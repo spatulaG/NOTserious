@@ -462,6 +462,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isImgOn: 0
   img: {fileID: 1019507088}
+  color: 1
+  player: {fileID: 806431253}
 --- !u!1 &623351179
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +835,7 @@ GameObject:
   - component: {fileID: 806431256}
   - component: {fileID: 806431255}
   - component: {fileID: 806431254}
+  - component: {fileID: 806431259}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -922,6 +925,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &806431259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 806431253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd066cd3535a314c8cec25ec482c386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: 000000000000000000000000
+  slot_1:
+  - {fileID: 1087479579}
+  - {fileID: 1358050486}
+  - {fileID: 1974916442}
+  - {fileID: 2051774596}
+  slot_2:
+  - {fileID: 1007894086}
+  - {fileID: 909584549}
+  - {fileID: 847057232}
+  - {fileID: 2046599855}
+  slot_3:
+  - {fileID: 50391509}
+  - {fileID: 855582380}
+  - {fileID: 918975535}
+  - {fileID: 1762844260}
+  whiteFound: 0
 --- !u!1 &847057230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,6 +1549,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isImgOn: 0
   img: {fileID: 1650243805}
+  color: 3
+  player: {fileID: 806431253}
 --- !u!1 &1209582603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,6 +1990,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isImgOn: 0
   img: {fileID: 1209582604}
+  color: 2
+  player: {fileID: 806431253}
 --- !u!1 &1578066429
 GameObject:
   m_ObjectHideFlags: 0
