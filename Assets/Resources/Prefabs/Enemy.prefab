@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4866447245190512}
   - component: {fileID: 212184643826265374}
   - component: {fileID: 50301664800937852}
-  - component: {fileID: 61053763894953696}
   - component: {fileID: 95743382480368658}
   - component: {fileID: 114558787521205942}
+  - component: {fileID: 58099333824575964}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -55,17 +55,17 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.6
+  m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 64f76ef2d0abaeb47bdf4742820456bf, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61053763894953696
-BoxCollider2D:
+--- !u!58 &58099333824575964
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -77,18 +77,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2048, y: 0.2048}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
+  m_Radius: 0.09
 --- !u!95 &95743382480368658
 Animator:
   serializedVersion: 3
@@ -98,7 +88,7 @@ Animator:
   m_GameObject: {fileID: 1525889690672930}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fc548c5adaf21da4bbd39ed88391a20f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6342c888eb82d4747aca9fb63381554c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -119,8 +109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 2
-  MaxJumpWidth: 0
-  JumpHeight: 7
+  MaxJumpWidth: 4
+  JumpHeight: 3
 --- !u!212 &212184643826265374
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -156,7 +146,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a39268725071298498910247967fdb70, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e95d8933e4623e941a02461169f16f34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
