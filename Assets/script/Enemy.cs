@@ -8,8 +8,8 @@ public class Enemy : MonoBehaviour
     public float MaxSpeed;
     float speed;
 
-    public float jump;
-    public float jumpHeight = 4;
+    public float MaxJumpWidth;
+    public float JumpHeight = 4;
 
     bool onGround = false;
     Vector3 size;
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y-0.1f, 0)+ offset, -transform.up);
         left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y-0.1f, 0) + offset, -transform.up);
 
-        Vector2 jumpTo = transform.position + new Vector3((size.x + jump*0.6f) * direction.x, -size.y - 0.2f, 0);
+        Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth*0.6f) * direction.x, -size.y - 0.2f, 0);
         Vector2 jumpDir = new Vector2(direction.x, 0);
         float jumpDist = 0.1f;
         jumpcollider = Physics2D.Raycast(jumpTo,jumpDir, jumpDist);
@@ -93,8 +93,8 @@ public class Enemy : MonoBehaviour
 
         if (timer > randomtime)
         {
-            if(jumpcollider.collider != null && onGround)
-                rb.AddForce(Vector2.up * jump * jumpHeight);
+            if (jumpcollider.collider != null && onGround)
+                jump();
             timer = 0;
             randomtime = Random.Range(3, 5);
         }
@@ -102,6 +102,13 @@ public class Enemy : MonoBehaviour
             timer += Time.deltaTime;
 
         
+    }
+
+    private void jump()
+    {
+        speed = MaxSpeed;
+        rb.AddForce(Vector3.up * JumpHeight, ForceMode2D.Impulse);
+        rb.AddForce(direction*0.6f, ForceMode2D.Impulse);
     }
 
     private void ChangeDirection()
@@ -127,7 +134,7 @@ public class Enemy : MonoBehaviour
             if (jumpcollider.collider != null)
             {
                 onGround = false;
-                rb.AddForce(Vector2.up * jump * jumpHeight);
+                jump();
             }
             else
             {
@@ -140,7 +147,7 @@ public class Enemy : MonoBehaviour
             if (jumpcollider.collider != null)
             {
                 onGround = false;
-                rb.AddForce(Vector2.up * jump * jumpHeight);
+                jump();
             }
             else
             {
