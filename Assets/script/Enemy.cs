@@ -9,9 +9,11 @@ public class Enemy : MonoBehaviour
     float speed;
 
     public float jump;
+    public float jumpHeight = 4;
 
     bool onGround = false;
     Vector3 size;
+    Vector3 offset;
     float timer;
     int randomtime;
 
@@ -27,6 +29,8 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         size = GetComponent<Collider2D>().bounds.size / 2;
+        offset = GetComponent<Collider2D>().offset;
+        
         direction.x = -1;
         
     }
@@ -42,13 +46,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       
-
-        if (other.tag == "Powerup")
-        {
-            print("Spelaren krockade med " + other.name);
-            Destroy(other.gameObject);
-        }
+    
     }
     // Update is called once per frame
     void Update()
@@ -56,8 +54,8 @@ public class Enemy : MonoBehaviour
         if (speed < MaxSpeed)
             speed += Time.deltaTime;
 
-        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y, 0), -transform.up);
-        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y, 0), -transform.up);
+        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y-0.1f, 0)+ offset, -transform.up);
+        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y-0.1f, 0) + offset, -transform.up);
 
         Vector2 jumpTo = transform.position + new Vector3((size.x + jump*0.6f) * direction.x, -size.y - 0.2f, 0);
         Vector2 jumpDir = new Vector2(direction.x, 0);
@@ -78,8 +76,8 @@ public class Enemy : MonoBehaviour
         }
 
         //Draw debug Rays
-        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y, 0), Vector2.down, Color.green);
-        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y, 0), Vector2.down, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y-0.1f, 0) + offset, Vector2.down, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y-0.1f, 0)+ offset, Vector2.down, Color.green);
         Debug.DrawRay(jumpTo, jumpDir*jumpDist, Color.green);
 
         
@@ -96,7 +94,7 @@ public class Enemy : MonoBehaviour
         if (timer > randomtime)
         {
             if(jumpcollider.collider != null && onGround)
-                rb.AddForce(Vector2.up * jump);
+                rb.AddForce(Vector2.up * jump * jumpHeight);
             timer = 0;
             randomtime = Random.Range(3, 5);
         }
@@ -129,7 +127,7 @@ public class Enemy : MonoBehaviour
             if (jumpcollider.collider != null)
             {
                 onGround = false;
-                rb.AddForce(Vector2.up * jump);
+                rb.AddForce(Vector2.up * jump * jumpHeight);
             }
             else
             {
@@ -142,7 +140,7 @@ public class Enemy : MonoBehaviour
             if (jumpcollider.collider != null)
             {
                 onGround = false;
-                rb.AddForce(Vector2.up * jump);
+                rb.AddForce(Vector2.up * jump * jumpHeight);
             }
             else
             {
