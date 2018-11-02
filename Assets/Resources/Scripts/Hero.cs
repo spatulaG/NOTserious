@@ -19,10 +19,10 @@ public class Hero : MonoBehaviour {
     
     void shoot()
     {
-        //Resources.Load("Prefabs/bullet")
+        
         if (facingDirection == FacingDirection.FacingLeft)
         {
-            bullet = Instantiate(bullet, hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left,ForceMode2D.Impulse);
             bullet.tag = "bullet";
         }
