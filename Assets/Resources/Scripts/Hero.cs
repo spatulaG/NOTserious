@@ -10,6 +10,8 @@ public class Hero : MonoBehaviour {
     public float bulletSpeed = 10.0f;
     public Transform hero;
 
+    public float JumpHeight = 2;
+
     private GameObject bullet;
     private FacingDirection facingDirection = FacingDirection.FacingRight;
 
@@ -19,10 +21,13 @@ public class Hero : MonoBehaviour {
     private bool isDead = false;
     private int HP;
 
+    float direction;
     public float TheDistanceHeroFallBackWhenBeingAttack;
     void Start () {
         HP = 3;
         TheDistanceHeroFallBackWhenBeingAttack = 1;
+
+        direction = hero.transform.localScale.x;
 
     }
     
@@ -74,13 +79,16 @@ public class Hero : MonoBehaviour {
     }
 
     void Update () {
+
+        
+
         if (Input.GetKey(KeyCode.D))
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
             facingDirection = FacingDirection.FacingRight;
-            hero.transform.localScale = new Vector3(5,5,1);
+            hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
         else if (Input.GetKey(KeyCode.A))
         {
@@ -88,7 +96,7 @@ public class Hero : MonoBehaviour {
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
-            hero.transform.localScale = new Vector3(-5, 5, 1);
+            hero.transform.localScale = new Vector3(-direction, hero.transform.localScale.y, 1);
         }
         else
         {
@@ -99,7 +107,7 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test jump");
             isInAir = true;
-            hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up,ForceMode2D.Impulse);
+            hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up*JumpHeight,ForceMode2D.Impulse);
             hero.GetComponent<Animator>().SetTrigger("Jump");
         }
 
