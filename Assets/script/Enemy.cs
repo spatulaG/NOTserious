@@ -138,7 +138,7 @@ public class Enemy : MonoBehaviour
         Debug.DrawRay(checkwall, walldir * walldist, Color.green);
         Debug.DrawRay(checkwallAbove, walldir * walldist, Color.green);
 
-        if(wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider == null)
+        if(wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider == null && onGround)
         {
             jump();
         }
@@ -151,6 +151,7 @@ public class Enemy : MonoBehaviour
         speed = MaxSpeed;
         rb.AddForce(Vector3.up * JumpHeight, ForceMode2D.Impulse);
         rb.AddForce(direction*0.6f, ForceMode2D.Impulse);
+        onGround = false;
     }
 
     private void ChangeDirection()
