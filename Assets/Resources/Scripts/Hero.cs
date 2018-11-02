@@ -17,11 +17,14 @@ public class Hero : MonoBehaviour {
     private bool isShooting = false;
 
     private bool isDead = false;
+    private int HP;
 
-
+    public float TheDistanceHeroFallBackWhenBeingAttack;
     void Start () {
-		
-	}
+        HP = 3;
+        TheDistanceHeroFallBackWhenBeingAttack = 1;
+
+    }
     
 
     void shoot()
@@ -45,29 +48,44 @@ public class Hero : MonoBehaviour {
         Destroy(bullet);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.tag == "enemy")
+        if(collision.gameObject.tag == "Enemy")
         {
+            if(collision.gameObject.transform.position.x > hero.transform.position.x)
+            {
+                Debug.Log("Being Attacked from Right");
+                hero.transform.Translate(-TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
+            }
+            else
+            {
+                Debug.Log("Being Attacked from Left");
+            }
+            HP--;
+            if(HP == 0)
+            {
+                isDead = true;
+            }
             hero.GetComponent<Animator>().SetTrigger("IsUnderAttack");
         }
     }
 
-    // Update is called once per frame
     void Update () {
         if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Test right move");
+            //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
             facingDirection = FacingDirection.FacingRight;
+            hero.transform.localScale = new Vector3(5,5,1);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Test left move");
+            //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
+            hero.transform.localScale = new Vector3(-5, 5, 1);
         }
         else
         {
@@ -76,7 +94,7 @@ public class Hero : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.K) && isInAir == false)
         {
-            Debug.Log("Test jump");
+            //Debug.Log("Test jump");
             isInAir = true;
             hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up,ForceMode2D.Impulse);
             hero.GetComponent<Animator>().SetTrigger("Jump");
