@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour {
     private Vector3 offset;
 	void Start () {
         offset = mainCamera.transform.position - hero.transform.position;
-        offset /= 2;//fr
+        //offset /= 3;//fr
 	}
 	
 	// Update is called once per frame
