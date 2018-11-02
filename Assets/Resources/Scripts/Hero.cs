@@ -9,10 +9,13 @@ public class Hero : MonoBehaviour {
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
     public Transform hero;
-    private bool isInAir = false;
-    private bool isShooting = false;
     public GameObject bullet;
     private FacingDirection facingDirection = FacingDirection.FacingRight;
+
+    private bool isDead = false;
+    private bool isInAir = false;
+    private bool isShooting = false;
+
     void Start () {
 		
 	}
