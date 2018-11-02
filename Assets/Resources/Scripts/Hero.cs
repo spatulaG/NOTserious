@@ -25,8 +25,7 @@ public class Hero : MonoBehaviour {
     public float TheDistanceHeroFallBackWhenBeingAttack;
     void Start () {
         HP = 3;
-        TheDistanceHeroFallBackWhenBeingAttack = 0.5f;
-
+        TheDistanceHeroFallBackWhenBeingAttack = 3f;
         direction = hero.transform.localScale.x;
 
     }
@@ -34,10 +33,9 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
-        //Resources.Load("Prefabs/bullet")
         if (facingDirection == FacingDirection.FacingLeft)
         {
-            bullet = Instantiate(bullet, hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left,ForceMode2D.Impulse);
             bullet.tag = "bullet";
         }
@@ -63,12 +61,12 @@ public class Hero : MonoBehaviour {
             if(collision.gameObject.transform.position.x > hero.transform.position.x)
             {
                 Debug.Log("Being Attacked from Right");
-                hero.transform.Translate(-TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
+                hero.GetComponent<Rigidbody2D>().AddForce(Vector3.left * TheDistanceHeroFallBackWhenBeingAttack, ForceMode2D.Impulse);
             }
             else
             {
                 hero.transform.Translate(TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
-                Debug.Log("Being Attacked from Left");
+                hero.GetComponent<Rigidbody2D>().AddForce(Vector3.right * TheDistanceHeroFallBackWhenBeingAttack, ForceMode2D.Impulse);
             }
             HP--;
             if(HP == 0)
