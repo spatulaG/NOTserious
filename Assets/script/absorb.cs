@@ -6,34 +6,47 @@ using UnityEngine.UI;
 public class absorb : MonoBehaviour {
     public bool isImgOn;
     public GameObject img;
-    public int color;
     public GameObject player;
     private GameObject color1, color2, color3;
-    private Renderer rend;
     public GameObject popUpMenu;
+    public Color current;
+    //public PopUpMenu pop;
 
     // Use this for initialization
     void Start () {
+        
+
         color1 = GameObject.Find("Color1");
         color2 = GameObject.Find("Color2");
         color3 = GameObject.Find("Color3");
         
         img.SetActive(false);
         isImgOn = false;
-        rend = player.GetComponent<Renderer>();
+        current = player.GetComponent<SpriteRenderer>().color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Check switch if button down tsu ma ra nai
-        attack();
+       
         //absorb
         absorbColor();
         //If Tag player pop-up menu(UI)
         
     }
+    
 
+    static public Color[] colorSlot = {
+        new Color(233, 233, 233),
+        new Color(232, 55, 146),
+        new Color(255, 225, 41),
+        new Color(252, 107, 24),
+        new Color(38, 197, 253),
+        new Color(117, 110, 248),
+        new Color(176, 238, 49),
+        new Color(17, 28, 56),
+    };
+    /*
     Color white = new Color(233, 233, 233);//white
     Color red = new Color(232, 55, 146);//red
     Color yellow = new Color(255, 225, 41);//yellow
@@ -42,41 +55,61 @@ public class absorb : MonoBehaviour {
     Color purple = new Color(117, 110, 248);//purple
     Color green = new Color(176, 238, 49);//green
     Color black = new Color(17, 28, 56);//black
-         
-         
-    private void attack()
-    {
-
-    }
+           */
 
     private void absorbColor()
     {
-        if (Input.GetKey("j") && isImgOn)
+        if (Input.GetKey("i") && isImgOn)
         {
+            print("yes");
             popUpMenu.SetActive(true);
-            rend.material.SetColor("_Color", this.GetComponent<Renderer>().material.GetColor("_Color"));
-            
+            player.GetComponent<SpriteRenderer>().color =  this.GetComponent<SpriteRenderer>().color;
+            print(current);
 
 
         }
     }
-
+    PopUpMenu a;
     public string getCurrentColor() {
         string currentColor = "";
-        rend.material.GetColor("_Color");
+        int colorID = 0;
+        for (int n = 0; n < 8; n++) {
+            if (Math.Abs(current.r - colorSlot[n].r) <= 0.5)
+                colorID = n;
 
+        }
+        switch (colorID) {
 
-
-
-
-
-
-
+            case 0:
+                currentColor = "white";
+                break;
+            case 1:
+                currentColor = "red";
+                break;
+            case 2:
+                currentColor = "yellow";
+                break;
+            case 3:
+                currentColor = "orange";
+                break;
+            case 4:
+                currentColor = "blue";
+                break;
+            case 5:
+                currentColor = "purple";
+                break;
+            case 6:
+                currentColor = "green";
+                break;
+            case 7:
+                currentColor = "black";
+                break;
+        }
 
         return currentColor;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         print("trigger");
         //Check Tag
@@ -92,8 +125,7 @@ public class absorb : MonoBehaviour {
         }
             //Switch
     }
-
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (isImgOn == true)
         {

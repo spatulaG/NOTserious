@@ -318,9 +318,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1014615206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1406215879198772, guid: 828ac80f8051d99449bfbf21002a12ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 436577377}
 --- !u!1 &1400020883 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1373175187682292, guid: 828ac80f8051d99449bfbf21002a12ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 436577377}
+--- !u!1 &1556968586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1857047098388160, guid: 828ac80f8051d99449bfbf21002a12ce,
     type: 2}
   m_PrefabInternal: {fileID: 436577377}
 --- !u!1 &1620972532
@@ -417,10 +427,15 @@ MonoBehaviour:
   - {fileID: 350516127}
   - {fileID: 1400020883}
   color:
-  - {fileID: 560582049}
-  - {fileID: 1667441110}
-  - {fileID: 1730133524}
+  - {fileID: 1014615206}
+  - {fileID: 1556968586}
+  - {fileID: 2086581015}
   _timeCount: 5
   _isShow: 0
   _isBlendable: 0
   selectNumber: 0
+--- !u!1 &2086581015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1769988506284582, guid: 828ac80f8051d99449bfbf21002a12ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 436577377}
