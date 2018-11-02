@@ -62,8 +62,9 @@ public class absorb : MonoBehaviour {
         if (Input.GetKey("i") && isImgOn)
         {
             print("yes");
-            popUpMenu.SetActive(true);
+        //  popUpMenu.SetActive(true);
             player.GetComponent<SpriteRenderer>().color =  this.GetComponent<SpriteRenderer>().color;
+            current = player.GetComponent<SpriteRenderer>().color;
             print(current);
 
 

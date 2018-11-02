@@ -61,6 +61,8 @@ public class bag : MonoBehaviour {
 //  private int[] _mergeNumber;
 
     private SpriteRenderer[] _colorSpriteRenderer;
+	private SpriteRenderer playerSpriteRenderer;
+	private PlayerStatus _playerStatus;
     // Use this for initialization
 
     public class ColorProperty{
@@ -77,21 +79,23 @@ public class bag : MonoBehaviour {
     }
 
     private ColorProperty[] _colorMerge;
-//  private ColorProperty _colorMerge1;
-//  private ColorProperty _colorMerge2;
 
     void Start () {
         _colorSpriteRenderer = new SpriteRenderer[3];
         _colorMerge = new ColorProperty[2];
+		playerSpriteRenderer = GetComponent<SpriteRenderer>();
+		_playerStatus = GetComponent<PlayerStatus>();
         for(int i = 0; i < 2; i++)
             _colorMerge[i] = new ColorProperty(0,Color.red,0);
-      
         for(int i = 0; i < 3; i++)
             _colorSpriteRenderer[i] = color[i].GetComponent<SpriteRenderer>();
     }
     
     // Update is called once per frame
     void Update () {
+		for(int i = 0; i < 3; i++){
+			_colorSpriteRenderer[i].color = new Color(colorSlot[_playerStatus.slot[i]].r/255, colorSlot[_playerStatus.slot[i]].g/255, colorSlot[_playerStatus.slot[i]].b/255);
+		}
 
 		if(Input.GetKeyDown(KeyCode.Escape))
 			_isShow = false;
@@ -105,12 +109,12 @@ public class bag : MonoBehaviour {
         }
         if(_isShow){
             if(Input.GetKeyDown(KeyCode.RightArrow)){
-                _colorCount = (_colorCount == 3) ? 3 : (_colorCount + 1);
+                _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                 if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
                     _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
             }else if(Input.GetKeyDown(KeyCode.LeftArrow)){
-                _colorCount = (_colorCount == 1) ? 1 : (_colorCount - 1);
+                _colorCount = (_colorCount <= 1) ? 1 : (_colorCount - 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
@@ -125,38 +129,39 @@ public class bag : MonoBehaviour {
                 else{
 					if(_colorMerge[1]._mergeNumber == _colorMerge[0]._mergeNumber){
                     	Debug.Log("equal");
+
 						_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                     	selectNumber = 0;
                 	}
 					else{
-                    selectNumber = (selectNumber <= 1) ? 1 : (selectNumber - 1);
+						selectNumber = (selectNumber <= 0) ? 0 : (selectNumber - 1);
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
-                    _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
-					Debug.Log("SelectNumber4 :" + selectNumber);
+                 	   _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+						Debug.Log("SelectNumber4 :" + selectNumber);
+                    
 					}
                 }
-                if(selectNumber == 1){
+				if(selectNumber == 1){
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
+					playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
+					ReturnColor();
+					Debug.Log("SelectNumber5 :" + selectNumber);
             //      Debug.Log("1 :" + _colorMerge[1]._colorIndex);
 				//	Debug.Log("return color" + ReturnColor());
-                }
-              Debug.Log("SelectNumber1 :" + selectNumber);
+            	}
+				
+                
+              	Debug.Log("SelectNumber1 :" + selectNumber);
                 
             }
-            
+			
+
             if(selectNumber == 2){
                 ColorPropertyStore(_colorMerge[1], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 				_colorSpriteRenderer[_colorMerge[1]._mergeNumber].sprite = mySprite[0];
 				_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
             //    Debug.Log(_colorMerge[1]._mergeNumber + " " + _colorMerge[0]._mergeNumber);
 				Debug.Log("SelectNumber2 :" + selectNumber);
-/*
-                if(_colorMerge[1]._mergeNumber == _colorMerge[0]._mergeNumber){
-                    Debug.Log("equal");
-                    selectNumber = 0;
-                }
-*/
-
             //  Debug.Log("2 :" + _colorMerge[0]._colorIndex);
 		
              
@@ -164,8 +169,13 @@ public class bag : MonoBehaviour {
                     _colorCount = _colorMerge[0]._mergeNumber + 1;
             //      Debug.Log("_colorCount selectNumber2 " + _colorCount);
                     BlendColor(_colorMerge[0]._colorIndex, _colorMerge[1]._colorIndex, _colorMerge);
-				
-                 
+					if(selectNumber == 0){
+					_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
+					for(int i = 0; i < 3; i++){
+						if(i != _colorMerge[0]._mergeNumber)
+							_colorSpriteRenderer[i].sprite = mySprite[0];
+					}
+				}
             }
 			//		Debug.Log("return color1" + ReturnColor());
 
@@ -173,6 +183,10 @@ public class bag : MonoBehaviour {
         }else{
             _colorCount = 0;
 			selectNumber = 0;
+			_colorSpriteRenderer[0].sprite = mySprite[0];
+			_colorSpriteRenderer[1].sprite = mySprite[0];
+			_colorSpriteRenderer[2].sprite = mySprite[0];
+			popUpMenu.SetActive(false);
 		//	Destroy(this);
         }
     }
@@ -210,12 +224,13 @@ public class bag : MonoBehaviour {
                 Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
                 SpriteRender(_colorMerge[1]._colorIndex, (int)ColorEnum.White);
             }else{
-                SpriteRender((int)ColorEnum.White, _colorMerge[0]._colorIndex);
+            //    SpriteRender((int)ColorEnum.White, _colorMerge[0]._colorIndex);
             }
 
         }else if(_colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
 			SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
 		}
+		
 
     }
 
@@ -249,8 +264,11 @@ public class bag : MonoBehaviour {
     }
 
 	public Color ReturnColor(){
+		playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
 		return _colorMerge[0]._colorValue255;
 	}
+
+	
 }
 
 
