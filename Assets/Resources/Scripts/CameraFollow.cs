@@ -17,8 +17,6 @@ public class CameraFollow : MonoBehaviour {
         LeftDown = new GameObject("LeftDown");
         RightUp = new GameObject("RightUp");
         offset = mainCamera.transform.position - hero.transform.position;
-        //LeftDown = GameObject.FindGameObjectWithTag("leftdown");
-        //RightUp = GameObject.FindGameObjectWithTag("rightup");
         BackGround = GameObject.FindGameObjectWithTag("background");
         LeftDown.transform.position = new Vector3(LeftAndRightAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2 + BackGround.transform.position.x, -UpAndDownAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2 + BackGround.transform.position.y, LeftDown.transform.position.z);
         RightUp.transform.position = new Vector3(-LeftAndRightAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2 + BackGround.transform.position.x, UpAndDownAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2 + BackGround.transform.position.y, RightUp.transform.position.z);
