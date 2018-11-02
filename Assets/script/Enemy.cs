@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject Blob;
+    List<GameObject> bloblist = new List<GameObject>();
+
     Vector3 direction;
     public float MaxSpeed;
+
     float speed;
 
     public float MaxJumpWidth;
@@ -44,10 +48,18 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.tag == "ground")
         {
             onGround = true;
             speed *= 0.5f;
+        }
+        if (collision.gameObject.tag == "bullet")
+        {
+           // GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            bloblist.Add(Instantiate(Blob, collision.gameObject.transform.position, Quaternion.identity, transform));
+            bloblist[bloblist.Count-1].GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            Destroy(collision.gameObject);
         }
     }
     private void OnTriggerEnter(Collider other)
