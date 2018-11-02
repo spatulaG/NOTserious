@@ -22,7 +22,7 @@ public class Hero : MonoBehaviour {
     public float TheDistanceHeroFallBackWhenBeingAttack;
     void Start () {
         HP = 3;
-        TheDistanceHeroFallBackWhenBeingAttack = 1;
+        TheDistanceHeroFallBackWhenBeingAttack = 0.5f;
 
     }
     
@@ -59,6 +59,7 @@ public class Hero : MonoBehaviour {
             }
             else
             {
+                hero.transform.Translate(TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
                 Debug.Log("Being Attacked from Left");
             }
             HP--;
