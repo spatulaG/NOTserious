@@ -35,18 +35,28 @@ public class Hero : MonoBehaviour {
         attackDelay = 1.0f;
     }
     
+    public int getHP()
+    {
+        return HP;
+    }
+
+    public void setHP(int HP)
+    {
+        this.HP = HP;
+    }
 
     void shoot()
     {
+        hero.GetComponent<Animator>().SetTrigger("Shoot");
         if (facingDirection == FacingDirection.FacingLeft)
         {
-            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, -0.8f, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left,ForceMode2D.Impulse);
             bullet.tag = "bullet";
         }
         else
         {
-            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position + new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position + new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0.8f, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.right, ForceMode2D.Impulse);
             bullet.tag = "bullet";
         }
@@ -95,7 +105,7 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
+            hero.GetComponent<Animator>().SetBool("IsMoveRight", true);
             facingDirection = FacingDirection.FacingRight;
             hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
@@ -103,7 +113,7 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
+            hero.GetComponent<Animator>().SetBool("IsMoveRight", true);
             facingDirection = FacingDirection.FacingLeft;
             hero.transform.localScale = new Vector3(-direction, hero.transform.localScale.y, 1);
         }
