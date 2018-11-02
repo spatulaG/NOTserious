@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour
 
     RaycastHit2D right;
     RaycastHit2D left;
-    
+    RaycastHit2D jumpcollider;
+
     // Use this for initialization
     void Start()
     {
@@ -58,11 +59,11 @@ public class Enemy : MonoBehaviour
         right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y, 0), -transform.up);
         left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y, 0), -transform.up);
 
-        Vector2 jumpTo = transform.position + new Vector3((size.x + jump) * direction.x, -size.y - 0.2f, 0);
+        Vector2 jumpTo = transform.position + new Vector3((size.x + jump*0.6f) * direction.x, -size.y - 0.2f, 0);
         Vector2 jumpDir = new Vector2(direction.x, 0);
         float jumpDist = 0.1f;
+        jumpcollider = Physics2D.Raycast(jumpTo,jumpDir, jumpDist);
 
-        RaycastHit2D jumpcollider = Physics2D.Raycast(jumpTo,jumpDir, jumpDist);
 
         RaycastHit2D groundCollider = Physics2D.Raycast(transform.position, -transform.up, 0.1f);
 
@@ -85,13 +86,8 @@ public class Enemy : MonoBehaviour
 
         if (onGround)
         {
-            //if (rb.velocity.y > 0.1f || rb.velocity.y < -0.1f)
-            //    onGround = false;
-            //else
-            {
-                ChangeDirection();
-
-            }
+            //  ChangeDirection();
+            jumpToNext();
         }
 
 
@@ -100,7 +96,7 @@ public class Enemy : MonoBehaviour
         if (timer > randomtime)
         {
             if(jumpcollider.collider != null && onGround)
-                rb.AddForce(Vector2.up * jump * 100);
+                rb.AddForce(Vector2.up * jump);
             timer = 0;
             randomtime = Random.Range(3, 5);
         }
@@ -124,6 +120,37 @@ public class Enemy : MonoBehaviour
             if (speed >= MaxSpeed)
                 speed *= 0.5f;
         }
+    }
+
+    private void jumpToNext()
+    {
+        if (left.collider == null && direction.x == -1)
+        {
+            if (jumpcollider.collider != null)
+            {
+                onGround = false;
+                rb.AddForce(Vector2.up * jump);
+            }
+            else
+            {
+                ChangeDirection();
+            }
+        }
+
+        if (right.collider == null && direction.x == 1)
+        {
+            if (jumpcollider.collider != null)
+            {
+                onGround = false;
+                rb.AddForce(Vector2.up * jump);
+            }
+            else
+            {
+                ChangeDirection();
+            }
+        }
+
+        
     }
 
     private void FixedUpdate()
