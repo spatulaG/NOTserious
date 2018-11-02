@@ -9,14 +9,24 @@ public class Hero : MonoBehaviour {
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
     public Transform hero;
+
+    private GameObject bullet;
+    private FacingDirection facingDirection = FacingDirection.FacingRight;
+
     private bool isInAir = false;
     private bool isShooting = false;
-    public GameObject bullet;
-    private FacingDirection facingDirection = FacingDirection.FacingRight;
+
+    private bool isDead = false;
+    private int HP;
+
+    public float TheDistanceHeroFallBackWhenBeingAttack;
     void Start () {
-		
-	}
+        HP = 3;
+        TheDistanceHeroFallBackWhenBeingAttack = 1;
+
+    }
     
+
     void shoot()
     {
         if(facingDirection == FacingDirection.FacingLeft)
@@ -35,25 +45,47 @@ public class Hero : MonoBehaviour {
     IEnumerator DestroyBullet(float waitTime, GameObject bullet)
     {
         yield return new WaitForSeconds(waitTime);
-        //等待之后执行的动作  
         Destroy(bullet);
     }
 
-	// Update is called once per frame
-	void Update () {
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            if(collision.gameObject.transform.position.x > hero.transform.position.x)
+            {
+                Debug.Log("Being Attacked from Right");
+                hero.transform.Translate(-TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
+            }
+            else
+            {
+                Debug.Log("Being Attacked from Left");
+            }
+            HP--;
+            if(HP == 0)
+            {
+                isDead = true;
+            }
+            hero.GetComponent<Animator>().SetTrigger("IsUnderAttack");
+        }
+    }
+
+    void Update () {
         if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Test right move");
+            //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
             facingDirection = FacingDirection.FacingRight;
+            hero.transform.localScale = new Vector3(5,5,1);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Test left move");
+            //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
+            hero.transform.localScale = new Vector3(-5, 5, 1);
         }
         else
         {
@@ -62,7 +94,7 @@ public class Hero : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.K) && isInAir == false)
         {
-            Debug.Log("Test jump");
+            //Debug.Log("Test jump");
             isInAir = true;
             hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up,ForceMode2D.Impulse);
             hero.GetComponent<Animator>().SetTrigger("Jump");
@@ -81,5 +113,11 @@ public class Hero : MonoBehaviour {
         {
             shoot();
         }
+
+        if (isDead)
+        {
+            hero.GetComponent<Animator>().SetBool("IsDead", true);
+        }
+
     }
 }
