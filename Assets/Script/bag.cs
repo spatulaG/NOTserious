@@ -96,7 +96,6 @@ public class bag : MonoBehaviour {
 		for(int i = 0; i < 3; i++){
 			_colorSpriteRenderer[i].color = new Color(colorSlot[_playerStatus.slot[i]].r/255, colorSlot[_playerStatus.slot[i]].g/255, colorSlot[_playerStatus.slot[i]].b/255);
 		}
-
 		if(Input.GetKeyDown(KeyCode.Escape))
 			_isShow = false;
         
@@ -124,11 +123,11 @@ public class bag : MonoBehaviour {
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
                     _colorSpriteRenderer[_colorCount-1].sprite = mySprite[2];
-					Debug.Log("SelectNumber3 :" + selectNumber);
+				//	Debug.Log("SelectNumber3 :" + selectNumber);
                 }
                 else{
 					if(_colorMerge[1]._mergeNumber == _colorMerge[0]._mergeNumber){
-                    	Debug.Log("equal");
+                //    	Debug.Log("equal");
 
 						_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                     	selectNumber = 0;
@@ -137,7 +136,7 @@ public class bag : MonoBehaviour {
 						selectNumber = (selectNumber <= 0) ? 0 : (selectNumber - 1);
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                  	   _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
-						Debug.Log("SelectNumber4 :" + selectNumber);
+				//		Debug.Log("SelectNumber4 :" + selectNumber);
                     
 					}
                 }
@@ -145,13 +144,13 @@ public class bag : MonoBehaviour {
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 					playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
 					ReturnColor();
-					Debug.Log("SelectNumber5 :" + selectNumber);
+				//	Debug.Log("SelectNumber5 :" + selectNumber);
             //      Debug.Log("1 :" + _colorMerge[1]._colorIndex);
 				//	Debug.Log("return color" + ReturnColor());
             	}
 				
                 
-              	Debug.Log("SelectNumber1 :" + selectNumber);
+            //  	Debug.Log("SelectNumber1 :" + selectNumber);
                 
             }
 			
@@ -160,9 +159,7 @@ public class bag : MonoBehaviour {
                 ColorPropertyStore(_colorMerge[1], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 				_colorSpriteRenderer[_colorMerge[1]._mergeNumber].sprite = mySprite[0];
 				_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
-            //    Debug.Log(_colorMerge[1]._mergeNumber + " " + _colorMerge[0]._mergeNumber);
-				Debug.Log("SelectNumber2 :" + selectNumber);
-            //  Debug.Log("2 :" + _colorMerge[0]._colorIndex);
+			//	Debug.Log("SelectNumber2 :" + selectNumber);
 		
              
                     selectNumber = 0;
@@ -212,28 +209,38 @@ public class bag : MonoBehaviour {
     //  Debug.Log(mergePlus);
         if(mergePlus == 3 && isBasicColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Orange, (int)ColorEnum.White);
+			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Orange, (int)ColorEnum.White);
         }else if(mergePlus == 5 && isBasicColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Blue, (int)ColorEnum.White);
+			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Blue, (int)ColorEnum.White);
         }else if(mergePlus == 6 && isBasicColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Green, (int)ColorEnum.White);
+			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Green, (int)ColorEnum.White);
 
         }else if(isBlackColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
+			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Black, (int)ColorEnum.White);
         }else if(isWhiteColor(_colorMerge) && _colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
             if(mergeIndex1 == 0){
                 Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
                 SpriteRender(_colorMerge[1]._colorIndex, (int)ColorEnum.White);
+				ChangePlayerStatus(_playerStatus, _colorMerge, _colorMerge[1]._colorIndex, (int)ColorEnum.White);
             }else{
             //    SpriteRender((int)ColorEnum.White, _colorMerge[0]._colorIndex);
             }
 
         }else if(_colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
 			SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
+			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Black, (int)ColorEnum.White);
 		}
+		Debug.Log("_colorMerge[0]._mergeNumber" + _colorMerge[0]._mergeNumber);
 		
-
+		Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
     }
-
+	public void ChangePlayerStatus(PlayerStatus _playerStatus, ColorProperty[] _colorMerge, int colorIndex1, int colorIndex2){
+		_playerStatus.slot[_colorMerge[0]._mergeNumber] = colorIndex1;
+		_playerStatus.slot[_colorMerge[1]._mergeNumber] = colorIndex2;
+	}
     public bool isBasicColor(ColorProperty[] _colorMerge){
         
         bool is1 = false, is2 = false;
@@ -270,5 +277,3 @@ public class bag : MonoBehaviour {
 
 	
 }
-
-

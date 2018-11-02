@@ -6,26 +6,30 @@ public class PlayerStatus : MonoBehaviour {
 	public int[] slot = {0,0,0};
 	public int slotNum = 0;
 	private absorb _absorb;
+	private bool isAbsorb = false;
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.I) && _absorb != null){
-			slotNum /= 3;
+		//	Debug.Log("2222");
+			slotNum = slotNum % 3;
 			slot[slotNum] = CheckColor(_absorb.getCurrentColor());
-			Debug.Log(slot[slotNum]);
+		//	Debug.Log(slot[slotNum]);
 			slotNum++;
-			Debug.Log("slotNum" + slotNum);
+		//	Debug.Log("slotNum" + slotNum);
+			isAbsorb = false;
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
     {
         if(LayerMask.LayerToName(other.gameObject.layer) == "ColorGround") {
-            _absorb = GetComponent<absorb>();
+            _absorb = other.gameObject.GetComponent<absorb>();
+			isAbsorb = true;
+		//	Debug.Log("1111");
         }
     }
 
