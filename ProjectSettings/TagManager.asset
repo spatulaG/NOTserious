@@ -6,10 +6,13 @@ TagManager:
   tags:
   - bullet
   - ground
+<<<<<<< HEAD
   - Enemy
   - leftdown
   - rightup
   - background
+=======
+>>>>>>> monster
   layers:
   - Default
   - TransparentFX

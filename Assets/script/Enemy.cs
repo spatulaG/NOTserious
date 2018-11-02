@@ -24,14 +24,20 @@ public class Enemy : MonoBehaviour
     RaycastHit2D left;
     RaycastHit2D jumpcollider;
 
+    Collider2D collider;
+
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        size = GetComponent<Collider2D>().bounds.size / 2;
-        offset = GetComponent<Collider2D>().offset;
+        collider = GetComponent<Collider2D>();
+
+
+       
+            size = collider.bounds.size / 2;
+            offset = collider.offset;
         
-        direction.x = -1;
+            direction.x = -1;
         
     }
 
@@ -54,8 +60,9 @@ public class Enemy : MonoBehaviour
         if (speed < MaxSpeed)
             speed += Time.deltaTime;
 
-        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y-0.1f, 0)+ offset, -transform.up);
-        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y-0.1f, 0) + offset, -transform.up);
+
+        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y-0.1f, 0)+ offset, -transform.up*0.4f);
+        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y-0.1f, 0) + offset, -transform.up * 0.4f);
 
         Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth*0.6f) * direction.x, -size.y - 0.2f, 0);
         Vector2 jumpDir = new Vector2(direction.x, 0);
@@ -76,8 +83,8 @@ public class Enemy : MonoBehaviour
         }
 
         //Draw debug Rays
-        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y-0.1f, 0) + offset, Vector2.down, Color.green);
-        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y-0.1f, 0)+ offset, Vector2.down, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y-0.1f, 0) + offset, Vector2.down * 0.4f, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y-0.1f, 0)+ offset, Vector2.down * 0.4f, Color.green);
         Debug.DrawRay(jumpTo, jumpDir*jumpDist, Color.green);
 
         
