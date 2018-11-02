@@ -9,14 +9,21 @@ public class Hero : MonoBehaviour {
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
     public Transform hero;
+
+    private GameObject bullet;
+    private FacingDirection facingDirection = FacingDirection.FacingRight;
+
     private bool isInAir = false;
     private bool isShooting = false;
-    public GameObject bullet;
-    private FacingDirection facingDirection = FacingDirection.FacingRight;
+
+    private bool isDead = false;
+
+
     void Start () {
 		
 	}
     
+
     void shoot()
     {
         if(facingDirection == FacingDirection.FacingLeft)
@@ -35,12 +42,19 @@ public class Hero : MonoBehaviour {
     IEnumerator DestroyBullet(float waitTime, GameObject bullet)
     {
         yield return new WaitForSeconds(waitTime);
-        //等待之后执行的动作  
         Destroy(bullet);
     }
 
-	// Update is called once per frame
-	void Update () {
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "enemy")
+        {
+            hero.GetComponent<Animator>().SetTrigger("IsUnderAttack");
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (Input.GetKey(KeyCode.D))
         {
             Debug.Log("Test right move");
@@ -81,5 +95,11 @@ public class Hero : MonoBehaviour {
         {
             shoot();
         }
+
+        if (isDead)
+        {
+            hero.GetComponent<Animator>().SetBool("IsDead", true);
+        }
+
     }
 }
