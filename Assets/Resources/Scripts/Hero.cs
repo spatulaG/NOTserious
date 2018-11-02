@@ -10,6 +10,8 @@ public class Hero : MonoBehaviour {
     public float bulletSpeed = 10.0f;
     public Transform hero;
 
+    public float JumpHeight = 2;
+
     private GameObject bullet;
     private FacingDirection facingDirection = FacingDirection.FacingRight;
 
@@ -19,25 +21,31 @@ public class Hero : MonoBehaviour {
     private bool isDead = false;
     private int HP;
 
+    float direction;
     public float TheDistanceHeroFallBackWhenBeingAttack;
     void Start () {
         HP = 3;
         TheDistanceHeroFallBackWhenBeingAttack = 0.5f;
+
+        direction = hero.transform.localScale.x;
 
     }
     
 
     void shoot()
     {
-        if(facingDirection == FacingDirection.FacingLeft)
+        //Resources.Load("Prefabs/bullet")
+        if (facingDirection == FacingDirection.FacingLeft)
         {
-            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(bullet, hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left,ForceMode2D.Impulse);
+            bullet.tag = "bullet";
         }
         else
         {
             bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position + new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.right, ForceMode2D.Impulse);
+            bullet.tag = "bullet";
         }
         StartCoroutine(DestroyBullet(1.0f,bullet));
     }
@@ -72,13 +80,16 @@ public class Hero : MonoBehaviour {
     }
 
     void Update () {
+
+        
+
         if (Input.GetKey(KeyCode.D))
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
             facingDirection = FacingDirection.FacingRight;
-            hero.transform.localScale = new Vector3(5,5,1);
+            hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
         else if (Input.GetKey(KeyCode.A))
         {
@@ -86,7 +97,7 @@ public class Hero : MonoBehaviour {
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
             hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
-            hero.transform.localScale = new Vector3(-5, 5, 1);
+            hero.transform.localScale = new Vector3(-direction, hero.transform.localScale.y, 1);
         }
         else
         {
@@ -97,7 +108,7 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test jump");
             isInAir = true;
-            hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up,ForceMode2D.Impulse);
+            hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up*JumpHeight,ForceMode2D.Impulse);
             hero.GetComponent<Animator>().SetTrigger("Jump");
         }
 
