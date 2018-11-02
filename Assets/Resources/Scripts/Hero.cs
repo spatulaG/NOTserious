@@ -29,15 +29,18 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
-        if(facingDirection == FacingDirection.FacingLeft)
+        
+        if (facingDirection == FacingDirection.FacingLeft)
         {
             bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left,ForceMode2D.Impulse);
+            bullet.tag = "bullet";
         }
         else
         {
             bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position + new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.right, ForceMode2D.Impulse);
+            bullet.tag = "bullet";
         }
         StartCoroutine(DestroyBullet(1.0f,bullet));
     }
