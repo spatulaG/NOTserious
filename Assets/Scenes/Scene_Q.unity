@@ -730,8 +730,13 @@ MonoBehaviour:
   - {fileID: 452538069}
   - {fileID: 350516127}
   - {fileID: 1400020883}
+  color:
+  - {fileID: 560582049}
+  - {fileID: 1667441110}
+  - {fileID: 1730133524}
   _timeCount: 5
   _isShow: 0
+  _isBlendable: 0
   selectNumber: 0
 --- !u!1 &1667441110
 GameObject:
