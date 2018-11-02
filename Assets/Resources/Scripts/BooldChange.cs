@@ -32,17 +32,17 @@ public class BooldChange : MonoBehaviour
 
     public void setBooldImage()
     {
-        if(hero.GetComponent<Hero>().getHP() == 0)
+        if(hero.GetComponent<Hero>().getHP() == 1)
         {
             Sprite EmptyBoold = Resources.Load("Material/EmptyBlood", typeof(Sprite)) as Sprite;
             BooldImage.GetComponent<Image>().sprite = EmptyBoold;
         }
-        else if (hero.GetComponent<Hero>().getHP() == 1)
+        else if (hero.GetComponent<Hero>().getHP() == 2)
         {
             Sprite HalfBoold = Resources.Load("Material/HalfBlood", typeof(Sprite)) as Sprite;
             BooldImage.GetComponent<Image>().sprite = HalfBoold;
         }
-        else if (hero.GetComponent<Hero>().getHP() == 2)
+        else if (hero.GetComponent<Hero>().getHP() == 3)
         {
             Sprite FullBoold = Resources.Load("Material/FullBlood",typeof(Sprite)) as Sprite;
             BooldImage.GetComponent<Image>().sprite = FullBoold;
@@ -54,12 +54,4 @@ public class BooldChange : MonoBehaviour
         setBooldImage();
     }
 
-
-    public void showLoseUI()
-    {
-        //WinImage.gameObject.SetActive(false);
-        //WinPanel.SetActive(false);
-        //LoseImage.gameObject.SetActive(true);
-        //LosePanel.SetActive(true);
-    }
 }

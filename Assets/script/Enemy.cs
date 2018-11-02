@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject Blob;
+    List<GameObject> bloblist = new List<GameObject>();
+
     Vector3 direction;
     public float MaxSpeed;
+
     float speed;
 
     public float MaxJumpWidth;
@@ -44,10 +48,18 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.tag == "ground")
         {
             onGround = true;
             speed *= 0.5f;
+        }
+        if (collision.gameObject.tag == "bullet")
+        {
+           // GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            bloblist.Add(Instantiate(Blob, collision.gameObject.transform.position, Quaternion.identity, transform));
+            bloblist[bloblist.Count-1].GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            Destroy(collision.gameObject);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -61,13 +73,15 @@ public class Enemy : MonoBehaviour
             speed += Time.deltaTime;
 
 
-        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y-0.1f, 0)+ offset, -transform.up*0.4f);
-        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y-0.1f, 0) + offset, -transform.up * 0.4f);
+        CheckWall();
 
-        Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth*0.6f) * direction.x, -size.y - 0.2f, 0);
+        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f);
+        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f);
+
+        Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth * 0.6f) * direction.x, -size.y - 0.2f, 0);
         Vector2 jumpDir = new Vector2(direction.x, 0);
         float jumpDist = 0.1f;
-        jumpcollider = Physics2D.Raycast(jumpTo,jumpDir, jumpDist);
+        jumpcollider = Physics2D.Raycast(jumpTo, jumpDir, jumpDist);
 
 
         RaycastHit2D groundCollider = Physics2D.Raycast(transform.position, -transform.up, 0.1f);
@@ -83,11 +97,11 @@ public class Enemy : MonoBehaviour
         }
 
         //Draw debug Rays
-        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y-0.1f, 0) + offset, Vector2.down * 0.4f, Color.green);
-        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y-0.1f, 0)+ offset, Vector2.down * 0.4f, Color.green);
-        Debug.DrawRay(jumpTo, jumpDir*jumpDist, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, Vector2.down * 0.4f, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, Vector2.down * 0.4f, Color.green);
+        Debug.DrawRay(jumpTo, jumpDir * jumpDist, Color.green);
 
-        
+
 
         if (onGround)
         {
@@ -108,7 +122,28 @@ public class Enemy : MonoBehaviour
         else
             timer += Time.deltaTime;
 
-        
+
+    }
+
+    private void CheckWall()
+    {
+        Vector2 checkwall = transform.position + new Vector3((size.x) * direction.x, -size.y/2, 0);
+        Vector2 checkwallAbove = transform.position + new Vector3((size.x) * direction.x, size.y/2, 0);
+        Vector2 walldir = new Vector2(direction.x, 0);
+        float walldist = size.x;
+
+        RaycastHit2D wall = Physics2D.Raycast(checkwall, walldir, walldist);
+        RaycastHit2D wallAbove = Physics2D.Raycast(checkwallAbove, walldir, walldist);
+
+        Debug.DrawRay(checkwall, walldir * walldist, Color.green);
+        Debug.DrawRay(checkwallAbove, walldir * walldist, Color.green);
+
+        if(wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider == null && onGround)
+        {
+            jump();
+        }
+
+
     }
 
     private void jump()
@@ -116,6 +151,7 @@ public class Enemy : MonoBehaviour
         speed = MaxSpeed;
         rb.AddForce(Vector3.up * JumpHeight, ForceMode2D.Impulse);
         rb.AddForce(direction*0.6f, ForceMode2D.Impulse);
+        onGround = false;
     }
 
     private void ChangeDirection()

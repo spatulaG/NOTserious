@@ -28,7 +28,7 @@ public class absorb : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-       
+        current = player.GetComponent<SpriteRenderer>().color;
         //absorb
         absorbColor();
         //If Tag player pop-up menu(UI)
@@ -61,10 +61,11 @@ public class absorb : MonoBehaviour {
     {
         if (Input.GetKey("i") && isImgOn)
         {
-            print("yes");
+            //print("yes");
             popUpMenu.SetActive(true);
             player.GetComponent<SpriteRenderer>().color =  this.GetComponent<SpriteRenderer>().color;
-            print(current);
+            current = player.GetComponent<SpriteRenderer>().color;
+            //print(current);
 
 
         }
@@ -74,9 +75,12 @@ public class absorb : MonoBehaviour {
         string currentColor = "";
         int colorID = 0;
         for (int n = 0; n < 8; n++) {
-            if (Math.Abs(current.r - colorSlot[n].r) <= 0.5)
+            if (Math.Abs(current.r * 255 - colorSlot[n].r) <= 0.5)
+            {
+
                 colorID = n;
 
+            }
         }
         switch (colorID) {
 
@@ -111,10 +115,10 @@ public class absorb : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        print("trigger");
+        //print("trigger");
         //Check Tag
         if(other.tag == "Player") {
-            print("player!");
+            //print("player!");
             if (isImgOn == false)
             {
                 img.SetActive(true);
