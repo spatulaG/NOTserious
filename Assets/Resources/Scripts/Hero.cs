@@ -23,11 +23,16 @@ public class Hero : MonoBehaviour {
 
     float direction;
     public float TheDistanceHeroFallBackWhenBeingAttack;
+
+    private bool isCanAttack;
+    private float attackDelay;
+
     void Start () {
         HP = 3;
         TheDistanceHeroFallBackWhenBeingAttack = 3f;
         direction = hero.transform.localScale.x;
-
+        isCanAttack = true;
+        attackDelay = 1.0f;
     }
     
 
@@ -52,6 +57,11 @@ public class Hero : MonoBehaviour {
     {
         yield return new WaitForSeconds(waitTime);
         Destroy(bullet);
+    }
+    IEnumerator CanAttack(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        isCanAttack = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -119,9 +129,11 @@ public class Hero : MonoBehaviour {
             hero.transform.localEulerAngles = new Vector3(hero.transform.localEulerAngles.x, hero.transform.localEulerAngles.y, 0);
         }
 
-        if(Input.GetKeyDown(KeyCode.J) && isShooting == false)
+        if(Input.GetKeyDown(KeyCode.J) && isShooting == false && isCanAttack == true)
         {
             shoot();
+            isCanAttack = false;
+            StartCoroutine(CanAttack(attackDelay));
         }
 
         if (isDead)
