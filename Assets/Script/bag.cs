@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopUpMenu : MonoBehaviour {
+public class bag : MonoBehaviour {
 
 
 
@@ -28,7 +28,6 @@ public class PopUpMenu : MonoBehaviour {
 
 
     public GameObject popUpMenu;
-    public GameObject[] colorPanel;
     public GameObject[] color;
 
     public enum ColorEnum{
@@ -52,6 +51,7 @@ public class PopUpMenu : MonoBehaviour {
         new Color(17, 28, 56),
     };
     
+	public Sprite[] mySprite;
 
     public float _timeCount = 5.0f;
     public bool _isShow = false;
@@ -59,7 +59,7 @@ public class PopUpMenu : MonoBehaviour {
     private int _colorCount = 0;
     public int selectNumber = 0;
 //  private int[] _mergeNumber;
-    private SpriteRenderer[] _panelSpriteRenderer;
+
     private SpriteRenderer[] _colorSpriteRenderer;
     // Use this for initialization
 
@@ -81,16 +81,11 @@ public class PopUpMenu : MonoBehaviour {
 //  private ColorProperty _colorMerge2;
 
     void Start () {
-        _panelSpriteRenderer = new SpriteRenderer[3];
         _colorSpriteRenderer = new SpriteRenderer[3];
         _colorMerge = new ColorProperty[2];
         for(int i = 0; i < 2; i++)
             _colorMerge[i] = new ColorProperty(0,Color.red,0);
-    //  _colorMerge1 = new ColorProperty(0,Color.red,0);
-    //  _colorMerge2 = new ColorProperty(0,Color.red,0);
-        for(int i = 0; i < 3; i++){
-            _panelSpriteRenderer[i] = colorPanel[i].GetComponent<SpriteRenderer>();
-        }
+      
         for(int i = 0; i < 3; i++)
             _colorSpriteRenderer[i] = color[i].GetComponent<SpriteRenderer>();
     }
@@ -102,83 +97,82 @@ public class PopUpMenu : MonoBehaviour {
 			_isShow = false;
         
         if((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !_isShow){
-            colorPanel[0].SetActive(true);
             popUpMenu.SetActive(true);
-            
+			_colorSpriteRenderer[0].sprite = mySprite[1];
+           
             _isShow = true;
-            
-
-
-        //  _isShow = true;
-
-            /*
-            while(_timeCount > 0.0f){
-                if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)){
-                    _timeCount = 5.0f;
-                }else{
-                    _timeCount -= Time.deltaTime;
-                }
-            }
-            
-            popUpMenu.SetActive(false);
-            _isShow = false;*/
 
         }
         if(_isShow){
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 _colorCount = (_colorCount == 3) ? 3 : (_colorCount + 1);
-                colorPanel[_colorCount-1].SetActive(true);
-                if(_colorCount - 2 >= 0 && _panelSpriteRenderer[_colorCount-2].color == new Color(0,1,1,1))
-                    colorPanel[_colorCount-2].SetActive(false);
+                _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+                if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
+                    _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
             }else if(Input.GetKeyDown(KeyCode.LeftArrow)){
                 _colorCount = (_colorCount == 1) ? 1 : (_colorCount - 1);
-                colorPanel[_colorCount-1].SetActive(true);
-                if(_panelSpriteRenderer[_colorCount].color == new Color(0,1,1,1))
-                    colorPanel[_colorCount].SetActive(false);
+                _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
+                	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
             if(Input.GetKeyDown(KeyCode.Space)){
-                if(_panelSpriteRenderer[_colorCount-1].color == new Color(0,1,1,1)){
-                    Debug.Log("_colorCount selectNumber: " + _colorCount);
+                if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
+                //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
-                    _panelSpriteRenderer[_colorCount-1].color = new Color(1,0,1,1);
+                    _colorSpriteRenderer[_colorCount-1].sprite = mySprite[2];
+					Debug.Log("SelectNumber3 :" + selectNumber);
                 }
                 else{
+					if(_colorMerge[1]._mergeNumber == _colorMerge[0]._mergeNumber){
+                    	Debug.Log("equal");
+						_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+                    	selectNumber = 0;
+                	}
+					else{
                     selectNumber = (selectNumber <= 1) ? 1 : (selectNumber - 1);
-                    Debug.Log("_colorCount selectNumber: " + _colorCount);
-                    _panelSpriteRenderer[_colorCount-1].color = new Color(0,1,1,1);
+                //    Debug.Log("_colorCount selectNumber: " + _colorCount);
+                    _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+					Debug.Log("SelectNumber4 :" + selectNumber);
+					}
                 }
                 if(selectNumber == 1){
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
             //      Debug.Log("1 :" + _colorMerge[1]._colorIndex);
+				//	Debug.Log("return color" + ReturnColor());
                 }
-            //  Debug.Log("SelectNumber :" + selectNumber);
+              Debug.Log("SelectNumber1 :" + selectNumber);
                 
             }
             
             if(selectNumber == 2){
                 ColorPropertyStore(_colorMerge[1], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
-                Debug.Log(_colorMerge[1]._mergeNumber + " " + _colorMerge[0]._mergeNumber);
+				_colorSpriteRenderer[_colorMerge[1]._mergeNumber].sprite = mySprite[0];
+				_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
+            //    Debug.Log(_colorMerge[1]._mergeNumber + " " + _colorMerge[0]._mergeNumber);
+				Debug.Log("SelectNumber2 :" + selectNumber);
 /*
                 if(_colorMerge[1]._mergeNumber == _colorMerge[0]._mergeNumber){
                     Debug.Log("equal");
                     selectNumber = 0;
                 }
 */
+
             //  Debug.Log("2 :" + _colorMerge[0]._colorIndex);
+		
              
                     selectNumber = 0;
                     _colorCount = _colorMerge[0]._mergeNumber + 1;
-                    Debug.Log("_colorCount selectNumber2 " + _colorCount);
-                    colorPanel[_colorMerge[1]._mergeNumber].SetActive(false);
+            //      Debug.Log("_colorCount selectNumber2 " + _colorCount);
                     BlendColor(_colorMerge[0]._colorIndex, _colorMerge[1]._colorIndex, _colorMerge);
+				
                  
             }
+			//		Debug.Log("return color1" + ReturnColor());
 
             
         }else{
             _colorCount = 0;
 			selectNumber = 0;
-			popUpMenu.SetActive(false);
 		//	Destroy(this);
         }
     }
@@ -206,18 +200,20 @@ public class PopUpMenu : MonoBehaviour {
             SpriteRender((int)ColorEnum.Orange, (int)ColorEnum.White);
         }else if(mergePlus == 5 && isBasicColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Blue, (int)ColorEnum.White);
-            
         }else if(mergePlus == 6 && isBasicColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Green, (int)ColorEnum.White);
-        }else if(isWhiteColor(_colorMerge)){
-                Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
-				if(mergeIndex1 == 0)
-					SpriteRender(_colorMerge[1]._colorIndex, (int)ColorEnum.White);
-				else if(mergeIndex2 == 0)
-                	SpriteRender(_colorMerge[0]._colorIndex, (int)ColorEnum.White);
+
         }else if(isBlackColor(_colorMerge)){
             SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
-        }else{
+        }else if(isWhiteColor(_colorMerge) && _colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
+            if(mergeIndex1 == 0){
+                Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
+                SpriteRender(_colorMerge[1]._colorIndex, (int)ColorEnum.White);
+            }else{
+                SpriteRender((int)ColorEnum.White, _colorMerge[0]._colorIndex);
+            }
+
+        }else if(_colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
 			SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
 		}
 
@@ -251,6 +247,10 @@ public class PopUpMenu : MonoBehaviour {
         _colorSpriteRenderer[_colorMerge[0]._mergeNumber].color = new Color(colorSlot[color1].r/255, colorSlot[color1].g/255, colorSlot[color1].b/255);
         _colorSpriteRenderer[_colorMerge[1]._mergeNumber].color = new Color(colorSlot[color2].r/255, colorSlot[color2].g/255, colorSlot[color2].b/255);
     }
+
+	public Color ReturnColor(){
+		return _colorMerge[0]._colorValue255;
+	}
 }
 
 
