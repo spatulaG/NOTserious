@@ -8,7 +8,7 @@ public class Hero : MonoBehaviour {
 
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
-    public Transform hero;
+    public GameObject hero;
 
     public float JumpHeight = 2;
 
@@ -149,7 +149,13 @@ public class Hero : MonoBehaviour {
         if (isDead)
         {
             hero.GetComponent<Animator>().SetBool("IsDead", true);
+            StartCoroutine(DestroyHero(2.0f, hero));
         }
 
+    }
+    IEnumerator DestroyHero(float waitTime, GameObject hero)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Destroy(hero);
     }
 }

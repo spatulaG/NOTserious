@@ -6,7 +6,7 @@ public class SceneControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        MusicManager.instance.StopBGM();
+        //MusicManager.instance.StopBGM();
 	}
 	
 	// Update is called once per frame
