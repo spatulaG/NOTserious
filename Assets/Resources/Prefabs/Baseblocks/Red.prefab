@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1815044189755052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.11, y: 1.78, z: -5}
+  m_LocalPosition: {x: 0, y: 1.78, z: -5}
   m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children:
   - {fileID: 4517614895203434}
@@ -195,7 +195,6 @@ MonoBehaviour:
   isImgOn: 0
   img: {fileID: 1884822718224324}
   player: {fileID: 0}
-  popUpMenu: {fileID: 1655200876880106, guid: 66eefdcd8fbaec0469843c89b1a9c1f7, type: 2}
   current: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &212333072261208562
 SpriteRenderer:

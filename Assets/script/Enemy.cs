@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         thisCollider = GetComponent<Collider2D>();
-        layermask = LayerMask.GetMask("Default");
+        layermask = LayerMask.GetMask("Default", "ColorGround");
 
 
         size = thisCollider.bounds.size / 2;
@@ -70,7 +70,8 @@ public class Enemy : MonoBehaviour
         {
            // GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
             bloblist.Add(Instantiate(Blob, collision.gameObject.transform.position, Quaternion.identity, transform));
-            bloblist[bloblist.Count-1].GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            
+                bloblist[bloblist.Count-1].GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
             Destroy(collision.gameObject);
         }
     }
@@ -82,7 +83,8 @@ public class Enemy : MonoBehaviour
         }
         if (other.tag == "ground")
         {
-            GetComponent<SpriteRenderer>().color = other.gameObject.GetComponent<SpriteRenderer>().color;
+            if (LayerMask.LayerToName(other.gameObject.layer) == "ColorGround")
+                GetComponent<SpriteRenderer>().color = other.gameObject.GetComponent<SpriteRenderer>().color;
         }
     }
     // Update is called once per frame
