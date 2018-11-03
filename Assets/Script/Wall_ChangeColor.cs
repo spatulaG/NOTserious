@@ -11,7 +11,7 @@ public class Wall_ChangeColor : MonoBehaviour {
 	public float smoothness = 0.1f;
 
 	//add some conditions
-	public bool canChange = true;
+	public static bool canChange = false;
 	private SpriteRenderer _spriteRenderer;
 	// Use this for initialization
 	void Start () {
