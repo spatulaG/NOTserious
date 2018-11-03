@@ -54,6 +54,8 @@ public class cannon : MonoBehaviour {
             bullet = Instantiate(bulletPrefab, bulletPositon.position, Quaternion.identity) as GameObject;//this.GetComponent<Collider2D>().bounds.size.x / 2
             bullet.GetComponent<Rigidbody2D>().AddForce(angle * 10f, ForceMode2D.Impulse);
             bullet.GetComponent<SpriteRenderer>().color = new Color(colorSlot[(int)bulletColor].r/255, colorSlot[(int)bulletColor].g / 255, colorSlot[(int)bulletColor].b / 255);
+            
+            bullet.transform.position = new Vector3(bullet.transform.position.x, bullet.transform.position.y, -4);
             //print("size" + this.GetComponent<Collider2D>().bounds.size.x / 2);
             //print("angle :" + this.transform.localRotation.eulerAngles);
             bullet.tag = "bullet4cannon";
