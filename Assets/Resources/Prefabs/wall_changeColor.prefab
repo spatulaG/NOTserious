@@ -38,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201041947810508}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.71, y: 0.43, z: 5.4254785}
-  m_LocalScale: {x: 7.15592, y: 22.62, z: 7.15592}
+  m_LocalPosition: {x: 7.52, y: -4.977, z: -4}
+  m_LocalScale: {x: 6.2342377, y: 25.588217, z: 7.15592}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,7 +58,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.16, y: 0.16}
     newSize: {x: 0.16, y: 0.16}
@@ -75,7 +75,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201041947810508}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -83,7 +83,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.053202365}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.16, y: 0.16}
     newSize: {x: 0.16, y: 0.16}
@@ -102,14 +102,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201041947810508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a980801d7fd224fe09f6c29ea542548c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a6cd1ffad552744dac9809d01d35d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startColor: {r: 0.9098039, g: 0.21568628, b: 0.57254905, a: 1}
-  targetColor: {r: 0.6901961, g: 0.93333334, b: 0.19215687, a: 1}
-  duration: 5
-  smoothness: 0.02
-  canChange: 1
+  player: {fileID: 0}
 --- !u!114 &114049167148535252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,10 +114,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201041947810508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 680d7f908f0974aa2a65bdaf6ce91775, type: 3}
+  m_Script: {fileID: 11500000, guid: 738f4043bf335164e9cfdc6b1b6b8a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  startColor: {r: 0.9098039, g: 0.21568628, b: 0.57254905, a: 1}
+  targetColor: {r: 0.6901961, g: 0.9333334, b: 0.19215688, a: 1}
+  duration: 5
+  smoothness: 0.1
+  canChange: 1
 --- !u!212 &212676503895117884
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: b5b20e0f2329e0847b2590d10e56ec4d, type: 3}
   m_Color: {r: 0.6901961, g: 0.93333334, b: 0.19215687, a: 1}
   m_FlipX: 0
   m_FlipY: 0
