@@ -39,6 +39,14 @@ public class Hero : MonoBehaviour {
         offset = thisCollider.offset;
     }
     
+    public int getHP()
+    {
+        return HP;
+    }
+    public void setHP(int HP)
+    {
+        this.HP = HP;
+    }
 
     void shoot()
     {
@@ -99,12 +107,12 @@ public class Hero : MonoBehaviour {
 
         if (groundCollider.collider == null)
         {
-            print("NOTHING");
+          //  print("NOTHING");
             isInAir = true;
         }
         else
         {
-            print(groundCollider.collider.gameObject.name);
+           // print(groundCollider.collider.gameObject.name);
             isInAir = false;
         }
 
