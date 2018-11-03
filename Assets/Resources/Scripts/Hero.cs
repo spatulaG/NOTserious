@@ -15,7 +15,7 @@ public class Hero : MonoBehaviour {
     private GameObject bullet;
     private FacingDirection facingDirection = FacingDirection.FacingRight;
 
-    private bool isInAir = false;
+    public bool isInAir = false;
     private bool isShooting = false;
 
     private bool isDead = false;
@@ -24,22 +24,25 @@ public class Hero : MonoBehaviour {
     float direction;
     public float TheDistanceHeroFallBackWhenBeingAttack;
 
-    private bool isCanAttack;
-    private float attackDelay;
+    Collider2D thisCollider;
+    Vector3 size;
+    Vector3 offset;
 
     void Start () {
         HP = 3;
-        TheDistanceHeroFallBackWhenBeingAttack = 3f;
+        TheDistanceHeroFallBackWhenBeingAttack = 1;
+
         direction = hero.transform.localScale.x;
-        isCanAttack = true;
-        attackDelay = 1.0f;
+
+        thisCollider = GetComponent<Collider2D>();
+        size = thisCollider.bounds.size / 2;
+        offset = thisCollider.offset;
     }
     
     public int getHP()
     {
         return HP;
     }
-
     public void setHP(int HP)
     {
         this.HP = HP;
@@ -47,16 +50,16 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
-        hero.GetComponent<Animator>().SetTrigger("Shoot");
+        
         if (facingDirection == FacingDirection.FacingLeft)
         {
-            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, -0.8f, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left,ForceMode2D.Impulse);
             bullet.tag = "bullet";
         }
         else
         {
-            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position + new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0.8f, 0), Quaternion.identity) as GameObject;
+            bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position + new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.right, ForceMode2D.Impulse);
             bullet.tag = "bullet";
         }
@@ -68,28 +71,27 @@ public class Hero : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         Destroy(bullet);
     }
-    IEnumerator CanAttack(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        isCanAttack = true;
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "ground")
         {
-            if(collision.gameObject.transform.position.x > hero.transform.position.x)
+            isInAir = false;
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (collision.gameObject.transform.position.x > hero.transform.position.x)
             {
                 Debug.Log("Being Attacked from Right");
-                hero.GetComponent<Rigidbody2D>().AddForce(Vector3.left * TheDistanceHeroFallBackWhenBeingAttack, ForceMode2D.Impulse);
+                hero.transform.Translate(-TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
             }
             else
             {
-                hero.transform.Translate(TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
-                hero.GetComponent<Rigidbody2D>().AddForce(Vector3.right * TheDistanceHeroFallBackWhenBeingAttack, ForceMode2D.Impulse);
+                Debug.Log("Being Attacked from Left");
             }
             HP--;
-            if(HP == 0)
+            if (HP == 0)
             {
                 isDead = true;
             }
@@ -98,14 +100,28 @@ public class Hero : MonoBehaviour {
     }
 
     void Update () {
-
         
+        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, LayerMask.GetMask("Default"));
+        Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
+
+
+        if (groundCollider.collider == null)
+        {
+          //  print("NOTHING");
+            isInAir = true;
+        }
+        else
+        {
+           // print(groundCollider.collider.gameObject.name);
+            isInAir = false;
+        }
+
 
         if (Input.GetKey(KeyCode.D))
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveRight", true);
+            hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
             facingDirection = FacingDirection.FacingRight;
             hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
@@ -113,7 +129,7 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveRight", true);
+            hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
             hero.transform.localScale = new Vector3(-direction, hero.transform.localScale.y, 1);
         }
@@ -122,7 +138,7 @@ public class Hero : MonoBehaviour {
             hero.GetComponent<Animator>().SetBool("IsMoveRight", false);
             hero.GetComponent<Animator>().SetBool("IsMoveLeft", false);
         }
-        if (Input.GetKeyDown(KeyCode.K) && isInAir == false)
+        if (Input.GetKeyDown(KeyCode.K) && isInAir == false)// && hero.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
             //Debug.Log("Test jump");
             isInAir = true;
@@ -130,20 +146,18 @@ public class Hero : MonoBehaviour {
             hero.GetComponent<Animator>().SetTrigger("Jump");
         }
 
-        if(hero.GetComponent<Rigidbody2D>().velocity.y == 0)
-        {
-            isInAir = false;
-        }
+        //if(hero.GetComponent<Rigidbody2D>().velocity.y == 0)
+        //{
+        //    isInAir = false;
+        //}
         if (hero.transform.localEulerAngles.z != 0)
         {
             hero.transform.localEulerAngles = new Vector3(hero.transform.localEulerAngles.x, hero.transform.localEulerAngles.y, 0);
         }
 
-        if(Input.GetKeyDown(KeyCode.J) && isShooting == false && isCanAttack == true)
+        if(Input.GetKeyDown(KeyCode.J) && isShooting == false)
         {
             shoot();
-            isCanAttack = false;
-            StartCoroutine(CanAttack(attackDelay));
         }
 
         if (isDead)

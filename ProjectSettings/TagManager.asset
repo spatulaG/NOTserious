@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - background
+  - ground
+  - bullet
+  - Enemy
+  - bullet4cannon
   layers:
   - Default
   - TransparentFX

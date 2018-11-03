@@ -8,7 +8,7 @@ public class absorb : MonoBehaviour {
     public GameObject img;
     public GameObject player;
     private GameObject color1, color2, color3;
-    public GameObject popUpMenu;
+   // public GameObject popUpMenu;
     public Color current;
     //public PopUpMenu pop;
 
@@ -70,7 +70,7 @@ public class absorb : MonoBehaviour {
 
         }
     }
-    PopUpMenu a;
+    //PopUpMenu a;
     public string getCurrentColor() {
         string currentColor = "";
         int colorID = 0;

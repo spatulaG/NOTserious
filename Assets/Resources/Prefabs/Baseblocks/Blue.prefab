@@ -194,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isImgOn: 0
   img: {fileID: 1496232737785164}
-  player: {fileID: 1013177043913582, guid: 00aad2bfd642dd342abf518eb500c3d0, type: 2}
+  player: {fileID: 0}
   popUpMenu: {fileID: 1655200876880106, guid: 66eefdcd8fbaec0469843c89b1a9c1f7, type: 2}
   current: {r: 0, g: 0.2758026, b: 1, a: 1}
 --- !u!212 &212257795698022708
