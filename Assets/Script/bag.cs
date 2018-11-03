@@ -96,9 +96,10 @@ public class bag : MonoBehaviour {
 		for(int i = 0; i < 3; i++){
 			_colorSpriteRenderer[i].color = new Color(colorSlot[_playerStatus.slot[i]].r/255, colorSlot[_playerStatus.slot[i]].g/255, colorSlot[_playerStatus.slot[i]].b/255);
 		}
+		/*
 		if(Input.GetKeyDown(KeyCode.Escape))
 			_isShow = false;
-        
+        */
         if((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !_isShow){
             popUpMenu.SetActive(true);
 			_colorSpriteRenderer[0].sprite = mySprite[1];
@@ -107,6 +108,8 @@ public class bag : MonoBehaviour {
 
         }
         if(_isShow){
+			if(Input.GetKeyDown(KeyCode.Escape))
+				_isShow = false;
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
