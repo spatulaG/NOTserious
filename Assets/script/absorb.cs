@@ -62,7 +62,7 @@ public class absorb : MonoBehaviour {
         if (Input.GetKey("i") && isImgOn)
         {
             //print("yes");
-            popUpMenu.SetActive(true);
+        //    popUpMenu.SetActive(true);
             player.GetComponent<SpriteRenderer>().color =  this.GetComponent<SpriteRenderer>().color;
             current = player.GetComponent<SpriteRenderer>().color;
             //print(current);
@@ -86,27 +86,35 @@ public class absorb : MonoBehaviour {
 
             case 0:
                 currentColor = "white";
+            //    Debug.Log("White");
                 break;
             case 1:
                 currentColor = "red";
+            //    Debug.Log("red");
                 break;
             case 2:
                 currentColor = "yellow";
+            //    Debug.Log("yellow");
                 break;
             case 3:
                 currentColor = "orange";
+            //    Debug.Log("orange");
                 break;
             case 4:
                 currentColor = "blue";
+            //    Debug.Log("blue");
                 break;
             case 5:
                 currentColor = "purple";
+            //    Debug.Log("purple");
                 break;
             case 6:
                 currentColor = "green";
+            //    Debug.Log("green");
                 break;
             case 7:
                 currentColor = "black";
+            //    Debug.Log("black");
                 break;
         }
 

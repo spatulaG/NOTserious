@@ -16,7 +16,7 @@ public class MonsterHit : MonoBehaviour {
 	}
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "bullet") {
+        if (collision.tag == "bullet" || collision.tag == "bullet4cannon") {
             
             if (Oppo(getColor(collision.GetComponent<SpriteRenderer>().color)) == getColor(this.GetComponent<SpriteRenderer>().color))
             {
