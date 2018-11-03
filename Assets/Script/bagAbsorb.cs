@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bag : MonoBehaviour {
+public class bagAbsorb : MonoBehaviour {
 
-
-
+	
     //COLOR INDEX
     /*  number - represent color - number in 255 value
         1 - red - 232, 55, 146
@@ -25,6 +24,7 @@ public class bag : MonoBehaviour {
         2 + 4 = 6
         1 + 4 = 5
     */
+
 
     public GameObject popUpMenu;
     public GameObject[] color;
@@ -53,7 +53,7 @@ public class bag : MonoBehaviour {
 	public Sprite[] mySprite;
 
     public float _timeCount = 5.0f;
-    public bool _isShow = false;
+    public bool isShow = false;
     public bool _isBlendable = false;
     private int _colorCount = 0;
     public int selectNumber = 0;
@@ -99,16 +99,7 @@ public class bag : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Escape))
 			_isShow = false;
         */
-        if((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !_isShow){
-            popUpMenu.SetActive(true);
-			_colorSpriteRenderer[0].sprite = mySprite[1];
-           
-            _isShow = true;
-
-        }
-        if(_isShow){
-			if(Input.GetKeyDown(KeyCode.Escape))
-				_isShow = false;
+        
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
@@ -144,51 +135,24 @@ public class bag : MonoBehaviour {
                 }
 				if(selectNumber == 1){
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
-					playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
-					ReturnColor();
-				//	Debug.Log("SelectNumber5 :" + selectNumber);
-            //      Debug.Log("1 :" + _colorMerge[1]._colorIndex);
-				//	Debug.Log("return color" + ReturnColor());
+					_colorSpriteRenderer[_colorMerge[0]._mergeNumber].color = colorSlot[this.gameObject.GetComponent<PlayerStatus>().ReturnColor()];
+					this.gameObject.GetComponent<PlayerStatus>().slot[_colorMerge[0]._mergeNumber] = this.gameObject.GetComponent<PlayerStatus>().ReturnColor();
+					selectNumber = 0;
+					_colorCount = 0;
+					selectNumber = 0;
+					_colorSpriteRenderer[0].sprite = mySprite[0];
+					_colorSpriteRenderer[1].sprite = mySprite[0];
+					_colorSpriteRenderer[2].sprite = mySprite[0];
+					popUpMenu.SetActive(false);
             	}
-				
                 
-            //  	Debug.Log("SelectNumber1 :" + selectNumber);
-                
-            }
-			
-
-            if(selectNumber == 2){
-                ColorPropertyStore(_colorMerge[1], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
-				_colorSpriteRenderer[_colorMerge[1]._mergeNumber].sprite = mySprite[0];
-				_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
-			//	Debug.Log("SelectNumber2 :" + selectNumber);
-		
-             
-                    selectNumber = 0;
-                    _colorCount = _colorMerge[0]._mergeNumber + 1;
-            //      Debug.Log("_colorCount selectNumber2 " + _colorCount);
-                    BlendColor(_colorMerge[0]._colorIndex, _colorMerge[1]._colorIndex, _colorMerge);
-					if(selectNumber == 0){
-					_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
-					for(int i = 0; i < 3; i++){
-						if(i != _colorMerge[0]._mergeNumber)
-							_colorSpriteRenderer[i].sprite = mySprite[0];
-					}
-				}
-            }
-			//		Debug.Log("return color1" + ReturnColor());
-
-            
-        }else{
-            _colorCount = 0;
-			selectNumber = 0;
-			_colorSpriteRenderer[0].sprite = mySprite[0];
-			_colorSpriteRenderer[1].sprite = mySprite[0];
-			_colorSpriteRenderer[2].sprite = mySprite[0];
-			popUpMenu.SetActive(false);
-		//	Destroy(this);
-        }
+			}
+               
     }
+
+	private void OnDisable() {
+		
+	}
 
 
     public void ColorPropertyStore(ColorProperty _colorMerge, SpriteRenderer _colorSpriteRenderer, int _colorCount)
@@ -206,66 +170,11 @@ public class bag : MonoBehaviour {
         }
     }
 
-    public void BlendColor(int mergeIndex1, int mergeIndex2, ColorProperty[] _colorMerge){
-        int mergePlus = mergeIndex1 + mergeIndex2;
-    //  Debug.Log(mergePlus);
-        if(mergePlus == 3 && isBasicColor(_colorMerge)){
-            SpriteRender((int)ColorEnum.Orange, (int)ColorEnum.White);
-			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Orange, (int)ColorEnum.White);
-        }else if(mergePlus == 5 && isBasicColor(_colorMerge)){
-            SpriteRender((int)ColorEnum.Blue, (int)ColorEnum.White);
-			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Blue, (int)ColorEnum.White);
-        }else if(mergePlus == 6 && isBasicColor(_colorMerge)){
-            SpriteRender((int)ColorEnum.Green, (int)ColorEnum.White);
-			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Green, (int)ColorEnum.White);
-
-        }else if(isBlackColor(_colorMerge)){
-            SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
-			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Black, (int)ColorEnum.White);
-        }else if(isWhiteColor(_colorMerge) && _colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
-            if(mergeIndex1 == 0){
-                Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
-                SpriteRender(_colorMerge[1]._colorIndex, (int)ColorEnum.White);
-				ChangePlayerStatus(_playerStatus, _colorMerge, _colorMerge[1]._colorIndex, (int)ColorEnum.White);
-            }else{
-            //    SpriteRender((int)ColorEnum.White, _colorMerge[0]._colorIndex);
-            }
-
-        }else if(_colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
-			SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
-			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Black, (int)ColorEnum.White);
-		}
-		Debug.Log("_colorMerge[0]._mergeNumber" + _colorMerge[0]._mergeNumber);
-		
-		Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
-    }
+   
 	public void ChangePlayerStatus(PlayerStatus _playerStatus, ColorProperty[] _colorMerge, int colorIndex1, int colorIndex2){
 		_playerStatus.slot[_colorMerge[0]._mergeNumber] = colorIndex1;
 		_playerStatus.slot[_colorMerge[1]._mergeNumber] = colorIndex2;
 	}
-    public bool isBasicColor(ColorProperty[] _colorMerge){
-        
-        bool is1 = false, is2 = false;
-        if(_colorMerge[0]._colorIndex == 1 || _colorMerge[0]._colorIndex == 2 || _colorMerge[0]._colorIndex == 4)
-            is1 = true;
-        if(_colorMerge[1]._colorIndex == 1 || _colorMerge[1]._colorIndex == 2 || _colorMerge[1]._colorIndex == 4)
-            is2 = true;
-        if(is1 && is2)
-            return true;
-
-        return false;
-    }
-    public bool isWhiteColor(ColorProperty[] _colorMerge){
-        if(_colorMerge[0]._colorIndex == 0 || _colorMerge[1]._colorIndex == 0)
-            return true;
-        return false;
-    }
-
-    public bool isBlackColor(ColorProperty[] _colorMerge){
-        if(_colorMerge[0]._colorIndex == 7 || _colorMerge[1]._colorIndex == 7)
-            return true;
-        return false;
-    }
 
     public void SpriteRender(int color1, int color2){
         _colorSpriteRenderer[_colorMerge[0]._mergeNumber].color = new Color(colorSlot[color1].r/255, colorSlot[color1].g/255, colorSlot[color1].b/255);
@@ -277,5 +186,4 @@ public class bag : MonoBehaviour {
 		return _colorMerge[0]._colorValue255;
 	}
 
-	
 }

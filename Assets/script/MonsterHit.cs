@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class MonsterHit : MonoBehaviour {
     private Color current;
+
+    /// Q added > <!!!!
+
+    public bool canRespawn = true;
+
+    /// Q added end > <!!!!
     
 	// Use this for initialization
 	void Start () {
@@ -24,6 +30,13 @@ public class MonsterHit : MonoBehaviour {
             if (Oppo(getColor(collision.gameObject.GetComponent<SpriteRenderer>().color)) == getColor(this.GetComponent<SpriteRenderer>().color))
             {
                 print("enemy dead");
+
+                /// Q added > <!!!!
+                if(canRespawn){
+                    MonsterSpawnPoint.isRespawn = true;
+                    Debug.Log("true");
+                }
+                /// Q added end > <!!!!
 
                 Destroy(this.gameObject);
             }

@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class MonsterSpawnPoint : MonoBehaviour {
 
-	private float timerOne = 1f;
-
-    private float timeOne = 6.0f;
-
-    private float timerWave = 0f;
-
-    private float timeWave = 10.0f;
-
-    private int countPerWave = 0;
-
+	
 	private GameObject monster;
+    public static bool isRespawn = false;
 
     // Update is called once per frame
 
@@ -22,25 +14,12 @@ public class MonsterSpawnPoint : MonoBehaviour {
 	}
 
     void Update () {
-
-        timerWave += Time.deltaTime;
-
-        if(timerWave < timeWave) {
-            timerOne += Time.deltaTime;
-            if(timerOne > timeOne) {
-                monster = Instantiate (Resources.Load("Prefabs/monster1"), this.gameObject.GetComponent<Transform>().position, Quaternion.identity) as GameObject;
-                timerOne -= timeOne;
-            }
+        if(isRespawn){
+            monster = Instantiate (Resources.Load("Prefabs/monster1"), this.gameObject.GetComponent<Transform>().position, Quaternion.identity) as GameObject;
+            monster.GetComponent<MonsterHit>().canRespawn = true;
+            isRespawn = false;
         }
-       if (timerWave >= timeWave) {
-            timerWave -= timeWave;
-            countPerWave = 0;
-        }
+                
 
-	}
-
-	
-	private void DestroySelf6Second(){
-		Destroy(monster, 6);
 	}
 }
