@@ -55,7 +55,7 @@ public class cannon : MonoBehaviour {
             bullet.GetComponent<SpriteRenderer>().color = new Color(colorSlot[(int)bulletColor].r/255, colorSlot[(int)bulletColor].g / 255, colorSlot[(int)bulletColor].b / 255);
             //print("size" + this.GetComponent<Collider2D>().bounds.size.x / 2);
             //print("angle :" + this.transform.localRotation.eulerAngles);
-            //bullet.tag = "bullet";
+            bullet.tag = "bullet4cannon";
             currentTime = time;
         }
 
