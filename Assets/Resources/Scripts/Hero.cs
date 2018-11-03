@@ -9,6 +9,8 @@ public class Hero : MonoBehaviour {
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
     public GameObject hero;
+    public GameObject body;
+    public GameObject hair;
 
     public float JumpHeight = 2;
 
@@ -54,7 +56,8 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
-        hero.GetComponent<Animator>().SetTrigger("Shoot");
+        body.GetComponent<Animator>().SetTrigger("Shoot");
+        hair.GetComponent<Animator>().SetTrigger("Shoot");
         if (facingDirection == FacingDirection.FacingLeft)
         {
             bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, -0.55f, 0), Quaternion.identity) as GameObject;
@@ -104,7 +107,8 @@ public class Hero : MonoBehaviour {
             {
                 isDead = true;
             }
-            hero.GetComponent<Animator>().SetTrigger("IsUnderAttack");
+            body.GetComponent<Animator>().SetTrigger("IsUnderAttack");
+            hair.GetComponent<Animator>().SetTrigger("IsUnderAttack");
         }
     }
 
@@ -130,7 +134,8 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
+            body.GetComponent<Animator>().SetBool("IsMoveRight",true);
+            hair.GetComponent<Animator>().SetBool("IsMoveRight", true);
             facingDirection = FacingDirection.FacingRight;
             hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
@@ -138,21 +143,25 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
+            body.GetComponent<Animator>().SetBool("IsMoveLeft", true);
+            hair.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
             hero.transform.localScale = new Vector3(-direction, hero.transform.localScale.y, 1);
         }
         else
         {
-            hero.GetComponent<Animator>().SetBool("IsMoveRight", false);
-            hero.GetComponent<Animator>().SetBool("IsMoveLeft", false);
+            body.GetComponent<Animator>().SetBool("IsMoveRight", false);
+            body.GetComponent<Animator>().SetBool("IsMoveLeft", false);
+            hair.GetComponent<Animator>().SetBool("IsMoveRight", false);
+            hair.GetComponent<Animator>().SetBool("IsMoveLeft", false);
         }
         if (Input.GetKeyDown(KeyCode.K) && isInAir == false)// && hero.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
             //Debug.Log("Test jump");
             isInAir = true;
             hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up*JumpHeight,ForceMode2D.Impulse);
-            hero.GetComponent<Animator>().SetTrigger("Jump");
+            body.GetComponent<Animator>().SetTrigger("Jump");
+            hair.GetComponent<Animator>().SetTrigger("Jump");
         }
 
         //if(hero.GetComponent<Rigidbody2D>().velocity.y == 0)
@@ -173,7 +182,8 @@ public class Hero : MonoBehaviour {
 
         if (isDead)
         {
-            hero.GetComponent<Animator>().SetBool("IsDead", true);
+            body.GetComponent<Animator>().SetBool("IsDead", true);
+            hair.GetComponent<Animator>().SetBool("IsDead", true);
             StartCoroutine(DestroyHero(2.0f, hero));
         }
 
