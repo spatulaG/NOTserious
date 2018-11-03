@@ -125,12 +125,24 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 224692546401716366}
   - component: {fileID: 222228884637409510}
   - component: {fileID: 114999796633597672}
   m_Layer: 5
   m_Name: ColorWheelPanel
   m_TagString: Untagged
+=======
+  - component: {fileID: 4011640855857040}
+  - component: {fileID: 212607695708202536}
+  - component: {fileID: 114661714365100604}
+  - component: {fileID: 50358098848793520}
+  - component: {fileID: 61479288645024450}
+  - component: {fileID: 95297422928242814}
+  m_Layer: 0
+  m_Name: hero3.0
+  m_TagString: Player
+>>>>>>> 1a7f06ce41832a2319605061475dc4c68a711e35
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum Type
+    {
+        Jumping,
+        NoneJumping
+    }
+
+    public Type enemyType = Type.NoneJumping;
+
+    public bool MoveOnStart = false;
+
     public GameObject Blob;
     List<GameObject> bloblist = new List<GameObject>();
 
@@ -41,7 +51,7 @@ public class Enemy : MonoBehaviour
             size = collider.bounds.size / 2;
             offset = collider.offset;
         
-            direction.x = -1;
+            direction.x = 0;
         
     }
 
@@ -62,13 +72,21 @@ public class Enemy : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-    
+        if (!MoveOnStart && direction.x == 0 && other.tag == "MainCamera")
+        {
+            direction.x = -1;
+        }
+        if (other.tag == "ground")
+        {
+            GetComponent<SpriteRenderer>().color = other.gameObject.GetComponent<SpriteRenderer>().color;
+        }
     }
     // Update is called once per frame
     void Update()
     {
+
         if (speed < MaxSpeed)
             speed += Time.deltaTime;
 
@@ -111,16 +129,18 @@ public class Enemy : MonoBehaviour
 
 
 
-
-        if (timer > randomtime)
+        if (enemyType == Type.Jumping)
         {
-            if (jumpcollider.collider != null && onGround)
-                jump();
-            timer = 0;
-            randomtime = Random.Range(3, 5);
+            if (timer > randomtime)
+            {
+                if (jumpcollider.collider != null && onGround)
+                    jump();
+                timer = 0;
+                randomtime = Random.Range(3, 5);
+            }
+            else
+                timer += Time.deltaTime;
         }
-        else
-            timer += Time.deltaTime;
 
 
     }
@@ -203,7 +223,10 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 dir = direction.x == 1 ? transform.right : -transform.right;
+        Vector3 dir = Vector3.zero;
+
+        if (direction.x != 0)
+            dir = direction.x == 1 ? transform.right : -transform.right;
         transform.position += dir * speed * Time.deltaTime;
     }
 }
