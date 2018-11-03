@@ -58,9 +58,14 @@ public class Hero : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "ground")
         {
-            if(collision.gameObject.transform.position.x > hero.transform.position.x)
+            isInAir = false;
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (collision.gameObject.transform.position.x > hero.transform.position.x)
             {
                 Debug.Log("Being Attacked from Right");
                 hero.transform.Translate(-TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
@@ -70,7 +75,7 @@ public class Hero : MonoBehaviour {
                 Debug.Log("Being Attacked from Left");
             }
             HP--;
-            if(HP == 0)
+            if (HP == 0)
             {
                 isDead = true;
             }
@@ -80,7 +85,17 @@ public class Hero : MonoBehaviour {
 
     void Update () {
 
-        
+        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position,-transform.up, 0.1f);
+
+        //if (groundCollider.collider == null)
+        //{
+        //    onGround = false;
+        //}
+        //else
+        //{
+        //    onGround = true;
+        //}
+
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -111,10 +126,10 @@ public class Hero : MonoBehaviour {
             hero.GetComponent<Animator>().SetTrigger("Jump");
         }
 
-        if(hero.GetComponent<Rigidbody2D>().velocity.y == 0)
-        {
-            isInAir = false;
-        }
+        //if(hero.GetComponent<Rigidbody2D>().velocity.y == 0)
+        //{
+        //    isInAir = false;
+        //}
         if (hero.transform.localEulerAngles.z != 0)
         {
             hero.transform.localEulerAngles = new Vector3(hero.transform.localEulerAngles.x, hero.transform.localEulerAngles.y, 0);
