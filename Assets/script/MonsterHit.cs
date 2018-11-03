@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MonsterHit : MonoBehaviour {
     private Color current;
+    
 	// Use this for initialization
 	void Start () {
         current = this.GetComponent<SpriteRenderer>().color;
