@@ -24,6 +24,9 @@ public class Hero : MonoBehaviour {
     float direction;
     public float TheDistanceHeroFallBackWhenBeingAttack;
 
+    private bool isCanAttack;
+    private float attackDelay;
+
     Collider2D thisCollider;
     Vector3 size;
     Vector3 offset;
@@ -33,7 +36,8 @@ public class Hero : MonoBehaviour {
         TheDistanceHeroFallBackWhenBeingAttack = 1;
 
         direction = hero.transform.localScale.x;
-
+        isCanAttack = true;
+        attackDelay = 1.0f;
         thisCollider = GetComponent<Collider2D>();
         size = thisCollider.bounds.size / 2;
         offset = thisCollider.offset;
@@ -50,7 +54,7 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
-        
+        hero.GetComponent<Animator>().SetTrigger("Shoot");
         if (facingDirection == FacingDirection.FacingLeft)
         {
             bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
@@ -72,6 +76,11 @@ public class Hero : MonoBehaviour {
         Destroy(bullet);
     }
 
+    IEnumerator CanAttack(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        isCanAttack = true;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "ground")
@@ -155,9 +164,11 @@ public class Hero : MonoBehaviour {
             hero.transform.localEulerAngles = new Vector3(hero.transform.localEulerAngles.x, hero.transform.localEulerAngles.y, 0);
         }
 
-        if(Input.GetKeyDown(KeyCode.J) && isShooting == false)
+        if (Input.GetKeyDown(KeyCode.J) && isShooting == false && isCanAttack == true)
         {
             shoot();
+            isCanAttack = false;
+            StartCoroutine(CanAttack(attackDelay));
         }
 
         if (isDead)
