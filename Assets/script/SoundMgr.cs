@@ -23,6 +23,7 @@ public class SoundMgr : MonoBehaviour {
             int playNum;
             playNum = Random.Range(0, SFXs.Length-1);
             print(playNum);
+
             switch (playNum) {
                 case 0:
                     MusicManager.instance.PlaySE("MonsterSE1");
