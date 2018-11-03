@@ -19,5 +19,6 @@ public class Wall_GoThrough : MonoBehaviour {
 		else
 			_coll.isTrigger = false;
 
-	}
+    }
+
 }

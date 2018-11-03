@@ -23,9 +23,9 @@ public class Enemy : MonoBehaviour
     float speed;
 
     public float MaxJumpWidth;
-    public float JumpHeight = 4;
+    public float JumpHeight = 3;
 
-    bool onGround = false;
+    public bool onGround = false;
     Vector3 size;
     Vector3 offset;
     float timer;
@@ -38,20 +38,22 @@ public class Enemy : MonoBehaviour
     RaycastHit2D left;
     RaycastHit2D jumpcollider;
 
-    Collider2D collider;
+    Collider2D thisCollider;
+    int layermask;
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
+        thisCollider = GetComponent<Collider2D>();
+        layermask = LayerMask.GetMask("Default");
 
 
-       
-            size = collider.bounds.size / 2;
-            offset = collider.offset;
+        size = thisCollider.bounds.size / 2;
+            offset = thisCollider.offset;
         
-            direction.x = 0;
+        if(MoveOnStart)
+            direction.x = -1;
         
     }
 
@@ -93,18 +95,31 @@ public class Enemy : MonoBehaviour
 
         CheckWall();
 
-        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f);
-        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f);
+        //Check if at end of platform
+        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up, 0.4f,layermask);
+        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up, 0.4f,layermask);
+        //Draw debug Rays
+        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f, Color.green);
 
+
+        //Check platform infront
         Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth * 0.6f) * direction.x, -size.y - 0.2f, 0);
         Vector2 jumpDir = new Vector2(direction.x, 0);
         float jumpDist = 0.1f;
-        jumpcollider = Physics2D.Raycast(jumpTo, jumpDir, jumpDist);
+        jumpcollider = Physics2D.Raycast(jumpTo, jumpDir, jumpDist, layermask);
+        Debug.DrawRay(jumpTo, jumpDir * jumpDist, Color.green);
 
 
-        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position, -transform.up, 0.1f);
-
+        //Check ground
+        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, layermask);
+        Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
+        
         if (groundCollider.collider == null)
+        {
+            onGround = false;
+        }
+        else
         {
             onGround = true;
         }
@@ -114,11 +129,8 @@ public class Enemy : MonoBehaviour
             //Cant jump
         }
 
-        //Draw debug Rays
-        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, Vector2.down * 0.4f, Color.green);
-        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, Vector2.down * 0.4f, Color.green);
-        Debug.DrawRay(jumpTo, jumpDir * jumpDist, Color.green);
-
+       
+       
 
 
         if (onGround)
@@ -152,8 +164,8 @@ public class Enemy : MonoBehaviour
         Vector2 walldir = new Vector2(direction.x, 0);
         float walldist = size.x;
 
-        RaycastHit2D wall = Physics2D.Raycast(checkwall, walldir, walldist);
-        RaycastHit2D wallAbove = Physics2D.Raycast(checkwallAbove, walldir, walldist);
+        RaycastHit2D wall = Physics2D.Raycast(checkwall, walldir, walldist, layermask);
+        RaycastHit2D wallAbove = Physics2D.Raycast(checkwallAbove, walldir, walldist, layermask);
 
         Debug.DrawRay(checkwall, walldir * walldist, Color.green);
         Debug.DrawRay(checkwallAbove, walldir * walldist, Color.green);
@@ -168,10 +180,14 @@ public class Enemy : MonoBehaviour
 
     private void jump()
     {
-        speed = MaxSpeed;
-        rb.AddForce(Vector3.up * JumpHeight, ForceMode2D.Impulse);
-        rb.AddForce(direction*0.6f, ForceMode2D.Impulse);
-        onGround = false;
+
+        if (rb.velocity.y <= 0)
+        {
+            speed = MaxSpeed;
+            rb.AddForce(Vector3.up * JumpHeight, ForceMode2D.Impulse);
+            rb.AddForce(direction * 0.6f, ForceMode2D.Impulse);
+            onGround = false;
+        }
     }
 
     private void ChangeDirection()
@@ -192,11 +208,12 @@ public class Enemy : MonoBehaviour
 
     private void jumpToNext()
     {
+
         if (left.collider == null && direction.x == -1)
         {
             if (jumpcollider.collider != null)
             {
-                onGround = false;
+             //   onGround = false;
                 jump();
             }
             else
@@ -209,7 +226,7 @@ public class Enemy : MonoBehaviour
         {
             if (jumpcollider.collider != null)
             {
-                onGround = false;
+             //   onGround = false;
                 jump();
             }
             else

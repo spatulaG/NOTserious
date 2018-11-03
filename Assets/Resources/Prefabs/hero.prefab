@@ -332,6 +332,7 @@ MonoBehaviour:
   bulletSpeed: 10
   hero: {fileID: 4805972974059652}
   JumpHeight: 9
+  isInAir: 0
   TheDistanceHeroFallBackWhenBeingAttack: 0
 --- !u!212 &212031447435118188
 SpriteRenderer:
@@ -691,7 +692,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 46a86ea978ad552489117a98a6671784, type: 3}
-  m_Color: {r: 0.14901961, g: 0.77254903, b: 0.99215686, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
