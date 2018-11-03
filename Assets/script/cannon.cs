@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class cannon : MonoBehaviour {
-    public GameObject bullet;
+    public GameObject bulletPrefab;
+    GameObject bullet;
     public float time;
     private float currentTime;
     public Vector2 angle;
@@ -50,7 +51,7 @@ public class cannon : MonoBehaviour {
         if (currentTime <= 0f)
         {
             
-            bullet = Instantiate(Resources.Load("Prefabs/bullet4cannon"), bulletPositon.position, Quaternion.identity) as GameObject;//this.GetComponent<Collider2D>().bounds.size.x / 2
+            bullet = Instantiate(bulletPrefab, bulletPositon.position, Quaternion.identity) as GameObject;//this.GetComponent<Collider2D>().bounds.size.x / 2
             bullet.GetComponent<Rigidbody2D>().AddForce(angle * 10f, ForceMode2D.Impulse);
             bullet.GetComponent<SpriteRenderer>().color = new Color(colorSlot[(int)bulletColor].r/255, colorSlot[(int)bulletColor].g / 255, colorSlot[(int)bulletColor].b / 255);
             //print("size" + this.GetComponent<Collider2D>().bounds.size.x / 2);
