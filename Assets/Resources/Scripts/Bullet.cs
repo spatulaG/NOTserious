@@ -11,6 +11,6 @@ public class Bullet : MonoBehaviour {
 	}
 	
 	void Update () {
-        GetComponent<Animator>().SetTrigger("IsShootBullet");
+        //GetComponent<Animator>().SetTrigger("IsShootBullet");
     }
 }
