@@ -15,7 +15,7 @@ public class Hero : MonoBehaviour {
     private GameObject bullet;
     private FacingDirection facingDirection = FacingDirection.FacingRight;
 
-    private bool isInAir = false;
+    public bool isInAir = false;
     private bool isShooting = false;
 
     private bool isDead = false;
@@ -23,12 +23,20 @@ public class Hero : MonoBehaviour {
 
     float direction;
     public float TheDistanceHeroFallBackWhenBeingAttack;
+
+    Collider2D thisCollider;
+    Vector3 size;
+    Vector3 offset;
+
     void Start () {
         HP = 3;
         TheDistanceHeroFallBackWhenBeingAttack = 1;
 
         direction = hero.transform.localScale.x;
 
+        thisCollider = GetComponent<Collider2D>();
+        size = thisCollider.bounds.size / 2;
+        offset = thisCollider.offset;
     }
     
 
@@ -84,17 +92,21 @@ public class Hero : MonoBehaviour {
     }
 
     void Update () {
+        
+        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, LayerMask.GetMask("Default"));
+        Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
 
-        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position,-transform.up, 0.1f);
 
-        //if (groundCollider.collider == null)
-        //{
-        //    onGround = false;
-        //}
-        //else
-        //{
-        //    onGround = true;
-        //}
+        if (groundCollider.collider == null)
+        {
+            print("NOTHING");
+            isInAir = true;
+        }
+        else
+        {
+            print(groundCollider.collider.gameObject.name);
+            isInAir = false;
+        }
 
 
         if (Input.GetKey(KeyCode.D))
@@ -118,7 +130,7 @@ public class Hero : MonoBehaviour {
             hero.GetComponent<Animator>().SetBool("IsMoveRight", false);
             hero.GetComponent<Animator>().SetBool("IsMoveLeft", false);
         }
-        if (Input.GetKeyDown(KeyCode.K) && isInAir == false)
+        if (Input.GetKeyDown(KeyCode.K) && isInAir == false)// && hero.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
             //Debug.Log("Test jump");
             isInAir = true;
