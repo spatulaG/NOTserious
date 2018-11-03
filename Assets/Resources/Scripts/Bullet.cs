@@ -13,4 +13,13 @@ public class Bullet : MonoBehaviour {
 	void Update () {
         //GetComponent<Animator>().SetTrigger("IsShootBullet");
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag == "ground")
+        {
+            GetComponent<Animator>().SetTrigger("IsShootBullet");
+        }
+    }
 }
