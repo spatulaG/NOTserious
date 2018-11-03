@@ -14,25 +14,28 @@ public class MonsterHit : MonoBehaviour {
 	void Update () {
 		
 	}
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "bullet" || collision.tag == "bullet4cannon") {
-            
-            if (Oppo(getColor(collision.GetComponent<SpriteRenderer>().color)) == getColor(this.GetComponent<SpriteRenderer>().color))
+
+        if (collision.gameObject.tag == "bullet" || collision.gameObject.tag == "bullet4cannon")
+        {
+
+            if (Oppo(getColor(collision.gameObject.GetComponent<SpriteRenderer>().color)) == getColor(this.GetComponent<SpriteRenderer>().color))
             {
                 print("enemy dead");
 
                 Destroy(this.gameObject);
             }
-            else {
+            else
+            {
 
                 //print("bullet color" + collision.GetComponent<SpriteRenderer>().color.r * 255);
                 //print("enemy color" + this.GetComponent<SpriteRenderer>().color.r * 255);
                 print("wrong color!");
             }
-            Destroy(collision);
+            
+            Destroy(collision.gameObject);
         }
-
     }
 
     public string Oppo(string color)

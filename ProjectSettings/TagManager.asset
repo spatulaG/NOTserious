@@ -8,6 +8,7 @@ TagManager:
   - ground
   - bullet
   - Enemy
+  - bullet4cannon
   layers:
   - Default
   - TransparentFX
