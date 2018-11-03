@@ -15,6 +15,7 @@ public class SoundMgr : MonoBehaviour {
         length = enemys.Length;
     }
     void Update () {
+        
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemys.Length < length)
         {
@@ -40,13 +41,9 @@ public class SoundMgr : MonoBehaviour {
 
 
             }
-                
-                
-                
-                
-
-        }
-        else
             length = enemys.Length;
+        }
+        //else
+        //    length = enemys.Length;
 	}
 }
