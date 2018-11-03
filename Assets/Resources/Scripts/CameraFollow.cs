@@ -12,14 +12,14 @@ public class CameraFollow : MonoBehaviour {
     private float LeftAndRightAdjustNumber;
     private float UpAndDownAdjustNumber;
 	void Start () {
-        LeftAndRightAdjustNumber = 15.0f;
-        UpAndDownAdjustNumber = 5.0f;
+        LeftAndRightAdjustNumber = 0.0f;
+        UpAndDownAdjustNumber = 0.0f;
         LeftDown = new GameObject("LeftDown");
         RightUp = new GameObject("RightUp");
         offset = mainCamera.transform.position - hero.transform.position;
         BackGround = GameObject.FindGameObjectWithTag("background");
-        LeftDown.transform.position = new Vector3(LeftAndRightAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2 + BackGround.transform.position.x, -UpAndDownAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2 + BackGround.transform.position.y, LeftDown.transform.position.z);
-        RightUp.transform.position = new Vector3(-LeftAndRightAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2 + BackGround.transform.position.x, UpAndDownAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2 + BackGround.transform.position.y, RightUp.transform.position.z);
+        LeftDown.transform.position = new Vector3(LeftAndRightAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x  + BackGround.transform.position.x, -UpAndDownAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y  + BackGround.transform.position.y, LeftDown.transform.position.z);
+        RightUp.transform.position = new Vector3(-LeftAndRightAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x  + BackGround.transform.position.x, UpAndDownAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y  + BackGround.transform.position.y, RightUp.transform.position.z);
     }
 	
 	// Update is called once per frame
