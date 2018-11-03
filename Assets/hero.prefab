@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 95614057251577036}
   - component: {fileID: 114117935463137350}
   - component: {fileID: 114717642971721102}
+  - component: {fileID: 114172679689324088}
   m_Layer: 0
   m_Name: hero
   m_TagString: Player
@@ -333,6 +334,19 @@ MonoBehaviour:
   HP: 3
   slot: 000000000000000000000000
   bullet: {fileID: 0}
+--- !u!114 &114172679689324088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1617886259178414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebde9fb8a7cda42b2a98a15289b1d544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot: 000000000000000000000000
+  slotNum: 0
 --- !u!114 &114458773436118526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,6 +361,7 @@ MonoBehaviour:
   moveSpeed: 3
   bulletSpeed: 10
   hero: {fileID: 4451824893029474}
+  JumpHeight: 2
   TheDistanceHeroFallBackWhenBeingAttack: 0
 --- !u!114 &114717642971721102
 MonoBehaviour:
