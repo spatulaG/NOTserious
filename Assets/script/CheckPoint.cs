@@ -15,7 +15,7 @@ public class CheckPoint : MonoBehaviour {
         {
             isActive = true;
             print("Check point activated");
-            playerPos = player.transform.position;
+            playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1.0f, player.transform.position.z);
             cameraPos = camera.transform.position;
 
             print("playerPos:"+playerPos);

@@ -17,6 +17,7 @@ public class colorwheel : MonoBehaviour {
 
     public float zValue = 0.5f;
     public float zValue2 = 8;
+    public float Z;
 
     int current = 0;
     int oldCurrent = 0;
@@ -85,8 +86,8 @@ public class colorwheel : MonoBehaviour {
 
         startPos = Camera.main.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 0));
         startPos.z = transform.position.z;
-        endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, startPos.z);
-
+        //endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, startPos.z);
+        endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Z);
 
         //Put on middle of screen
 
@@ -176,15 +177,15 @@ public class colorwheel : MonoBehaviour {
             switch (currentColorRotation)
             {
                 case 0:
-                    color = "Blue";
+                    color = "\nBlue";
                     Head.text = color;
-                    Body.text = "The color " + color + " is one of the primary colors";
+                    Body.text = "\nThe color " + color + " is one of the primary colors";
                     current = 0;
                     break;
                 case 360:
-                    color = "Blue";
+                    color = "\nBlue";
                     Head.text = color;
-                    Body.text = "The color " + color + " is one of the primary colors";
+                    Body.text = "\nThe color " + color + " is one of the primary colors";
                     current = 0;
                     break;
                 case 60:
@@ -194,27 +195,27 @@ public class colorwheel : MonoBehaviour {
                     current = 1;
                     break;
                 case 120:
-                    color = "Yellow";
+                    color = "\nYellow";
                     Head.text = color;
-                    Body.text = "The color " + color + " is one of the primery colors";
+                    Body.text = "\nThe color " + color + " is one of the primary colors";
                     current = 2;
                     break;
                 case 180:
                     color = "Orange";
                     Head.text = color;
-                    Body.text = "The color " + color + " is the complementary color of the primery color blue.\n\nCombined by the colors yellow and red";
+                    Body.text = "The color " + color + " is the complementary color of the primary color blue.\n\nCombined by the colors yellow and red";
                     current = 3;
                     break;
                 case 240:
-                    color = "Red";
+                    color = "\nRed";
                     Head.text = color;
-                    Body.text = "The color " + color + " is one of the primery colors";
+                    Body.text = "\nThe color " + color + " is one of the primary colors";
                     current = 4;
                     break;
                 case 300:
                     color = "Purple";
                     Head.text = color;
-                    Body.text = "The color " + color + " is the complementary color of the primery color yellow.\n\nCombined by the colors red and blue";
+                    Body.text = "The color " + color + " is the complementary color of the primary color yellow.\n\nCombined by the colors red and blue";
                     current = 5;
                     break;
 
@@ -273,7 +274,7 @@ public class colorwheel : MonoBehaviour {
     private void PasueGame()
     {
       
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P)||Input.GetKeyDown(KeyCode.JoystickButton6)|| Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             timer2 = Time.time;
             timer = Time.time;

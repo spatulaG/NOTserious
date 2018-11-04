@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea314b29e8542144795686052ecf6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRespawn: 1
 --- !u!114 &114679989499626236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea314b29e8542144795686052ecf6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRespawn: 1
 --- !u!212 &212002293438481086
 SpriteRenderer:
   m_ObjectHideFlags: 1

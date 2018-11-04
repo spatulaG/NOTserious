@@ -1,9 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: be2880fb62a702a48b4a079293e29b2e
+=======
 <<<<<<< HEAD:Assets/Resources/Animation/Hero/HeroBody.meta
 guid: 1187496dbacadc447985e15eb53a7169
 =======
 guid: 5c39033b278b240999295d4fbb3df628
 >>>>>>> 114_Q:Assets/Resources/Animation/Hero/HeroBody.meta
+>>>>>>> 114Tobbe
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
