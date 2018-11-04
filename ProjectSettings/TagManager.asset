@@ -9,6 +9,7 @@ TagManager:
   - bullet
   - Enemy
   - bullet4cannon
+  - CheckPoint
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - ColorGround
   - 
   - 
   - 

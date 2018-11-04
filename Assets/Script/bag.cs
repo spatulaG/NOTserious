@@ -26,7 +26,6 @@ public class bag : MonoBehaviour {
         1 + 4 = 5
     */
 
-
     public GameObject popUpMenu;
     public GameObject[] color;
 
@@ -53,7 +52,6 @@ public class bag : MonoBehaviour {
     
 	public Sprite[] mySprite;
 
-    public float _timeCount = 5.0f;
     public bool _isShow = false;
     public bool _isBlendable = false;
     private int _colorCount = 0;
@@ -61,7 +59,7 @@ public class bag : MonoBehaviour {
 //  private int[] _mergeNumber;
 
     private SpriteRenderer[] _colorSpriteRenderer;
-	private SpriteRenderer playerSpriteRenderer;
+	public SpriteRenderer playerSpriteRenderer;
 	private PlayerStatus _playerStatus;
     // Use this for initialization
 
@@ -83,7 +81,6 @@ public class bag : MonoBehaviour {
     void Start () {
         _colorSpriteRenderer = new SpriteRenderer[3];
         _colorMerge = new ColorProperty[2];
-		playerSpriteRenderer = GetComponent<SpriteRenderer>();
 		_playerStatus = GetComponent<PlayerStatus>();
         for(int i = 0; i < 2; i++)
             _colorMerge[i] = new ColorProperty(0,Color.red,0);
@@ -112,12 +109,15 @@ public class bag : MonoBehaviour {
 				_isShow = false;
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
-                _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+				if( _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2])
+                	_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                 if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
                     _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
             }else if(Input.GetKeyDown(KeyCode.LeftArrow)){
                 _colorCount = (_colorCount <= 1) ? 1 : (_colorCount - 1);
-                _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
+				
+				if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2])
+                	_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
