@@ -6827,7 +6827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   CheckPoint: {fileID: 1405038103}
-  player: {fileID: 1940464436}
+  player: {fileID: 948845702}
   camera: {fileID: 1273639177}
   waitTime: 1
 --- !u!1001 &650519016
@@ -9650,7 +9650,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4383568567463494, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 15.29
+      value: 27.25
       objectReference: {fileID: 0}
     - target: {fileID: 4383568567463494, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
       propertyPath: m_LocalRotation.x
@@ -9689,7 +9689,11 @@ Prefab:
       objectReference: {fileID: 948845706}
     - target: {fileID: 4537598590793334, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: -0.067
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317852862472146, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
+      propertyPath: m_TagString
+      value: HAIR
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
