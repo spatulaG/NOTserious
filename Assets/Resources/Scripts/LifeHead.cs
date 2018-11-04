@@ -19,7 +19,8 @@ public class LifeHead : MonoBehaviour
     {
         int heroLife = hero.GetComponent<Hero>().getHP();
 
-        Profile.GetComponent<SpriteRenderer>().sprite = HeadImages[heroLife-1];
+        if(heroLife > 0)
+            Profile.GetComponent<SpriteRenderer>().sprite = HeadImages[heroLife-1];
         
     }
 
