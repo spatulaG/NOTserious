@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 61813594091591736}
   - component: {fileID: 114703813147268520}
   m_Layer: 0
-  m_Name: Hero4.0 1
+  m_Name: Hero5.0
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,6 +412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: 000000000000000000000000
   slotNum: 0
+  absorbPopupMenu: {fileID: 0}
 --- !u!114 &114664137672194448
 MonoBehaviour:
   m_ObjectHideFlags: 1
