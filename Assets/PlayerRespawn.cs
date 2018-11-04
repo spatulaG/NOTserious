@@ -30,6 +30,8 @@ public class PlayerRespawn : MonoBehaviour {
 	IEnumerator Wait(float time)
     {
             yield return new WaitForSeconds(time);
+
+			
        
             gameObject.transform.position = checkPoint.GetComponent<CheckPoint>().playerPos;
             camera.transform.position = checkPoint.GetComponent<CheckPoint>().cameraPos;
