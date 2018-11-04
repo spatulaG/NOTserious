@@ -21,5 +21,9 @@ public class Bullet : MonoBehaviour {
         {
             GetComponent<Animator>().SetTrigger("IsShootBullet");
         }
+        if(collision.gameObject.tag == "rope")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

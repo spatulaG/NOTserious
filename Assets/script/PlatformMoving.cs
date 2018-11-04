@@ -40,6 +40,22 @@ public class PlatformMoving : MonoBehaviour {
         scaleY = GetComponent<Transform>().localScale.y;
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.transform.parent = this.transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            other.transform.parent = null;
+        }
+    }
+
     void Update()
     {
         distCovered = (Time.time - startTime) * moveSpeed;
@@ -70,7 +86,7 @@ public class PlatformMoving : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Player");
+        //Debug.Log("Player");
         if(other.gameObject.tag == "Player"){
             Debug.Log("xxxxxxx");
             other.gameObject.GetComponent<Transform>().parent = defaultObj.GetComponent<Transform>();

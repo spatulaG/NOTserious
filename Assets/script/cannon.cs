@@ -44,7 +44,7 @@ public class cannon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        print(colorSlot[(int)bulletColor]);
+        //print(colorSlot[(int)bulletColor]);
         currentTime -= Time.deltaTime;
         //print("current time : " + currentTime);
         //print("time : " + time);
