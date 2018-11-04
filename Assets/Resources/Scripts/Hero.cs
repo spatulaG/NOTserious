@@ -9,6 +9,8 @@ public class Hero : MonoBehaviour {
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
     public GameObject hero;
+    public GameObject body;
+    public GameObject hair;
 
     public float JumpHeight = 2;
 
@@ -31,6 +33,9 @@ public class Hero : MonoBehaviour {
     Vector3 size;
     Vector3 offset;
 
+    private bool changeAlpha = false;
+
+    private bool isUnBeatable = false;
     void Start () {
         HP = 3;
         TheDistanceHeroFallBackWhenBeingAttack = 1;
@@ -54,7 +59,12 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
-        hero.GetComponent<Animator>().SetTrigger("Shoot");
+        if (isDead)
+        {
+            return;
+        }
+        body.GetComponent<Animator>().SetTrigger("Shoot");
+        hair.GetComponent<Animator>().SetTrigger("Shoot");
         if (facingDirection == FacingDirection.FacingLeft)
         {
             bullet = Instantiate(Resources.Load("Prefabs/bullet"), hero.transform.position - new Vector3(hero.GetComponent<Collider2D>().bounds.size.x / 2, -0.55f, 0), Quaternion.identity) as GameObject;
@@ -83,6 +93,10 @@ public class Hero : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isDead)
+        {
+            return;
+        }
         if (collision.gameObject.tag == "ground")
         {
             isInAir = false;
@@ -98,19 +112,74 @@ public class Hero : MonoBehaviour {
             else
             {
                 Debug.Log("Being Attacked from Left");
+                hero.transform.Translate(TheDistanceHeroFallBackWhenBeingAttack, 0, 0);
             }
-            HP--;
+            if (!isUnBeatable)
+            {
+                HP--;
+            }
             if (HP == 0)
             {
                 isDead = true;
             }
-            hero.GetComponent<Animator>().SetTrigger("IsUnderAttack");
+            if (isDead)
+            {
+                body.GetComponent<Animator>().SetBool("IsDead", true);
+                hair.GetComponent<Animator>().SetBool("IsDead", true);
+                StartCoroutine(DestroyHero(1.0f, hero));
+            }
+
+                StartCoroutine(controlBlink(0.125f));
+                StartCoroutine(controlBlink(0.25f));
+            if (HP > 0)
+            {
+                StartCoroutine(controlBlink(0.375f));
+                StartCoroutine(controlBlink(0.5f));
+                StartCoroutine(controlBlink(0.625f));
+                StartCoroutine(controlBlink(0.75f));
+                isUnBeatable = true;
+                StartCoroutine(controlBeat(0.75f));
+            }
         }
+    }
+    IEnumerator controlBeat(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        isUnBeatable = false;
+    }
+
+    IEnumerator controlBlink(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        blink();
+    }
+
+    private void blink()
+    {
+        var r = body.GetComponent<Renderer>().material.color.r;
+        var b = body.GetComponent<Renderer>().material.color.b;
+        var g = body.GetComponent<Renderer>().material.color.g;
+        var alpha = 1.0f;
+        if (changeAlpha)
+        {
+            alpha = 1.0f;
+        }
+        else
+        {
+            alpha = 0.0f;
+        }
+        changeAlpha = !changeAlpha;
+        body.GetComponent<Renderer>().material.color = new Color(r, g, b, alpha);
+        hair.GetComponent<Renderer>().material.color = new Color(r, g, b, alpha);
     }
 
     void Update () {
-        
-        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, LayerMask.GetMask("Default"));
+        if (isDead)
+        {
+            return;
+        }
+
+        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, LayerMask.GetMask("Default", "ColorGround"));
         Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
 
 
@@ -130,7 +199,8 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveRight",true);
+            body.GetComponent<Animator>().SetBool("IsMoveRight",true);
+            hair.GetComponent<Animator>().SetBool("IsMoveRight", true);
             facingDirection = FacingDirection.FacingRight;
             hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
@@ -138,21 +208,25 @@ public class Hero : MonoBehaviour {
         {
             //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            hero.GetComponent<Animator>().SetBool("IsMoveLeft", true);
+            body.GetComponent<Animator>().SetBool("IsMoveLeft", true);
+            hair.GetComponent<Animator>().SetBool("IsMoveLeft", true);
             facingDirection = FacingDirection.FacingLeft;
             hero.transform.localScale = new Vector3(-direction, hero.transform.localScale.y, 1);
         }
         else
         {
-            hero.GetComponent<Animator>().SetBool("IsMoveRight", false);
-            hero.GetComponent<Animator>().SetBool("IsMoveLeft", false);
+            body.GetComponent<Animator>().SetBool("IsMoveRight", false);
+            body.GetComponent<Animator>().SetBool("IsMoveLeft", false);
+            hair.GetComponent<Animator>().SetBool("IsMoveRight", false);
+            hair.GetComponent<Animator>().SetBool("IsMoveLeft", false);
         }
         if (Input.GetKeyDown(KeyCode.K) && isInAir == false)// && hero.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
             //Debug.Log("Test jump");
             isInAir = true;
             hero.GetComponent<Rigidbody2D>().AddForce(Vector3.up*JumpHeight,ForceMode2D.Impulse);
-            hero.GetComponent<Animator>().SetTrigger("Jump");
+            body.GetComponent<Animator>().SetTrigger("Jump");
+            hair.GetComponent<Animator>().SetTrigger("Jump");
         }
 
         //if(hero.GetComponent<Rigidbody2D>().velocity.y == 0)
@@ -169,12 +243,6 @@ public class Hero : MonoBehaviour {
             shoot();
             isCanAttack = false;
             StartCoroutine(CanAttack(attackDelay));
-        }
-
-        if (isDead)
-        {
-            hero.GetComponent<Animator>().SetBool("IsDead", true);
-            StartCoroutine(DestroyHero(2.0f, hero));
         }
 
     }
