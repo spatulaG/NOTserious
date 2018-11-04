@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 enum FacingDirection { FacingLeft,FacingRight};
 
 public class Hero : MonoBehaviour {
+
+    public int sceneToLoad = 1;
+
 
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
@@ -249,6 +253,7 @@ public class Hero : MonoBehaviour {
     IEnumerator DestroyHero(float waitTime, GameObject hero)
     {
         yield return new WaitForSeconds(waitTime);
+        EditorSceneManager.LoadScene(sceneToLoad);
         Destroy(hero);
     }
 }
