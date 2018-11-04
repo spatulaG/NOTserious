@@ -26,8 +26,13 @@ public class bagAbsorb : MonoBehaviour {
     */
 
 	public bool _isShow = false;
+
+	//	///////////
     public GameObject popUpMenu;
+	public GameObject absorbMenu;
+
     public GameObject[] color;
+	public bag _bag;
 
     public enum ColorEnum{
         White = 0,
@@ -114,7 +119,8 @@ public class bagAbsorb : MonoBehaviour {
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
-            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton3)){
+
 				Debug.Log(_colorCount);
                 if(_colorCount - 1 >= 0 && _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
@@ -138,6 +144,9 @@ public class bagAbsorb : MonoBehaviour {
 					}
                 }
 				if(selectNumber == 1){
+					_bag.enabled = false;
+					this.enabled = false;
+					Debug.Log(_bag.enabled);
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 					_colorSpriteRenderer[_colorMerge[0]._mergeNumber].color = colorSlot[this.gameObject.GetComponent<PlayerStatus>().ReturnColor()];
 					this.gameObject.GetComponent<PlayerStatus>().slot[_colorMerge[0]._mergeNumber] = this.gameObject.GetComponent<PlayerStatus>().ReturnColor();
@@ -147,17 +156,15 @@ public class bagAbsorb : MonoBehaviour {
 					_colorSpriteRenderer[1].sprite = mySprite[0];
 					_colorSpriteRenderer[2].sprite = mySprite[0];
 					_isShow = false;
+
+//	///////////
+//					absorbMenu.SetActive(false);
 					popUpMenu.SetActive(false);
+//					_bag.enabled = true;
             	}
                 
 			}
-        }      
-
-	private void OnEnable() {
-	}
-
-	private void OnDisable() {			
-	}
+        }
 
 
     public void ColorPropertyStore(ColorProperty _colorMerge, SpriteRenderer _colorSpriteRenderer, int _colorCount)

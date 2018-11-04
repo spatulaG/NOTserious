@@ -18,7 +18,7 @@ public class PlayerStatus : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		/*
 		if(Input.GetKeyDown(KeyCode.I) && _absorb != null){
 		//	Debug.Log("2222");
@@ -30,12 +30,16 @@ public class PlayerStatus : MonoBehaviour {
 			isAbsorb = false;
 		}
 		*/
+		if(!_bag.enabled && !_bagAbsorb.enabled){
+			_bag.enabled = true;
+		}
 
 		if((Input.GetKeyDown(KeyCode.I) || (Input.GetKeyDown(KeyCode.JoystickButton3))) && _absorb != null){
 			
 			absorbPopupMenu.SetActive(true);
+			_bag.enabled = false;
 			
-			Debug.Log("1111");
+		//	Debug.Log("1111");
 			isAbsorb = false;
 		}
 	}
@@ -47,6 +51,7 @@ public class PlayerStatus : MonoBehaviour {
 			_bagAbsorb.enabled = true;
             _absorb = other.gameObject.GetComponent<absorb>();
 			isAbsorb = true;
+			Debug.Log("1111");
         }
     }
 	void OnTriggerExit2D(Collider2D other)
@@ -57,7 +62,7 @@ public class PlayerStatus : MonoBehaviour {
 			_absorb = null;
 			isAbsorb = false;
 			absorbPopupMenu.SetActive(false);
-		//	Debug.Log("1111");
+			Debug.Log("_bag.enabled: " + _bag.enabled);
         }
     }
 
