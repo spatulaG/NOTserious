@@ -260,6 +260,10 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (paused)
+            return;
+
+
         Vector3 dir = Vector3.zero;
 
         if (direction.x != 0)
