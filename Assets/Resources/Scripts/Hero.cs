@@ -106,7 +106,7 @@ public class Hero : MonoBehaviour {
             isInAir = false;
         }
 
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "bullet4cannon")
         {
             if (collision.gameObject.transform.position.x > hero.transform.position.x)
             {
