@@ -11,6 +11,7 @@ TagManager:
   - bullet4cannon
   - CheckPoint
   - rope
+  - upDownDoor
   layers:
   - Default
   - TransparentFX

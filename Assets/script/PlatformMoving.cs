@@ -86,7 +86,7 @@ public class PlatformMoving : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Player");
+        //Debug.Log("Player");
         if(other.gameObject.tag == "Player"){
             Debug.Log("xxxxxxx");
             other.gameObject.GetComponent<Transform>().parent = defaultObj.GetComponent<Transform>();

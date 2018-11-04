@@ -190,7 +190,7 @@ public class bag : MonoBehaviour {
 			_colorSpriteRenderer[1].sprite = mySprite[0];
 			_colorSpriteRenderer[2].sprite = mySprite[0];
 			popUpMenu.SetActive(false);
-			Debug.Log("SetFalse");
+			//Debug.Log("SetFalse");
 		//	Destroy(this);
         }
     }
