@@ -189,6 +189,11 @@ public class Hero : MonoBehaviour {
 
     void FixedUpdate () {
 
+        if (Input.GetKeyDown(KeyCode.JoystickButton8) || Input.GetKeyDown(KeyCode.JoystickButton9))
+        {
+            StartCoroutine(DestroyHero(1.0f, hero));
+
+        }
         if (paused)
             return;
         

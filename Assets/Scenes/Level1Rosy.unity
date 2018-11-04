@@ -2056,6 +2056,16 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 212870112121600238, guid: ebc0900ea6d19452196b5444ad297b70,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 212247175916517994, guid: ebc0900ea6d19452196b5444ad297b70,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebc0900ea6d19452196b5444ad297b70, type: 2}
   m_IsPrefabAsset: 0
