@@ -9,6 +9,7 @@ public class PlayerStatus : MonoBehaviour {
 	private bool isAbsorb = false;
 
 	public GameObject absorbPopupMenu;
+	public GameObject popupMenu;
 	private bagAbsorb _bagAbsorb;
 	private bag _bag;
 	// Use this for initialization
@@ -31,12 +32,19 @@ public class PlayerStatus : MonoBehaviour {
 		}
 		*/
 
+
 		if(Input.GetKeyDown(KeyCode.I) && _absorb != null){
 			
 			absorbPopupMenu.SetActive(true);
 			
 			Debug.Log("1111");
 			isAbsorb = false;
+		}
+
+		if((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !isAbsorb){
+	//		popupMenu.SetActive(true);
+			
+			Debug.Log("1111");
 		}
 	}
 
@@ -57,6 +65,8 @@ public class PlayerStatus : MonoBehaviour {
 			_absorb = null;
 			isAbsorb = false;
 			absorbPopupMenu.SetActive(false);
+	//		popupMenu.SetActive(false);
+
 		//	Debug.Log("1111");
         }
     }

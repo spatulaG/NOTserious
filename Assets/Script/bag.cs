@@ -145,6 +145,8 @@ public class bag : MonoBehaviour {
                 }
 				if(selectNumber == 1){
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
+					Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
+					Debug.Log("_colorMerge[1]._colorIndex" + _colorMerge[1]._colorIndex);
 					playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
 					ReturnColor();
 				//	Debug.Log("SelectNumber5 :" + selectNumber);
@@ -177,16 +179,18 @@ public class bag : MonoBehaviour {
 					}
 				}
             }
-			//		Debug.Log("return color1" + ReturnColor());
+					Debug.Log("SelectNumber " + selectNumber);
 
             
         }else{
             _colorCount = 0;
 			selectNumber = 0;
+			_isShow = false;
 			_colorSpriteRenderer[0].sprite = mySprite[0];
 			_colorSpriteRenderer[1].sprite = mySprite[0];
 			_colorSpriteRenderer[2].sprite = mySprite[0];
 			popUpMenu.SetActive(false);
+			Debug.Log("SetFalse");
 		//	Destroy(this);
         }
     }
@@ -225,20 +229,25 @@ public class bag : MonoBehaviour {
 			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Black, (int)ColorEnum.White);
         }else if(isWhiteColor(_colorMerge) && _colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
             if(mergeIndex1 == 0){
-                Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
+            //    Debug.Log("_colorMerge[0]._colorIndex " + _colorMerge[0]._colorIndex);
                 SpriteRender(_colorMerge[1]._colorIndex, (int)ColorEnum.White);
 				ChangePlayerStatus(_playerStatus, _colorMerge, _colorMerge[1]._colorIndex, (int)ColorEnum.White);
             }else{
             //    SpriteRender((int)ColorEnum.White, _colorMerge[0]._colorIndex);
             }
 
-        }else if(_colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
+        }else if(_colorMerge[0]._colorIndex == _colorMerge[1]._colorIndex){
+		//	Debug.Log("same");
+			SpriteRender(_colorMerge[0]._colorIndex,(int)ColorEnum.White);
+			ChangePlayerStatus(_playerStatus, _colorMerge, _colorMerge[0]._colorIndex, (int)ColorEnum.White);
+		}else if(_colorMerge[0]._mergeNumber != _colorMerge[1]._mergeNumber){
 			SpriteRender((int)ColorEnum.Black, (int)ColorEnum.White);
 			ChangePlayerStatus(_playerStatus, _colorMerge, (int)ColorEnum.Black, (int)ColorEnum.White);
 		}
-		Debug.Log("_colorMerge[0]._mergeNumber" + _colorMerge[0]._mergeNumber);
+	//	Debug.Log("_colorMerge[0]._mergeNumber " + _colorMerge[0]._mergeNumber);
+	//	Debug.Log("_colorMerge[1]._mergeNumber " + _colorMerge[1]._mergeNumber);
 		
-		Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
+	//	Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
     }
 	public void ChangePlayerStatus(PlayerStatus _playerStatus, ColorProperty[] _colorMerge, int colorIndex1, int colorIndex2){
 		_playerStatus.slot[_colorMerge[0]._mergeNumber] = colorIndex1;
@@ -277,6 +286,20 @@ public class bag : MonoBehaviour {
 		playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
 		return _colorMerge[0]._colorValue255;
 	}
+/*
+	void OnEnable() {
+		_colorSpriteRenderer = new SpriteRenderer[3];
+        for(int i = 0; i < 3; i++)
+            _colorSpriteRenderer[i] = color[i].GetComponent<SpriteRenderer>();
+		_colorCount = 0;
+		selectNumber = 0;
+		_isShow = false;
+		_colorSpriteRenderer[0].sprite = mySprite[0];
+		_colorSpriteRenderer[1].sprite = mySprite[0];
+		_colorSpriteRenderer[2].sprite = mySprite[0];
+		Debug.Log("SetFalse");
+	}
+*/	
 
 	
 }

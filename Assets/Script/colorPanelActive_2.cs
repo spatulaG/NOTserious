@@ -9,6 +9,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 	public Transform[] color;
 	public bool[] flag = {false,false,false};
 	public GameObject popupMenu;
+	public GameObject absorbMenu;
 //	public static bool isDisableMenu = false;
 	
 	// Use this for initialization
@@ -28,7 +29,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 		
 		if(this.gameObject.transform.localScale.x < 0.15f && !flag[0]){
 			this.gameObject.transform.localScale += new Vector3(tempTime/20,tempTime/20,tempTime/20);
-			Debug.Log("expand!!!!!!!!");
+		//	Debug.Log("expand!!!!!!!!");
 		}else{
 			flag[0] = true;
 		}
@@ -46,8 +47,8 @@ public class colorPanelActive_2 : MonoBehaviour {
 		if(color[1].localScale.x < 0.13f && flag[0]){
 			float temp = tempTime -0.3f;
 			color[1].localScale += new Vector3(temp/20,temp/20,temp/20);
-			Debug.Log(color[1].localScale);
-			Debug.Log("expand!!!!!!!!");
+		//	Debug.Log(color[1].localScale);
+		//	Debug.Log("expand!!!!!!!!");
 		//	color[1].localScale += new Vector3(tempTime/20,tempTime/20,tempTime/20);
 		}else if(color[1].localScale.x >= 0.13f && flag[0]){
 			flag[1] = true;
@@ -77,6 +78,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 	}
 
 	private void OnEnable() {
+		this.gameObject.transform.parent.gameObject.GetComponent<bag>().enabled = false;
 		for(int i = 0; i < flag.Length; i++)
 			flag[i] = false;
 		tempTime = 0;
@@ -94,6 +96,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 		for(int i = 1; i < color.Length; i++){
 			color[i].localScale = new Vector3(0,0,0);
 		}
+		this.gameObject.transform.parent.gameObject.GetComponent<bag>().enabled = false;
 //		isDisableMenu = false;
 	//	this.SetActive(false);
 	}
