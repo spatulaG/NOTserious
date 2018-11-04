@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Resources/Animation/Hero/HeroBody.meta
 guid: 1187496dbacadc447985e15eb53a7169
+=======
+guid: 5c39033b278b240999295d4fbb3df628
+>>>>>>> 114_Q:Assets/Resources/Animation/Hero/HeroBody.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
