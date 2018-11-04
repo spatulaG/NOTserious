@@ -7,8 +7,12 @@ public class Boss : MonoBehaviour
     public enum Type
     {
         Jumping,
-        NoneJumping
+        NoneJumping,
+        Rush
     }
+
+    public int attackStage;
+    Vector3 startposition;
 
     public Type enemyType = Type.NoneJumping;
 
@@ -44,6 +48,8 @@ public class Boss : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        startposition = transform.position;
+
         rb = GetComponent<Rigidbody2D>();
         thisCollider = GetComponent<Collider2D>();
         layermask = LayerMask.GetMask("Default", "ColorGround");
@@ -152,19 +158,77 @@ public class Boss : MonoBehaviour
             if (onGround)
             {
                 //  ChangeDirection();
-                jumpToNext();
+                //  jumpToNext();
             }
 
 
+            if (enemyType == Type.Rush)
+            {
+
+                if (timer > randomtime)
+                {
+
+                    if (attackStage == 0)
+                    {
+                        if (jumpcollider.collider != null && onGround)
+                        {
+                            rb.AddForce(Vector2.left * MaxJumpWidth, ForceMode2D.Impulse);
+
+                            attackStage++;
+                        }
+                        else
+                            timer = 0;
+                    }
+
+
+
+                }
+                else
+                    timer += Time.deltaTime;
+
+
+                if (attackStage == 1 && Mathf.Abs(rb.velocity.x) < 0.2f)
+                {
+                    direction.x = 1;
+                    attackStage++;
+                }
+                print(Vector3.Distance(transform.position, startposition));
+                if (attackStage == 2 && Vector3.Distance(transform.position, startposition) < 0.5f)
+                {
+                    direction.x = 0;
+                    enemyType = Type.Jumping;
+
+                    timer = 0;
+                    randomtime = Random.Range(3, 5);
+                }
+            }
+
+
+            if (Random.Range(1, 50) == 2)
+            {
+                GameObject bullet = Instantiate(Resources.Load("Prefabs/bullet"), transform.position - new Vector3(GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
+                bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left * (Random.Range(1,10)*0.1f), ForceMode2D.Impulse);
+                Destroy(bullet.gameObject, Random.Range(50, 100));
+                bullet.tag = "bullet";
+            }
 
             if (enemyType == Type.Jumping)
             {
                 if (timer > randomtime)
                 {
-                    if (jumpcollider.collider != null && onGround)
-                        jump();
-                    timer = 0;
-                    randomtime = Random.Range(3, 5);
+                 
+                    if (Random.Range(1, 5) == 2)
+                    {
+                        enemyType = Type.Rush;
+                        attackStage = 0;
+                    }
+                    else
+                    {
+                        if (jumpcollider.collider != null && onGround)
+                            jump();
+                        timer = 0;
+                        randomtime = Random.Range(3, 5);
+                    }
                 }
                 else
                     timer += Time.deltaTime;
@@ -205,7 +269,7 @@ public class Boss : MonoBehaviour
         {
             speed = MaxSpeed;
             rb.AddForce(Vector3.up * JumpHeight, ForceMode2D.Impulse);
-            rb.AddForce(direction * 0.6f, ForceMode2D.Impulse);
+          //  rb.AddForce(direction * 0.6f, ForceMode2D.Impulse);
             onGround = false;
         }
     }
