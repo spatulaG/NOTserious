@@ -270,6 +270,5 @@ public class Hero : MonoBehaviour {
     {
         yield return new WaitForSeconds(waitTime);
         EditorSceneManager.LoadScene(sceneToLoad);
-        Destroy(hero);
     }
 }
