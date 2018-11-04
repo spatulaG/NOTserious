@@ -63,8 +63,8 @@ public class CameraFollow : MonoBehaviour {
 
 
 
-        Vector3 cameraMove =  new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * moveDistance, Input.GetAxis("Vertical") * Time.deltaTime * moveDistance, 0);
-
+        //Vector3 cameraMove =  new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * moveDistance, Input.GetAxis("Vertical") * Time.deltaTime * moveDistance, 0);
+        Vector3 cameraMove = new Vector3(Input.GetAxis("Axis 4") * Time.deltaTime * moveDistance, -Input.GetAxis("Axis 5") * Time.deltaTime * moveDistance, 0);
         //if (cameraMove == Vector3.zero)
         //    startTime = Time.time;
 

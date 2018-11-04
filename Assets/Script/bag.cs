@@ -121,7 +121,7 @@ public class bag : MonoBehaviour {
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
-            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+            if(Input.GetKeyDown(KeyCode.I)||Input.GetKeyDown(KeyCode.JoystickButton3)){
                 if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
