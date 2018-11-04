@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 enum FacingDirection { FacingLeft,FacingRight};
 
 public class Hero : MonoBehaviour {
+
+    public int sceneToLoad = 1;
+
 
     public float moveSpeed = 3.0f;
     public float bulletSpeed = 10.0f;
@@ -172,8 +176,24 @@ public class Hero : MonoBehaviour {
         body.GetComponent<Renderer>().material.color = new Color(r, g, b, alpha);
         hair.GetComponent<Renderer>().material.color = new Color(r, g, b, alpha);
     }
+    bool paused = false;
+    void OnPauseGame()
+    {
+        paused = true;
 
-    void Update () {
+    }
+    void OnResumeGame()
+    {
+        paused = false;
+    }
+
+    void FixedUpdate () {
+
+        if (paused)
+            return;
+        
+
+
         if (isDead)
         {
             return;
@@ -197,7 +217,7 @@ public class Hero : MonoBehaviour {
         }
 
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D)||Input.GetAxis("Axis 1") > 0)
         {
             //Debug.Log("Test right move");
             hero.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
@@ -206,7 +226,7 @@ public class Hero : MonoBehaviour {
             facingDirection = FacingDirection.FacingRight;
             hero.transform.localScale = new Vector3(direction, hero.transform.localScale.y, 1);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A)||Input.GetAxis("Axis 1") < 0)
         {
             //Debug.Log("Test left move");
             hero.transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
@@ -222,7 +242,7 @@ public class Hero : MonoBehaviour {
             hair.GetComponent<Animator>().SetBool("IsMoveRight", false);
             hair.GetComponent<Animator>().SetBool("IsMoveLeft", false);
         }
-        if (Input.GetKeyDown(KeyCode.K) && isInAir == false)// && hero.GetComponent<Rigidbody2D>().velocity.y <= 0)
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Joystick1Button0)) && isInAir == false)// && hero.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
             //Debug.Log("Test jump");
             isInAir = true;
@@ -240,7 +260,7 @@ public class Hero : MonoBehaviour {
             hero.transform.localEulerAngles = new Vector3(hero.transform.localEulerAngles.x, hero.transform.localEulerAngles.y, 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.J) && isShooting == false && isCanAttack == true)
+        if ((Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.JoystickButton2)) && isShooting == false && isCanAttack == true)
         {
             shoot();
             isCanAttack = false;
@@ -251,6 +271,7 @@ public class Hero : MonoBehaviour {
     IEnumerator DestroyHero(float waitTime, GameObject hero)
     {
         yield return new WaitForSeconds(waitTime);
+        EditorSceneManager.LoadScene(sceneToLoad);
         Destroy(hero);
     }
 }

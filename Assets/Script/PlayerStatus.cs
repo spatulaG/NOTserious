@@ -31,7 +31,7 @@ public class PlayerStatus : MonoBehaviour {
 		}
 		*/
 
-		if(Input.GetKeyDown(KeyCode.I) && _absorb != null){
+		if((Input.GetKeyDown(KeyCode.I) || (Input.GetKeyDown(KeyCode.JoystickButton3))) && _absorb != null){
 			
 			absorbPopupMenu.SetActive(true);
 			

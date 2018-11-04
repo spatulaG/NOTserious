@@ -23,7 +23,7 @@ public class colorPanelActive : MonoBehaviour {
 		
 		if(this.gameObject.transform.localScale.x < 0.07f && !flag[0]){
 			this.gameObject.transform.localScale += new Vector3(tempTime/20,tempTime/20,tempTime/20);
-			Debug.Log("expand!!!!!!!!");
+		//	Debug.Log("expand!!!!!!!!");
 		}else{
 			flag[0] = true;
 		}
@@ -41,8 +41,8 @@ public class colorPanelActive : MonoBehaviour {
 		if(color[1].localScale.x < 0.3f && flag[0]){
 			float temp = tempTime -0.3f;
 			color[1].localScale += new Vector3(temp/20,temp/20,temp/20);
-			Debug.Log(color[1].localScale);
-			Debug.Log("expand!!!!!!!!");
+		//	Debug.Log(color[1].localScale);
+		//	Debug.Log("expand!!!!!!!!");
 		//	color[1].localScale += new Vector3(tempTime/20,tempTime/20,tempTime/20);
 		}else if(color[1].localScale.x >= 0.13f && flag[0]){
 			flag[1] = true;
