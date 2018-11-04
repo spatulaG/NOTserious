@@ -27,7 +27,6 @@ public class bagAbsorb : MonoBehaviour {
 
 	public bool _isShow = false;
     public GameObject popUpMenu;
-	public GameObject absorbMenu;
     public GameObject[] color;
 
     public enum ColorEnum{
@@ -104,19 +103,19 @@ public class bagAbsorb : MonoBehaviour {
 			_colorSpriteRenderer[0].sprite = mySprite[1];
 		}
         
-            if(Input.GetKeyDown(KeyCode.RightArrow)){
+            if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.JoystickButton5)){
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                 if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
                     _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
-            }else if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            }else if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.JoystickButton4)){
                 _colorCount = (_colorCount <= 1) ? 1 : (_colorCount - 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
-            if(Input.GetKeyDown(KeyCode.Space)){
-			//	Debug.Log(_colorCount);
+            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+				Debug.Log(_colorCount);
                 if(_colorCount - 1 >= 0 && _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 1) ? 1 : (selectNumber + 1);
@@ -142,7 +141,6 @@ public class bagAbsorb : MonoBehaviour {
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 					_colorSpriteRenderer[_colorMerge[0]._mergeNumber].color = colorSlot[this.gameObject.GetComponent<PlayerStatus>().ReturnColor()];
 					this.gameObject.GetComponent<PlayerStatus>().slot[_colorMerge[0]._mergeNumber] = this.gameObject.GetComponent<PlayerStatus>().ReturnColor();
-					this.enabled = false;
 					selectNumber = 0;
 					_colorCount = 0;
 					_colorSpriteRenderer[0].sprite = mySprite[0];
@@ -150,12 +148,16 @@ public class bagAbsorb : MonoBehaviour {
 					_colorSpriteRenderer[2].sprite = mySprite[0];
 					_isShow = false;
 					popUpMenu.SetActive(false);
-					
-					this.gameObject.GetComponent<bag>().enabled = true;
             	}
                 
 			}
-        }
+        }      
+
+	private void OnEnable() {
+	}
+
+	private void OnDisable() {			
+	}
 
 
     public void ColorPropertyStore(ColorProperty _colorMerge, SpriteRenderer _colorSpriteRenderer, int _colorCount)

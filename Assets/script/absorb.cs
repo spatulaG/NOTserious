@@ -59,7 +59,7 @@ public class absorb : MonoBehaviour {
 
     private void absorbColor()
     {
-        if (Input.GetKey("i") && isImgOn)
+        if ((Input.GetKey("i")||Input.GetKey(KeyCode.JoystickButton3)) && isImgOn)
         {
             //print("yes");
         //    popUpMenu.SetActive(true);

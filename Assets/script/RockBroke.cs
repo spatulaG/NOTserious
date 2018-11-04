@@ -50,9 +50,10 @@ public class RockBroke : MonoBehaviour
 
         for (int n = 0; n < Rocks.Length; n++)
         {
+            yield return new WaitForSeconds(1f);
             Destroy(Rocks[n].gameObject);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         Destroy(this.gameObject);
     }
 }
