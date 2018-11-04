@@ -168,6 +168,7 @@ MonoBehaviour:
   - {r: 0.5864128, g: 0.23843002, b: 0.8867924, a: 1}
   SE: {fileID: 1175543594}
   currentScene: {fileID: 1423295353}
+  SceneName: Level1Rosy
 --- !u!114 &7573897
 MonoBehaviour:
   m_ObjectHideFlags: 0

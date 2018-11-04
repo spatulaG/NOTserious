@@ -2081,7 +2081,7 @@ GameObject:
   - component: {fileID: 224061536}
   - component: {fileID: 224061535}
   m_Layer: 0
-  m_Name: IMG_2446
+  m_Name: plant_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10720,7 +10720,7 @@ GameObject:
   - component: {fileID: 1137745659}
   - component: {fileID: 1137745658}
   m_Layer: 0
-  m_Name: IMG_2444
+  m_Name: plant_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18690,7 +18690,7 @@ GameObject:
   - component: {fileID: 1961855067}
   - component: {fileID: 1961855066}
   m_Layer: 0
-  m_Name: IMG_2441
+  m_Name: plant_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
