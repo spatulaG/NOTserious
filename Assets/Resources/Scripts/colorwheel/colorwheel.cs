@@ -40,7 +40,7 @@ public class colorwheel : MonoBehaviour {
     void Update () {
 
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.P)||Input.GetKeyDown(KeyCode.JoystickButton6)|| Input.GetKeyDown(KeyCode.JoystickButton7))//
         {
             
 
@@ -75,7 +75,7 @@ public class colorwheel : MonoBehaviour {
         // Get the horizontal and vertical axis.
         // By default they are mapped to the arrow keys.
         // The value is in the range -1 to 1
-        float rotation = Input.GetAxis("Vertical") * speed;
+        float rotation = Input.GetAxis("Vertical") * speed;//controller?
 
         rotation *= Time.unscaledDeltaTime;
 

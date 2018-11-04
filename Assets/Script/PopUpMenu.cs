@@ -98,10 +98,10 @@ public class PopUpMenu : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-		if(Input.GetKeyDown(KeyCode.Escape))
+		if(Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.JoystickButton0)))
 			_isShow = false;
         
-        if((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !_isShow){
+        if(((Input.GetKeyDown(KeyCode.RightArrow) )|| Input.GetKeyDown(KeyCode.LeftArrow)) && !_isShow){
             colorPanel[0].SetActive(true);
             popUpMenu.SetActive(true);
             

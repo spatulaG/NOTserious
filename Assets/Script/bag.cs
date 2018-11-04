@@ -97,7 +97,7 @@ public class bag : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Escape))
 			_isShow = false;
         */
-        if((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !_isShow){
+        if(((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.JoystickButton4))|| (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.JoystickButton5))) && !_isShow){
             popUpMenu.SetActive(true);
 			_colorSpriteRenderer[0].sprite = mySprite[1];
            
@@ -105,15 +105,15 @@ public class bag : MonoBehaviour {
 
         }
         if(_isShow){
-			if(Input.GetKeyDown(KeyCode.Escape))
+			if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.JoystickButton0))
 				_isShow = false;
-            if(Input.GetKeyDown(KeyCode.RightArrow)){
+            if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.JoystickButton5)){
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
 				if( _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2])
                 	_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                 if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
                     _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
-            }else if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            }else if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.JoystickButton4)){
                 _colorCount = (_colorCount <= 1) ? 1 : (_colorCount - 1);
 				
 				if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2])
@@ -121,7 +121,7 @@ public class bag : MonoBehaviour {
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
                 if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
