@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - bullet4cannon
   - CheckPoint
+  - rope
   layers:
   - Default
   - TransparentFX

@@ -32,6 +32,22 @@ public class PlatformMoving : MonoBehaviour {
         journeyLength = Vector3.Distance(pointA.transform.position, pointB.transform.position);
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.transform.parent = this.transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            other.transform.parent = null;
+        }
+    }
+
     void Update()
     {
         distCovered = (Time.time - startTime) * moveSpeed;
