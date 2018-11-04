@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Block_Smash : MonoBehaviour {
     private Color current;
-
+    public bool isDestroyed;
     static public Color[] colorSlot = {
         new Color(233, 233, 233),
         new Color(232, 55, 146),
@@ -35,7 +35,8 @@ public class Block_Smash : MonoBehaviour {
             Debug.Log("1111");
             if (Oppo(getColor(collision.gameObject.GetComponent<SpriteRenderer>().color)) == getColor(this.GetComponent<SpriteRenderer>().color))
             {
-                Destroy(this.gameObject);
+                isDestroyed = true;
+                //Destroy(this.gameObject);
             }
             
         }
