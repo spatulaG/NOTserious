@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
+    public float speed;
     public GameObject hero;
     public Camera mainCamera;
     private Vector3 offset;
@@ -21,9 +22,11 @@ public class CameraFollow : MonoBehaviour {
         LeftDown.transform.position = new Vector3(LeftAndRightAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x  + BackGround.transform.position.x, -UpAndDownAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y  + BackGround.transform.position.y, LeftDown.transform.position.z);
         RightUp.transform.position = new Vector3(-LeftAndRightAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x  + BackGround.transform.position.x, UpAndDownAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y  + BackGround.transform.position.y, RightUp.transform.position.z);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+
+    private void FixedUpdate()
+    { 
         Vector3 newPosition = offset + hero.transform.position;
         if (newPosition.x < LeftDown.transform.position.x) 
         {
@@ -41,6 +44,17 @@ public class CameraFollow : MonoBehaviour {
         {
             newPosition.y = LeftDown.transform.position.y;
         }
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position,newPosition,1.0f);
-	}
+
+
+
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, newPosition, 1.0f);
+
+
+
+        Vector3 cameraMove = transform.position + new Vector3(Input.GetAxis("Horizontal2") * Time.deltaTime * speed, Input.GetAxis("Vertical2") * Time.deltaTime * speed, 0);
+        transform.position = Vector3.Slerp(transform.position, cameraMove,1);
+
+
+
+    }
 }
