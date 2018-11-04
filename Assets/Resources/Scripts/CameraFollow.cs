@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
     public float speed;
+    public float moveDistance;
+
+    float startTime;
+    float distance;
+
     public GameObject hero;
     public Camera mainCamera;
     private Vector3 offset;
@@ -21,6 +26,11 @@ public class CameraFollow : MonoBehaviour {
         BackGround = GameObject.FindGameObjectWithTag("background");
         LeftDown.transform.position = new Vector3(LeftAndRightAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x  + BackGround.transform.position.x, -UpAndDownAdjustNumber - BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y  + BackGround.transform.position.y, LeftDown.transform.position.z);
         RightUp.transform.position = new Vector3(-LeftAndRightAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.x  + BackGround.transform.position.x, UpAndDownAdjustNumber + BackGround.GetComponent<SpriteRenderer>().sprite.bounds.size.y  + BackGround.transform.position.y, RightUp.transform.position.z);
+
+        startTime = Time.time;
+
+        // Calculate the journey length.
+        
     }
 
     // Update is called once per frame
@@ -51,8 +61,19 @@ public class CameraFollow : MonoBehaviour {
 
 
 
-        Vector3 cameraMove = transform.position + new Vector3(Input.GetAxis("Horizontal2") * Time.deltaTime * speed, Input.GetAxis("Vertical2") * Time.deltaTime * speed, 0);
-        transform.position = Vector3.Slerp(transform.position, cameraMove,1);
+
+        Vector3 cameraMove =  new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * moveDistance, Input.GetAxis("Vertical") * Time.deltaTime * moveDistance, 0);
+
+        //if (cameraMove == Vector3.zero)
+        //    startTime = Time.time;
+
+        distance = Vector3.Distance(transform.position, transform.position + cameraMove);
+        float distCovered = (Time.time - startTime) * speed;
+        
+        float fracJourney = distCovered / distance;
+
+
+        transform.position = Vector3.Slerp(transform.position, transform.position + cameraMove,fracJourney);
 
 
 
