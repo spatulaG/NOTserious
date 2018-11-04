@@ -45,7 +45,7 @@ public class MonsterHit : MonoBehaviour {
 
                 //print("bullet color" + collision.GetComponent<SpriteRenderer>().color.r * 255);
                 //print("enemy color" + this.GetComponent<SpriteRenderer>().color.r * 255);
-                print("wrong color!");
+                //print("wrong color!");
             }
             
             Destroy(collision.gameObject);
@@ -93,7 +93,7 @@ public class MonsterHit : MonoBehaviour {
 
         if (oppoName == "")
             print("get oppo color failed");
-        print("oppo:" + oppoName);
+        //print("oppo:" + oppoName);
         return oppoName;
     }
     static public Color[] colorSlot = {
@@ -152,7 +152,7 @@ public class MonsterHit : MonoBehaviour {
                 currentColor = "black";
                 break;
         }
-        print(currentColor);
+        //print(currentColor);
         return currentColor;
     }
 

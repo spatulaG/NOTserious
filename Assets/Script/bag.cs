@@ -179,7 +179,7 @@ public class bag : MonoBehaviour {
 					}
 				}
             }
-					Debug.Log("SelectNumber " + selectNumber);
+					//Debug.Log("SelectNumber " + selectNumber);
 
             
         }else{

@@ -73,7 +73,7 @@ public class CameraFollow : MonoBehaviour {
         
         float fracJourney = distCovered / distance;
 
-
+        
         transform.position = Vector3.Slerp(transform.position, transform.position + cameraMove,fracJourney);
 
 
