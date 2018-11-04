@@ -13,6 +13,7 @@ public class CameraFollow : MonoBehaviour {
     private float LeftAndRightAdjustNumber;
     private float UpAndDownAdjustNumber;
 	void Start () {
+        currentPos = transform.position;
         LeftAndRightAdjustNumber = 0.0f;
         UpAndDownAdjustNumber = 0.0f;
         LeftDown = new GameObject("LeftDown");
@@ -48,13 +49,20 @@ public class CameraFollow : MonoBehaviour {
 
 
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, newPosition, 1.0f);
-
-
+        
 
         Vector3 cameraMove = transform.position + new Vector3(Input.GetAxis("Horizontal2") * Time.deltaTime * speed, Input.GetAxis("Vertical2") * Time.deltaTime * speed, 0);
-        transform.position = Vector3.Slerp(transform.position, cameraMove,1);
+         cameraMove = transform.position + new Vector3(Input.GetAxis("Axis 4") * Time.deltaTime * speed, -Input.GetAxis("Axis 5") * Time.deltaTime * speed, 0);
+        
+        transform.position = Vector3.Slerp(transform.position, cameraMove, timer += 0.001f);
 
 
 
     }
+    Vector3 currentPos;
+    private float timer = 0;
+
+
+
+
 }

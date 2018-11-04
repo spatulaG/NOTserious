@@ -17,6 +17,7 @@ public class colorwheel : MonoBehaviour {
 
     public float zValue = 0.5f;
     public float zValue2 = 8;
+    public float Z;
 
     int current = 0;
     int oldCurrent = 0;
@@ -85,8 +86,8 @@ public class colorwheel : MonoBehaviour {
 
         startPos = Camera.main.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 0));
         startPos.z = transform.position.z;
-        endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, startPos.z);
-
+        //endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, startPos.z);
+        endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Z);
 
         //Put on middle of screen
 
@@ -273,7 +274,7 @@ public class colorwheel : MonoBehaviour {
     private void PasueGame()
     {
       
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P)||Input.GetKeyDown(KeyCode.JoystickButton6)|| Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             timer2 = Time.time;
             timer = Time.time;
