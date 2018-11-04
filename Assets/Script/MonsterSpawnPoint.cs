@@ -27,11 +27,17 @@ public class MonsterSpawnPoint : MonoBehaviour {
         }
         */
         if(isRespawn){
-            monster = Instantiate (Resources.Load("Prefabs/monster1"), this.gameObject.GetComponent<Transform>().position, Quaternion.identity) as GameObject;
-            monster.GetComponent<MonsterHit>().canRespawn = true;
-            monster.tag = "Enemy";
-            isRespawn = false;
+            StartCoroutine(spawnWait(0.3f));
         }
 
 	}
+
+    IEnumerator spawnWait(float time)
+    {
+        yield return new WaitForSeconds(time);
+        monster = Instantiate(Resources.Load("Prefabs/monster1"), this.gameObject.GetComponent<Transform>().position, Quaternion.identity) as GameObject;
+        monster.GetComponent<MonsterHit>().canRespawn = true;
+        monster.tag = "Enemy";
+        isRespawn = false;
+    }
 }

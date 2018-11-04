@@ -24,7 +24,7 @@ public class SoundMgr : MonoBehaviour {
             int playNum;
             playNum = Random.Range(0, SFXs.Length-1);
             print(playNum);
-
+            print("monster!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             switch (playNum) {
                 case 0:
                     MusicManager.instance.PlaySE("MonsterSE1");
@@ -41,9 +41,9 @@ public class SoundMgr : MonoBehaviour {
 
 
             }
-            length = enemys.Length;
+            //length = enemys.Length;
         }
-        //else
-        //    length = enemys.Length;
+        
+            length = enemys.Length;
 	}
 }

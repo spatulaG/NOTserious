@@ -6367,10 +6367,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFXs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 954ee0c8f5e7bc34f9347b5370b39c25, type: 3}
+  - {fileID: 8300000, guid: 9ea389cc2e203014c83e293648719eaf, type: 3}
+  - {fileID: 8300000, guid: ea5ed68638e1c8546b4eaf8c27fa153e, type: 3}
+  - {fileID: 8300000, guid: e013e4f0bfa09074391882fc81fceb58, type: 3}
 --- !u!1 &590710326
 GameObject:
   m_ObjectHideFlags: 0
@@ -6638,6 +6638,7 @@ Prefab:
       objectReference: {fileID: 1273639179}
     m_RemovedComponents:
     - {fileID: 114558812648423922, guid: 29171755c84f65b4999773f432c9aab5, type: 2}
+    - {fileID: 114952665485567282, guid: 29171755c84f65b4999773f432c9aab5, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 29171755c84f65b4999773f432c9aab5, type: 2}
   m_IsPrefabAsset: 0
 --- !u!4 &612588915 stripped
@@ -16645,7 +16646,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1116118724642018, guid: 601efda332d17e8469ddc247efa19674, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1966507966182186, guid: 601efda332d17e8469ddc247efa19674, type: 2}
       propertyPath: m_IsActive

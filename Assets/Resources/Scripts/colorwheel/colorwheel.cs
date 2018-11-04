@@ -88,7 +88,7 @@ public class colorwheel : MonoBehaviour {
         startPos.z = transform.position.z;
         endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, startPos.z);
         //endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Z);
-        print(this.gameObject.transform.position);
+        //print(this.gameObject.transform.position);
         //Put on middle of screen
 
         PasueGame();
