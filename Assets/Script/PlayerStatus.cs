@@ -55,7 +55,8 @@ public class PlayerStatus : MonoBehaviour {
 			_bag.enabled = true;
 			_bagAbsorb.enabled = false;
             _absorb = other.gameObject.GetComponent<absorb>();
-			isAbsorb = true;
+			isAbsorb = false;
+			absorbPopupMenu.SetActive(false);
 		//	Debug.Log("1111");
         }
     }

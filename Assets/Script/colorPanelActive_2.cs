@@ -8,6 +8,8 @@ public class colorPanelActive_2 : MonoBehaviour {
 	private bool isLast = false;
 	public Transform[] color;
 	public bool[] flag = {false,false,false};
+	public GameObject popupMenu;
+//	public static bool isDisableMenu = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -16,9 +18,12 @@ public class colorPanelActive_2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+//		if(isDisableMenu){
+//			popupMenu.SetActive(false);
+//		}
 		if(tempTime < 4){
 			tempTime = tempTime + Time.deltaTime;
-			Debug.Log(tempTime);
+
 		}
 		
 		if(this.gameObject.transform.localScale.x < 0.15f && !flag[0]){
@@ -64,6 +69,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 		}
 
 		if(isLast){
+			this.gameObject.transform.parent.gameObject.GetComponent<bagAbsorb>().enabled = true;
 			for(int i = 0; i < flag.Length; i++)
 				flag[i] = false;
 			isLast = false;
@@ -75,6 +81,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 			flag[i] = false;
 		tempTime = 0;
 		isLast = false;
+//		isDisableMenu = true;
 		
 	}
 
@@ -87,6 +94,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 		for(int i = 1; i < color.Length; i++){
 			color[i].localScale = new Vector3(0,0,0);
 		}
+//		isDisableMenu = false;
 	//	this.SetActive(false);
 	}
 }

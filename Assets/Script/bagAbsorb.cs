@@ -25,7 +25,7 @@ public class bagAbsorb : MonoBehaviour {
         1 + 4 = 5
     */
 
-
+	public bool _isShow = false;
     public GameObject popUpMenu;
     public GameObject[] color;
 
@@ -52,7 +52,6 @@ public class bagAbsorb : MonoBehaviour {
     
 	public Sprite[] mySprite;
 
-    public float _timeCount = 5.0f;
     public bool isShow = false;
     public bool _isBlendable = false;
     private int _colorCount = 0;
@@ -99,6 +98,10 @@ public class bagAbsorb : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Escape))
 			_isShow = false;
         */
+		if(!_isShow){
+			_isShow = true;
+			_colorSpriteRenderer[0].sprite = mySprite[1];
+		}
         
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
@@ -112,13 +115,14 @@ public class bagAbsorb : MonoBehaviour {
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
             if(Input.GetKeyDown(KeyCode.Space)){
-                if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
+				Debug.Log(_colorCount);
+                if(_colorCount - 1 >= 0 && _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
-                    selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
+                    selectNumber = (selectNumber >= 1) ? 1 : (selectNumber + 1);
                     _colorSpriteRenderer[_colorCount-1].sprite = mySprite[2];
 				//	Debug.Log("SelectNumber3 :" + selectNumber);
                 }
-                else{
+                else if(_colorCount - 1 >= 0){
 					if(_colorMerge[1]._mergeNumber == _colorMerge[0]._mergeNumber){
                 //    	Debug.Log("equal");
 
@@ -139,19 +143,20 @@ public class bagAbsorb : MonoBehaviour {
 					this.gameObject.GetComponent<PlayerStatus>().slot[_colorMerge[0]._mergeNumber] = this.gameObject.GetComponent<PlayerStatus>().ReturnColor();
 					selectNumber = 0;
 					_colorCount = 0;
-					selectNumber = 0;
 					_colorSpriteRenderer[0].sprite = mySprite[0];
 					_colorSpriteRenderer[1].sprite = mySprite[0];
 					_colorSpriteRenderer[2].sprite = mySprite[0];
+					_isShow = false;
 					popUpMenu.SetActive(false);
             	}
                 
 			}
-               
-    }
+        }      
 
-	private void OnDisable() {
-		
+	private void OnEnable() {
+	}
+
+	private void OnDisable() {			
 	}
 
 

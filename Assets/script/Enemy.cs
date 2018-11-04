@@ -87,76 +87,90 @@ public class Enemy : MonoBehaviour
                 GetComponent<SpriteRenderer>().color = other.gameObject.GetComponent<SpriteRenderer>().color;
         }
     }
+
+    bool paused = false;
+    void OnPauseGame()
+    {
+        paused = true;
+
+    }
+    void OnResumeGame()
+    {
+        paused = false;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-
-        if (speed < MaxSpeed)
-            speed += Time.deltaTime;
-
-
-        CheckWall();
-
-        //Check if at end of platform
-        right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up, 0.4f,layermask);
-        left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up, 0.4f,layermask);
-        //Draw debug Rays
-        Debug.DrawRay(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f, Color.green);
-        Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f, Color.green);
-
-
-        //Check platform infront
-        Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth * 0.6f) * direction.x, -size.y - 0.2f, 0);
-        Vector2 jumpDir = new Vector2(direction.x, 0);
-        float jumpDist = 0.1f;
-        jumpcollider = Physics2D.Raycast(jumpTo, jumpDir, jumpDist, layermask);
-        Debug.DrawRay(jumpTo, jumpDir * jumpDist, Color.green);
-
-
-        //Check ground
-        RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, layermask);
-        Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
-        
-        if (groundCollider.collider == null)
+        if (!paused)
         {
-            onGround = false;
-        }
-        else
-        {
-            onGround = true;
-        }
-
-        if (jumpcollider.collider == null)
-        {
-            //Cant jump
-        }
-
-       
-       
+            if (speed < MaxSpeed)
+                speed += Time.deltaTime;
 
 
-        if (onGround)
-        {
-            //  ChangeDirection();
-            jumpToNext();
-        }
+            CheckWall();
+
+            //Check if at end of platform
+            right = Physics2D.Raycast(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up, 0.4f, layermask);
+            left = Physics2D.Raycast(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up, 0.4f, layermask);
+            //Draw debug Rays
+            Debug.DrawRay(transform.position + new Vector3(size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position + new Vector3(-size.x, -size.y - 0.1f, 0) + offset, -transform.up * 0.4f, Color.green);
 
 
+            //Check platform infront
+            Vector2 jumpTo = transform.position + new Vector3((size.x + MaxJumpWidth * 0.6f) * direction.x, -size.y - 0.2f, 0);
+            Vector2 jumpDir = new Vector2(direction.x, 0);
+            float jumpDist = 0.1f;
+            jumpcollider = Physics2D.Raycast(jumpTo, jumpDir, jumpDist, layermask);
+            Debug.DrawRay(jumpTo, jumpDir * jumpDist, Color.green);
 
-        if (enemyType == Type.Jumping)
-        {
-            if (timer > randomtime)
+
+            //Check ground
+            RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, layermask);
+            Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
+
+            if (groundCollider.collider == null)
             {
-                if (jumpcollider.collider != null && onGround)
-                    jump();
-                timer = 0;
-                randomtime = Random.Range(3, 5);
+                onGround = false;
             }
             else
-                timer += Time.deltaTime;
+            {
+                onGround = true;
+            }
+
+            if (jumpcollider.collider == null)
+            {
+                //Cant jump
+            }
+
+
+
+
+
+            if (onGround)
+            {
+                //  ChangeDirection();
+                jumpToNext();
+            }
+
+
+
+            if (enemyType == Type.Jumping)
+            {
+                if (timer > randomtime)
+                {
+                    if (jumpcollider.collider != null && onGround)
+                        jump();
+                    timer = 0;
+                    randomtime = Random.Range(3, 5);
+                }
+                else
+                    timer += Time.deltaTime;
+            }
+
         }
-
-
     }
 
     private void CheckWall()
@@ -175,6 +189,10 @@ public class Enemy : MonoBehaviour
         if(wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider == null && onGround)
         {
             jump();
+        }
+        else if(wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider != null && wallAbove.collider.tag == "ground" && onGround)
+        {
+            ChangeDirection();
         }
 
 

@@ -18,7 +18,7 @@ public class colorPanelActive : MonoBehaviour {
 	void Update () {
 		if(tempTime < 4){
 			tempTime = tempTime + Time.deltaTime;
-			Debug.Log(tempTime);
+
 		}
 		
 		if(this.gameObject.transform.localScale.x < 0.15f && !flag[0]){
