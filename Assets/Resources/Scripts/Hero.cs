@@ -59,6 +59,7 @@ public class Hero : MonoBehaviour {
 
     void shoot()
     {
+        //System.Threading.Thread.Sleep(2000);
         if (isDead)
         {
             return;
