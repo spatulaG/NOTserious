@@ -11,6 +11,17 @@ public class Boss : MonoBehaviour
         Rush
     }
 
+    static public Color[] colorSlot = {
+        new Color(233, 233, 233),
+        new Color(232, 55, 146),
+        new Color(255, 225, 41),
+        new Color(252, 107, 24),
+        new Color(38, 197, 253),
+        new Color(117, 110, 248),
+        new Color(176, 238, 49),
+        new Color(17, 28, 56),
+    };
+
     public int attackStage;
     Vector3 startposition;
 
@@ -85,7 +96,7 @@ public class Boss : MonoBehaviour
     {
         if (!MoveOnStart && direction.x == 0 && other.tag == "MainCamera")
         {
-            direction.x = -1;
+           // direction.x = -1;
         }
         if (other.tag == "ground")
         {
@@ -161,15 +172,17 @@ public class Boss : MonoBehaviour
                 //  jumpToNext();
             }
 
+            print(attackStage);
 
             if (enemyType == Type.Rush)
             {
 
                 if (timer > randomtime)
                 {
-
+                   
                     if (attackStage == 0)
                     {
+
                         if (jumpcollider.collider != null && onGround)
                         {
                             rb.AddForce(Vector2.left * MaxJumpWidth, ForceMode2D.Impulse);
@@ -192,11 +205,12 @@ public class Boss : MonoBehaviour
                     direction.x = 1;
                     attackStage++;
                 }
-                print(Vector3.Distance(transform.position, startposition));
+
                 if (attackStage == 2 && Vector3.Distance(transform.position, startposition) < 0.5f)
                 {
                     direction.x = 0;
                     enemyType = Type.Jumping;
+                    attackStage = 0;
 
                     timer = 0;
                     randomtime = Random.Range(3, 5);
@@ -204,12 +218,14 @@ public class Boss : MonoBehaviour
             }
 
 
-            if (Random.Range(1, 50) == 2)
+            if (Random.Range(1, 100) == 2)
             {
                 GameObject bullet = Instantiate(Resources.Load("Prefabs/bullet"), transform.position - new Vector3(GetComponent<Collider2D>().bounds.size.x / 2, 0, 0), Quaternion.identity) as GameObject;
-                bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left * (Random.Range(1,10)*0.1f), ForceMode2D.Impulse);
-                Destroy(bullet.gameObject, Random.Range(50, 100));
+                bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.left * (Random.Range(4,10)*0.1f), ForceMode2D.Impulse);
+                bullet.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
+                Destroy(bullet.gameObject, Random.Range(1, 3));
                 bullet.tag = "bullet";
+
             }
 
             if (enemyType == Type.Jumping)
@@ -224,6 +240,9 @@ public class Boss : MonoBehaviour
                     }
                     else
                     {
+
+                        GetComponent<SpriteRenderer>().color = colorSlot[Random.Range(0, colorSlot.Length)];
+
                         if (jumpcollider.collider != null && onGround)
                             jump();
                         timer = 0;
