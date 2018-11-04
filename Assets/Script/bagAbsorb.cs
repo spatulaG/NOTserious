@@ -114,7 +114,7 @@ public class bagAbsorb : MonoBehaviour {
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
-            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+            if(Input.GetKeyDown(KeyCode.I)||Input.GetKeyDown(KeyCode.JoystickButton3)){
 				Debug.Log(_colorCount);
                 if(_colorCount - 1 >= 0 && _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
