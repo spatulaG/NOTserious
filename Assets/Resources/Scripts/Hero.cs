@@ -172,8 +172,24 @@ public class Hero : MonoBehaviour {
         body.GetComponent<Renderer>().material.color = new Color(r, g, b, alpha);
         hair.GetComponent<Renderer>().material.color = new Color(r, g, b, alpha);
     }
+    bool paused = false;
+    void OnPauseGame()
+    {
+        paused = true;
 
-    void Update () {
+    }
+    void OnResumeGame()
+    {
+        paused = false;
+    }
+
+    void FixedUpdate () {
+
+        if (paused)
+            return;
+        
+
+
         if (isDead)
         {
             return;
