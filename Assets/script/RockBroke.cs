@@ -52,7 +52,7 @@ public class RockBroke : MonoBehaviour
         {
             Destroy(Rocks[n].gameObject);
         }
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
 }
