@@ -34,7 +34,8 @@ public class PlayerStatus : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.I) && _absorb != null){
 			
 			absorbPopupMenu.SetActive(true);
-
+			
+			Debug.Log("1111");
 			isAbsorb = false;
 		}
 	}
@@ -46,7 +47,6 @@ public class PlayerStatus : MonoBehaviour {
 			_bagAbsorb.enabled = true;
             _absorb = other.gameObject.GetComponent<absorb>();
 			isAbsorb = true;
-		//	Debug.Log("1111");
         }
     }
 	void OnTriggerExit2D(Collider2D other)
@@ -54,7 +54,7 @@ public class PlayerStatus : MonoBehaviour {
         if(LayerMask.LayerToName(other.gameObject.layer) == "ColorGround") {
 			_bag.enabled = true;
 			_bagAbsorb.enabled = false;
-            _absorb = other.gameObject.GetComponent<absorb>();
+			_absorb = null;
 			isAbsorb = false;
 			absorbPopupMenu.SetActive(false);
 		//	Debug.Log("1111");
