@@ -12,6 +12,8 @@ TagManager:
   - CheckPoint
   - rope
   - upDownDoor
+  - GreenTrigger
+  - HAIR
   layers:
   - Default
   - TransparentFX
