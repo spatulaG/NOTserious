@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 enum FacingDirection { FacingLeft,FacingRight};
 
@@ -276,6 +276,6 @@ public class Hero : MonoBehaviour {
     IEnumerator DestroyHero(float waitTime, GameObject hero)
     {
         yield return new WaitForSeconds(waitTime);
-        EditorSceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
