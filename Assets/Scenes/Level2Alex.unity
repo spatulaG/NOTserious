@@ -4616,7 +4616,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 217289686}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.47, y: 15.48, z: 5.163005}
+  m_LocalPosition: {x: 14.16, y: 15.48, z: 5.163005}
   m_LocalScale: {x: 0.32, y: 0.08241, z: 0.08241}
   m_Children:
   - {fileID: 838411317}
@@ -8589,7 +8589,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 379803513}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 45.99, y: 2.53, z: 0}
+  m_LocalPosition: {x: 45.03, y: 2.53, z: 0}
   m_LocalScale: {x: 6.250044, y: 40.000015, z: 1}
   m_Children: []
   m_Father: {fileID: 176804719}
@@ -11749,11 +11749,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4475741258477124, guid: ebc0900ea6d19452196b5444ad297b70, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.1
+      value: 11.03
       objectReference: {fileID: 0}
     - target: {fileID: 4475741258477124, guid: ebc0900ea6d19452196b5444ad297b70, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.4
+      value: 18.29
       objectReference: {fileID: 0}
     - target: {fileID: 4475741258477124, guid: ebc0900ea6d19452196b5444ad297b70, type: 2}
       propertyPath: m_LocalPosition.z
@@ -13730,9 +13730,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1112067376373304, guid: 574df828d29cdaa4182c35625d0cb324,
     type: 2}
   time: 0.5
-  angle: {x: 0, y: 0}
   bulletPositon: {fileID: 1327137867}
-  bulletColor: 0
+  Angles: 3
+  timeDuration: 2.76
+  bulletColor: 3
 --- !u!212 &655488999
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17753,8 +17754,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1112067376373304, guid: 574df828d29cdaa4182c35625d0cb324,
     type: 2}
   time: 0.5
-  angle: {x: 0, y: 0}
   bulletPositon: {fileID: 1456469939}
+  Angles: 0
+  timeDuration: 1
   bulletColor: 0
 --- !u!212 &840474515
 SpriteRenderer:
@@ -25496,7 +25498,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1248360328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7, y: 3.4, z: -8}
+  m_LocalPosition: {x: 14.51, y: 17.79, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -30398,8 +30400,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1112067376373304, guid: 574df828d29cdaa4182c35625d0cb324,
     type: 2}
   time: 0.5
-  angle: {x: 0, y: 0}
   bulletPositon: {fileID: 465804314}
+  Angles: 0
+  timeDuration: 1
   bulletColor: 0
 --- !u!212 &1493535715
 SpriteRenderer:
@@ -34443,11 +34446,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4859113085353070, guid: 174109524adc94cf3a96f314e8005a4d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 26.54
+      value: 26.48
       objectReference: {fileID: 0}
     - target: {fileID: 4859113085353070, guid: 174109524adc94cf3a96f314e8005a4d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 24.47828
+      value: 24.74
       objectReference: {fileID: 0}
     - target: {fileID: 4859113085353070, guid: 174109524adc94cf3a96f314e8005a4d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -40558,8 +40561,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1112067376373304, guid: 574df828d29cdaa4182c35625d0cb324,
     type: 2}
   time: 0.5
-  angle: {x: 0, y: 0}
   bulletPositon: {fileID: 1018306464}
+  Angles: 0
+  timeDuration: 1
   bulletColor: 0
 --- !u!212 &2058174883
 SpriteRenderer:
