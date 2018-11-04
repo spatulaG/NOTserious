@@ -13,6 +13,7 @@ public class colorwheel : MonoBehaviour {
 
     public GameObject wheel;
     public GameObject[] colors = new GameObject[6];
+    public GameObject[] compColors = new GameObject[6];
 
     public float zValue = 0.5f;
     public float zValue2 = 8;
@@ -50,7 +51,12 @@ public class colorwheel : MonoBehaviour {
 
         endPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, zValue);
 
-        
+        for (int i = 0; i < compColors.Length; i++)
+        {
+            Color tempColor = compColors[i].GetComponent<Renderer>().material.color;
+            tempColor.a = 0;
+            compColors[i].GetComponent<Renderer>().material.color = tempColor;
+        }
 
     }
 
@@ -97,6 +103,11 @@ public class colorwheel : MonoBehaviour {
             {
                 colors[i].transform.position = new Vector3(transform.position.x,transform.position.y, -zValue2);
                 colors[i].transform.localScale = Vector3.one;
+
+
+                Color tempColor = compColors[i].GetComponent<Renderer>().material.color;
+                tempColor.a = 0;
+                compColors[i].GetComponent<Renderer>().material.color = tempColor;
             }
             
             if(firstTime)
@@ -231,11 +242,27 @@ public class colorwheel : MonoBehaviour {
                     moveTimer = (Time.time - timer) * 2 / 1;
                     colors[current].transform.position = transform.TransformVector(Vector3.Slerp(start, end, moveTimer));
                     colors[current].transform.localScale = transform.TransformVector(Vector3.Slerp(Vector3.one, new Vector3(2, 2, colors[current].transform.localScale.z), moveTimer));
+
+                    compColors[current].transform.position = transform.TransformVector(Vector3.Slerp(start, end, moveTimer));
+                    compColors[current].transform.localScale = transform.TransformVector(Vector3.Slerp(Vector3.one, new Vector3(2, 2, compColors[current].transform.localScale.z+0.01f), moveTimer));
+
+                    Color tempColor = compColors[i].GetComponent<Renderer>().material.color;
+                    tempColor.a = moveTimer > 1 ? 1 : moveTimer;
+                    compColors[i].GetComponent<Renderer>().material.color = tempColor;
+
                 }
                 else
                 {
                     colors[i].transform.position = start;
                     colors[i].transform.localScale = Vector3.one;
+
+
+                    compColors[i].transform.position = start;
+                    compColors[i].transform.localScale = Vector3.one;
+
+                    Color tempColor = compColors[i].GetComponent<Renderer>().material.color;
+                    tempColor.a = 0;
+                    compColors[i].GetComponent<Renderer>().material.color = tempColor;
                 }
             }
         }
