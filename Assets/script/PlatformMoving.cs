@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlatformMoving : MonoBehaviour {
 
+    public GameObject defaultObj;
 	
 		
     [SerializeField] private float moveSpeed;
@@ -20,6 +21,11 @@ public class PlatformMoving : MonoBehaviour {
     private float distCovered;
     private float fracJourney;
 
+    private float scaleX;
+    private float scaleY;
+
+    
+
     void Start()
     {
         startTime = Time.time;
@@ -30,6 +36,8 @@ public class PlatformMoving : MonoBehaviour {
         }
 
         journeyLength = Vector3.Distance(pointA.transform.position, pointB.transform.position);
+        scaleX = GetComponent<Transform>().localScale.x;
+        scaleY = GetComponent<Transform>().localScale.y;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -76,4 +84,22 @@ public class PlatformMoving : MonoBehaviour {
             startTime = Time.time;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("Player");
+        if(other.gameObject.tag == "Player"){
+            Debug.Log("xxxxxxx");
+            other.gameObject.GetComponent<Transform>().parent = defaultObj.GetComponent<Transform>();
+            Debug.Log(other.gameObject.GetComponent<Transform>().localScale.x);
+            other.gameObject.GetComponent<Transform>().localScale = new Vector3(other.gameObject.GetComponent<Transform>().localScale.x/scaleX,other.gameObject.GetComponent<Transform>().localScale.y/scaleY, 1.0f);
+        //    other.GetComponent<Transform>().parent = this.GetComponent<Transform>();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if(other.gameObject.tag == "Player"){
+            other.gameObject.GetComponent<Transform>().parent = null;
+        }
+    }
+    
 }
