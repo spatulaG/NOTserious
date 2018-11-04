@@ -22,16 +22,63 @@ public class colorwheel : MonoBehaviour {
     void Start () {
         timer = Time.time;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    bool paused = false;
+ 
+
+    void OnPauseGame()
+    {
+       // paused = true;
+     
+    }
+    void OnResumeGame()
+    {
+     //  paused = false;
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            
+
+            Object[] objects = FindObjectsOfType(typeof(GameObject));
+            foreach (GameObject go in objects)
+            {
+                if (paused)
+                {
+                    go.SendMessage("OnResumeGame", SendMessageOptions.DontRequireReceiver);
+                    if (go.GetComponent<Rigidbody2D>() != null)
+                    {
+                        go.GetComponent<Rigidbody2D>().WakeUp();
+                    }
+                }
+                else
+                {
+                    go.SendMessage("OnPauseGame", SendMessageOptions.DontRequireReceiver);
+                    
+                    if (go.GetComponent<Rigidbody2D>() != null)
+                    {
+                        go.GetComponent<Rigidbody2D>().Sleep();
+                    }
+                }
+            }
+
+            paused = !paused;
+        }
+
+
+        //Time.timeScale = 0;
+
         // Get the horizontal and vertical axis.
         // By default they are mapped to the arrow keys.
         // The value is in the range -1 to 1
         float rotation = Input.GetAxis("Vertical") * speed;
-        
-        rotation *= Time.deltaTime;
-        
+
+        rotation *= Time.unscaledDeltaTime;
+
         // Rotate around our y-axis
         wheel.transform.Rotate(0, 0, rotation);
 
@@ -81,7 +128,7 @@ public class colorwheel : MonoBehaviour {
             case 180:
                 color = "Orange";
                 Head.text = color;
-                Body.text = "The color " + color + " is the complementary color of the base color blue.\n\nCombined by the colors yellow and red";
+                Body.text = "The color " + color + " is the complementary color of the primery color blue.\n\nCombined by the colors yellow and red";
                 current = 3;
                 break;
             case 240:
@@ -93,7 +140,7 @@ public class colorwheel : MonoBehaviour {
             case 300:
                 color = "Purple";
                 Head.text = color;
-                Body.text = "The color " + color + " is the complementary color of the base color yellow.\n\nCombined by the colors red and blue";
+                Body.text = "The color " + color + " is the complementary color of the primery color yellow.\n\nCombined by the colors red and blue";
                 current = 5;
                 break;
 
