@@ -18,8 +18,8 @@ public class CameraFollow : MonoBehaviour {
     private float LeftAndRightAdjustNumber;
     private float UpAndDownAdjustNumber;
 	void Start () {
-        LeftAndRightAdjustNumber = 0.0f;
-        UpAndDownAdjustNumber = 0.0f;
+        LeftAndRightAdjustNumber = -20.0f;
+        UpAndDownAdjustNumber =10.0f;
         LeftDown = new GameObject("LeftDown");
         RightUp = new GameObject("RightUp");
         offset = mainCamera.transform.position - hero.transform.position;
