@@ -54,11 +54,12 @@ public class star : MonoBehaviour {
                 Resources.UnloadUnusedAssets();
                 Destroy(Level1);
             }
-
-            print("player entered");
+            else {  print("player entered");
             img.SetActive(true);
             Destroy(this.gameObject);
-            //btn.enabled = true;
+                //btn.enabled = true;
+            }
+           
         }
     }
 }

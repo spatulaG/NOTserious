@@ -9693,7 +9693,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1317852862472146, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
       propertyPath: m_TagString
-      value: HAIR
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d56eb6ef1e22e441d926fe9ee8dfb7c4, type: 2}
