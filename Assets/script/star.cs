@@ -42,6 +42,14 @@ public class star : MonoBehaviour {
     }
     private Scene currentScene;
     public GameObject Level1;
+
+    /*IEnumerator DestroyLevel1(float time,GameObject Level1) {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene("Level2Alex"); //LoadSceneMode.Additive);
+        //Resources.UnloadUnusedAssets();
+        //Destroy(Level1);     
+        
+    }*/
     private void OnTriggerEnter2D(Collider2D collision)
     {
         currentScene = SceneManager.GetActiveScene();
@@ -50,16 +58,16 @@ public class star : MonoBehaviour {
             if (currentScene.name == "Level1Rosy")
             {
                 print("load alex");
-                SceneManager.LoadScene("Level2Alex", LoadSceneMode.Additive);
-                Resources.UnloadUnusedAssets();
-                Destroy(Level1);
+
+                SceneManager.LoadScene("Level2Alex");
+                //StartCoroutine(DestroyLevel1(2.0f, Level1));
             }
-            else {  print("player entered");
+
+
+            print("player entered");
             img.SetActive(true);
             Destroy(this.gameObject);
-                //btn.enabled = true;
-            }
-           
+            //btn.enabled = true;
         }
     }
 }
