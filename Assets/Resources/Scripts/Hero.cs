@@ -189,7 +189,7 @@ public class Hero : MonoBehaviour {
 
     void FixedUpdate () {
 
-        if (Input.GetKeyDown(KeyCode.JoystickButton8) && Input.GetKeyDown(KeyCode.JoystickButton9))
+        if ((Input.GetKeyDown(KeyCode.JoystickButton8) && Input.GetKeyDown(KeyCode.JoystickButton9)) || Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(DestroyHero(1.0f, hero));
 
@@ -277,6 +277,6 @@ public class Hero : MonoBehaviour {
     IEnumerator DestroyHero(float waitTime, GameObject hero)
     {
         yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
