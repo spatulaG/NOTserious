@@ -7,9 +7,12 @@ public class cannon : MonoBehaviour {
     GameObject bullet;
     public float time;
     private float currentTime;
-    public Vector2 angle;
+    //public Vector2 angle;
     public Transform bulletPositon;
     private Color currentColor;
+    public angles Angles = angles.up;
+    public float timeDuration = 1.0f;
+    public enum angles{up,left,down,right};
 
 
     static public Color[] colorSlot = {
@@ -41,18 +44,33 @@ public class cannon : MonoBehaviour {
     void Start () {
         currentTime = time;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        print(colorSlot[(int)bulletColor]);
+    Vector2 current = Vector2.up;
+    // Update is called once per frame
+    void Update () {
+        //print(colorSlot[(int)bulletColor]);
         currentTime -= Time.deltaTime;
         //print("current time : " + currentTime);
         //print("time : " + time);
         if (currentTime <= 0f)
         {
-            
+            current = Vector2.up;
+                switch ((int)Angles) {
+                    case 1:
+                        current = Vector2.up;
+                        break;//up
+                    case 2:
+                        current = Vector2.left;
+                        break;//left
+                    case 3:
+                        current = Vector2.down;
+                        break;//down
+                    case 4:
+                        current = Vector2.right;
+                        break;//right
+
+                }
             bullet = Instantiate(bulletPrefab, bulletPositon.position, Quaternion.identity) as GameObject;//this.GetComponent<Collider2D>().bounds.size.x / 2
-            bullet.GetComponent<Rigidbody2D>().AddForce(angle * 10f, ForceMode2D.Impulse);
+            bullet.GetComponent<Rigidbody2D>().AddForce(current * 4.0f, ForceMode2D.Impulse);
             bullet.GetComponent<SpriteRenderer>().color = new Color(colorSlot[(int)bulletColor].r/255, colorSlot[(int)bulletColor].g / 255, colorSlot[(int)bulletColor].b / 255);
             
             bullet.transform.position = new Vector3(bullet.transform.position.x, bullet.transform.position.y, -4);
@@ -62,12 +80,12 @@ public class cannon : MonoBehaviour {
             currentTime = time;
         }
 
-        StartCoroutine(DestroyBullet(1.0f, bullet));
+        StartCoroutine(DestroyBullet(bullet));
     }
 
-    IEnumerator DestroyBullet(float waitTime, GameObject bullet)
+    IEnumerator DestroyBullet( GameObject bullet)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(timeDuration);
         Destroy(bullet);
     }
 }

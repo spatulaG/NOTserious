@@ -10,6 +10,10 @@ TagManager:
   - Enemy
   - bullet4cannon
   - CheckPoint
+  - rope
+  - upDownDoor
+  - GreenTrigger
+  - HAIR
   layers:
   - Default
   - TransparentFX

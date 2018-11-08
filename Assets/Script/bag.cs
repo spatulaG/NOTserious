@@ -56,6 +56,7 @@ public class bag : MonoBehaviour {
     public bool _isBlendable = false;
     private int _colorCount = 0;
     public int selectNumber = 0;
+	public bagAbsorb _bagAbsorb;
 //  private int[] _mergeNumber;
 
     private SpriteRenderer[] _colorSpriteRenderer;
@@ -121,7 +122,7 @@ public class bag : MonoBehaviour {
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
-            if(Input.GetKeyDown(KeyCode.I)||Input.GetKeyDown(KeyCode.JoystickButton3)){
+            if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
                 if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
@@ -145,8 +146,8 @@ public class bag : MonoBehaviour {
                 }
 				if(selectNumber == 1){
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
-					Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
-					Debug.Log("_colorMerge[1]._colorIndex" + _colorMerge[1]._colorIndex);
+				//	Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
+				//	Debug.Log("_colorMerge[1]._colorIndex" + _colorMerge[1]._colorIndex);
 					playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
 					ReturnColor();
 				//	Debug.Log("SelectNumber5 :" + selectNumber);
@@ -190,7 +191,7 @@ public class bag : MonoBehaviour {
 			_colorSpriteRenderer[1].sprite = mySprite[0];
 			_colorSpriteRenderer[2].sprite = mySprite[0];
 			popUpMenu.SetActive(false);
-			Debug.Log("SetFalse");
+			//Debug.Log("SetFalse");
 		//	Destroy(this);
         }
     }
@@ -286,20 +287,7 @@ public class bag : MonoBehaviour {
 		playerSpriteRenderer.color = _colorMerge[0]._colorValue255;
 		return _colorMerge[0]._colorValue255;
 	}
-/*
-	void OnEnable() {
-		_colorSpriteRenderer = new SpriteRenderer[3];
-        for(int i = 0; i < 3; i++)
-            _colorSpriteRenderer[i] = color[i].GetComponent<SpriteRenderer>();
-		_colorCount = 0;
-		selectNumber = 0;
-		_isShow = false;
-		_colorSpriteRenderer[0].sprite = mySprite[0];
-		_colorSpriteRenderer[1].sprite = mySprite[0];
-		_colorSpriteRenderer[2].sprite = mySprite[0];
-		Debug.Log("SetFalse");
-	}
-*/	
+
 
 	
 }

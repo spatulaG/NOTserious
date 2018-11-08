@@ -66,9 +66,9 @@ public class StartScene : MonoBehaviour {
         blink(0f);
         yield return new WaitForSeconds(waitTime);
         //TODO: Change scene
-        SceneManager.LoadScene(SceneName, LoadSceneMode.Additive);
-        Resources.UnloadUnusedAssets();
-        Destroy(currentScene);
+        SceneManager.LoadScene(SceneName);// LoadSceneMode.Additive);
+        //Resources.UnloadUnusedAssets();
+        //Destroy(currentScene);
     }
 
     private void blink(float alpha)

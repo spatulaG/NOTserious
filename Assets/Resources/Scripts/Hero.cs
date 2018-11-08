@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 enum FacingDirection { FacingLeft,FacingRight};
 
@@ -106,7 +106,7 @@ public class Hero : MonoBehaviour {
             isInAir = false;
         }
 
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "bullet4cannon")
         {
             if (collision.gameObject.transform.position.x > hero.transform.position.x)
             {
@@ -189,6 +189,11 @@ public class Hero : MonoBehaviour {
 
     void FixedUpdate () {
 
+        if ((Input.GetKeyDown(KeyCode.JoystickButton8) && Input.GetKeyDown(KeyCode.JoystickButton9)) || Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(DestroyHero(1.0f, hero));
+
+        }
         if (paused)
             return;
         
@@ -198,6 +203,8 @@ public class Hero : MonoBehaviour {
         {
             return;
         }
+
+        
 
         RaycastHit2D groundCollider = Physics2D.Raycast(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up, 0.1f, LayerMask.GetMask("Default", "ColorGround"));
         Debug.DrawRay(transform.position + new Vector3(0, -size.y - 0.1f, 0) + offset, -transform.up * 0.1f, Color.green);
@@ -266,9 +273,10 @@ public class Hero : MonoBehaviour {
         }
 
     }
+
     IEnumerator DestroyHero(float waitTime, GameObject hero)
     {
         yield return new WaitForSeconds(waitTime);
-        EditorSceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

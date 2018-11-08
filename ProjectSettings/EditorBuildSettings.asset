@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1Rosy.unity
     guid: a2c7ccdffb62f814f91f0784ed8c2976
   - enabled: 1
-    path: Assets/Scenes/test.unity
-    guid: 1269794d04bfa004ca6d7a78d7760e82
+    path: Assets/Scenes/Level2Alex.unity
+    guid: 20faa493281c0274e9cf511c4cc5efbd
   m_configObjects: {}

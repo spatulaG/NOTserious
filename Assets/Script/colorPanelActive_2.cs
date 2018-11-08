@@ -10,6 +10,8 @@ public class colorPanelActive_2 : MonoBehaviour {
 	public bool[] flag = {false,false,false};
 	public GameObject popupMenu;
 	public GameObject absorbMenu;
+	public bag _bag;
+	public bagAbsorb _bagAbsorb;
 //	public static bool isDisableMenu = false;
 	
 	// Use this for initialization
@@ -74,6 +76,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 			for(int i = 0; i < flag.Length; i++)
 				flag[i] = false;
 			isLast = false;
+			_bag.enabled = false;
 		}
 	}
 
@@ -83,6 +86,7 @@ public class colorPanelActive_2 : MonoBehaviour {
 			flag[i] = false;
 		tempTime = 0;
 		isLast = false;
+		_bagAbsorb.enabled = true;
 //		isDisableMenu = true;
         
 		
