@@ -100,21 +100,26 @@ public class bag : MonoBehaviour {
         */
         if(((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.JoystickButton4))|| (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.JoystickButton5))) && !_isShow){
             popUpMenu.SetActive(true);
+			MusicManager.instance.PlaySE("SF_OpenBag");
 			_colorSpriteRenderer[0].sprite = mySprite[1];
            
             _isShow = true;
 
         }
         if(_isShow){
-			if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.JoystickButton0))
+			if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.JoystickButton0)){
+				MusicManager.instance.PlaySE("SF_CloseBag");
 				_isShow = false;
+			}
             if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.JoystickButton5)){
+				MusicManager.instance.PlaySE("SF_ChoosingColor");
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
 				if( _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2])
                 	_colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                 if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
                     _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
             }else if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.JoystickButton4)){
+				MusicManager.instance.PlaySE("SF_ChoosingColor");
                 _colorCount = (_colorCount <= 1) ? 1 : (_colorCount - 1);
 				
 				if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2])
@@ -123,6 +128,7 @@ public class bag : MonoBehaviour {
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
             if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+				
                 if(_colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
                 //    Debug.Log("_colorCount selectNumber: " + _colorCount);
                     selectNumber = (selectNumber >= 2) ? 2 : (selectNumber + 1);
@@ -145,6 +151,7 @@ public class bag : MonoBehaviour {
 					}
                 }
 				if(selectNumber == 1){
+					MusicManager.instance.PlaySE("SF_ChosenColor");
                     ColorPropertyStore(_colorMerge[0], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 				//	Debug.Log("_colorMerge[0]._colorIndex" + _colorMerge[0]._colorIndex);
 				//	Debug.Log("_colorMerge[1]._colorIndex" + _colorMerge[1]._colorIndex);
@@ -162,6 +169,7 @@ public class bag : MonoBehaviour {
 			
 
             if(selectNumber == 2){
+				MusicManager.instance.PlaySE("SF_MixColor");
                 ColorPropertyStore(_colorMerge[1], _colorSpriteRenderer[_colorCount - 1], _colorCount-1);
 				_colorSpriteRenderer[_colorMerge[1]._mergeNumber].sprite = mySprite[0];
 				_colorSpriteRenderer[_colorMerge[0]._mergeNumber].sprite = mySprite[1];
