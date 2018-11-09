@@ -175,8 +175,8 @@ public class Enemy : MonoBehaviour
 
     private void CheckWall()
     {
-        Vector2 checkwall = transform.position + new Vector3((size.x) * direction.x, -size.y/2, 0);
-        Vector2 checkwallAbove = transform.position + new Vector3((size.x) * direction.x, size.y/2, 0);
+        Vector2 checkwall = transform.position + new Vector3((size.x+offset.x) * direction.x, -size.y/2, 0);
+        Vector2 checkwallAbove = transform.position + new Vector3((size.x+offset.x) * direction.x, size.y/2, 0);
         Vector2 walldir = new Vector2(direction.x, 0);
         float walldist = size.x;
 
@@ -190,9 +190,11 @@ public class Enemy : MonoBehaviour
         {
             jump();
         }
-        else if(wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider != null && wallAbove.collider.tag == "ground" && onGround)
+       
+       else if (wall.collider != null && wall.collider.tag == "ground" && wallAbove.collider != null && wallAbove.collider.tag == "ground" && onGround)
         {
-            ChangeDirection();
+            direction.x *= -1;
+            speed *= 0.5f;
         }
 
 
