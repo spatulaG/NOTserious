@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class absorb : MonoBehaviour {
     public bool isImgOn;
-    //public GameObject img;
+    public GameObject img;
     public GameObject player;
     private GameObject color1, color2, color3;
    // public GameObject popUpMenu;
@@ -20,7 +20,7 @@ public class absorb : MonoBehaviour {
         color2 = GameObject.Find("Color2");
         color3 = GameObject.Find("Color3");
         
-        //img.SetActive(false);
+        img.SetActive(false);
         isImgOn = false;
         current = player.GetComponent<SpriteRenderer>().color;
     }
@@ -63,8 +63,10 @@ public class absorb : MonoBehaviour {
         {
             //print("yes");
         //    popUpMenu.SetActive(true);
+            MusicManager.instance.PlaySE("SF_Absorb");
             player.GetComponent<SpriteRenderer>().color =  this.GetComponent<SpriteRenderer>().color;
             current = player.GetComponent<SpriteRenderer>().color;
+            isImgOn = false;
             //print(current);
 
 
@@ -129,7 +131,8 @@ public class absorb : MonoBehaviour {
             //print("player!");
             if (isImgOn == false)
             {
-                //img.SetActive(true);
+                img.SetActive(true);
+                MusicManager.instance.PlaySE("SF_Bubble");
                 isImgOn = true;
             }
             
@@ -139,10 +142,10 @@ public class absorb : MonoBehaviour {
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (isImgOn == true)
+    //    if (isImgOn == true)
         {
 
-            //img.SetActive(false);
+            img.SetActive(false);
             isImgOn = false;
             
         }

@@ -109,17 +109,20 @@ public class bagAbsorb : MonoBehaviour {
 		}
         
             if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.JoystickButton5)){
+				MusicManager.instance.PlaySE("SF_ChoosingColor");
                 _colorCount = (_colorCount >= 3) ? 3 : (_colorCount + 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
                 if(_colorCount - 2 >= 0 && _colorSpriteRenderer[_colorCount-2].sprite == mySprite[1])
                     _colorSpriteRenderer[_colorCount-2].sprite = mySprite[0];
             }else if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.JoystickButton4)){
+				MusicManager.instance.PlaySE("SF_ChoosingColor");
                 _colorCount = (_colorCount <= 1) ? 1 : (_colorCount - 1);
                 _colorSpriteRenderer[_colorCount-1].sprite = mySprite[1];
 				if(_colorSpriteRenderer[_colorCount].sprite == mySprite[1])
                 	_colorSpriteRenderer[_colorCount].sprite = mySprite[0];
             }
             if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+				MusicManager.instance.PlaySE("SF_ChosenColor");
 
 				Debug.Log(_colorCount);
                 if(_colorCount - 1 >= 0 && _colorSpriteRenderer[_colorCount-1].sprite != mySprite[2]){
